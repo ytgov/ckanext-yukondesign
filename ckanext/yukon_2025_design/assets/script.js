@@ -5,6 +5,8 @@ ckan.module("yukon_2025_design-module", function ($, _) {
       debug: false,
     },
 
-    initialize: function () {},
+    initialize: function () {
+      console.log("init app")
+    },
   };
 });

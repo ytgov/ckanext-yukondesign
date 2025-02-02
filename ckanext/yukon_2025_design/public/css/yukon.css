@@ -1,0 +1,13 @@
+body {
+  font-family: var(--bs-body-font-family);
+}
+a{
+    text-decoration:none;
+}
+.footer-right .footer__menus .region-footer-menu ul.menu li a {
+  font-weight: normal;
+  text-decoration: none;
+}
+.footer-right .footer__menus .region-footer-menu ul.menu li a:hover {
+  text-decoration: underline;
+}
