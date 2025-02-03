@@ -1,4 +1,8 @@
 body {
+  --bs-border-color:#F1F1F1;
+  --bs-link-color-rgb: 0, 131, 146;
+  --bs-link-color: #008392;
+  --bs-link-hover-color:#1a5668;
   font-family: var(--bs-body-font-family);
 }
 a{
@@ -10,4 +14,18 @@ a{
 }
 .footer-right .footer__menus .region-footer-menu ul.menu li a:hover {
   text-decoration: underline;
+}
+
+.masthead{
+  background-color: white;
+  border-bottom: 3px solid var(--bs-yellow);
+}
+
+.masthead .main-navbar ul li a{
+  color: var(--bs-link-color);
+}
+.masthead .main-navbar ul li a:hover,
+.masthead .main-navbar ul li.active a{
+  background:var(--bs-primary);
+  color: white;
 }

@@ -1,0 +1,52 @@
+{% macro search_input(args) %}
+  <form action="{{ args.action }}">
+    <div class="input-group">
+      <input
+        class="form-control border border-warning p-2"
+        placeholder="{{ args.placeholder }}"
+        aria-label="{{ args.placeholder }}"
+        type="text"
+        id=""
+        name="{{args.name}}"
+        value=""
+      />
+      <button
+        type="submit"
+        class="btn btn-warning px-3"
+        aria-label="{{ args.placeholder }}"
+      >
+        <img src="/images/icons/magnifying-glass.svg" />
+      </button>
+    </div>
+  </form>
+{% endmacro %}
+
+{% macro search_section(args) %}
+  <div class="row gx-lg-5 gy-3">
+    <h4 class="mb-0">{{ args.title }}</h4>
+    <div class="col-lg-5">
+      <div class="mb-3">
+        {{ args.description }}
+      </div>
+      {{ search_input({
+        "placeholder": args.input_placeholder,
+        "action": args.action,
+        "name" : "q"
+      }) }}
+    </div>
+    <div class="col-lg-7 ps-lg-5">
+      <span class="d-block">{{ args.list_title }}</span>
+      <ul class="list-unstyled">
+        {% for item in args.list %}
+          <li>
+            <a href="{{ item.href }}">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+        <li>
+          <a href="/">{{ _("See more open information publications") }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+{% endmacro %}
