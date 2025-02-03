@@ -18,10 +18,34 @@
           <div class="col-lg-5 px-0">
             <p>
               {{_("Open government is designed to improve government transparency, promote civic participation, and provide economic and social benefits.")}}
-            </p>
-            <a href="#" class="btn btn-link px-0"> {{_("Read more")}} </a>
+							
+						</p>
+						<div class="collapse" id="hero-read-more">
+							<p>This portal is a collection of publications and datasets from Yukon government departments. The public can use and access these resources freely to learn more about how government works, to carry out research, or to use data for commercial or non-commercial purposes. </p>
+							<p>The open government portal functions as both a library for current resources and an archive for older data and information which have historic value.</p>
+							
+							<p>You can learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog, or visit the Access to Information Registry.</p>
+							<p>For government services and news, visit Yukon.ca</p>
+						</div>
+            <a class="btn btn-link px-0" id="read-more-button" data-bs-toggle="collapse" href="#hero-read-more" role="button" aria-expanded="false" aria-controls="hero-read-more"> {{_("Read more")}} </a>
+
           </div>
         </div>
+				<script>
+					document.addEventListener("DOMContentLoaded", function () {
+						const toggleButton = document.getElementById("read-more-button");
+						const collapseElement = document.getElementById("hero-read-more");
+				
+						collapseElement?.addEventListener("shown.bs.collapse", function () {
+						
+								toggleButton.textContent =  "{{_('Read Less')}}";
+						});
+				
+						collapseElement?.addEventListener("hidden.bs.collapse", function () {
+								toggleButton.textContent = "{{_('Read More')}}";
+						});
+				});
+				</script>
       </div>
     </div>
 
