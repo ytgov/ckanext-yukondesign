@@ -17,7 +17,7 @@ a{
 }
 
 .masthead{
-  background-color: white;
+  background: white;
   border-bottom: 3px solid var(--bs-yellow);
 }
 
