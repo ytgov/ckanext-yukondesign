@@ -1,1 +1,128 @@
-{% include "/frontend/home.html" %}
+{% extends "page.html" %}
+{% import "frontend/components.html" as components %}
+
+{% block maintag %}{% endblock %}
+{% block toolbar %}{% endblock %}
+
+{% block content %}
+  <div class="homepage layout-{{ homepage_style }}">
+    <div id="content" class="container">{{ self.flash() }}</div>
+    {% block primary_content %}
+      <div class="aurora-town">
+        <span class="aurora--main"></span>
+      </div>
+      <div style="min-height: 70vh">
+        <div class="pt-5 pb-5 border-bottom">
+          <div class="container">
+            <div class="yt-hero-cta">
+              <h1 class="yt-main-heading">{{ _("Open government") }}</h1>
+              <div class="col-lg-5 px-0">
+                <p>
+                  {{ _("Open government is designed to improve government transparency, promote civic participation, and provide economic and social benefits.") }}
+                </p>
+                <div class="collapse" id="hero-read-more">
+                  <p>
+                    This portal is a collection of publications and datasets from Yukon government departments. The public can use and access these resources freely to learn more about how government works, to carry out research, or to use data for commercial or non-commercial purposes.
+                  </p>
+                  <p>
+                    The open government portal functions as both a library for current resources and an archive for older data and information which have historic value.
+                  </p>
+                  <p>
+                    You can learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog, or visit the Access to Information Registry.
+                  </p>
+                  <p>
+                    For government services and news, visit Yukon.ca
+                  </p>
+                </div>
+                <a class="btn btn-link px-0" id="read-more-button" data-bs-toggle="collapse" href="#hero-read-more" role="button" aria-expanded="false" aria-controls="hero-read-more">
+                  {{ _("Read more") }}
+                </a>
+              </div>
+            </div>
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                const toggleButton = document.getElementById("read-more-button");
+                const collapseElement = document.getElementById("hero-read-more");
+                
+                collapseElement?.addEventListener("shown.bs.collapse", function () {
+                  toggleButton.textContent = "{{ _('Read Less') }}";
+                });
+                
+                collapseElement?.addEventListener("hidden.bs.collapse", function () {
+                  toggleButton.textContent = "{{ _('Read More') }}";
+                });
+              });
+            </script>
+          </div>
+        </div>
+        <div class="pt-5 pb-5 border-bottom">
+          <div class="container">
+            {{ components.search_section({
+              "title": _("Open information"),
+              "description": _("Find annual reports, news releases, scientific research publications, and other information."),
+              "input_placeholder": _("Enter open information search terms"),
+              "action": url_for('dataset.search'),
+              "list_title": _("Recently updated:"),
+              "list": [
+                { "href": "/", "title": "2023-23 Public Accounts" },
+                { "href": "/", "title": "Ministerial public body organizational structures" },
+                { "href": "/", "title": "2019 Yukon JCC - Territorial Court submissions" }
+              ],
+              "list_cta_title": _("See more open information datasets"),
+              "list_cta_href": "/"
+            }) }}
+          </div>
+        </div>
+        <div class="pt-5 pb-5 border-bottom">
+          <div class="container">
+            {{ components.search_section({
+              "title": _("Open data"),
+              "description": _("Find statistical and administrative data, geospatial data, and other machine-readable data."),
+              "input_placeholder": _("Enter open data search terms"),
+              "action": url_for('dataset.search'),
+              "list_title": _("Featured datasets:"),
+              "list": [
+                { "href": "/", "title": "Yukon Snow Survey Network" },
+                { "href": "/", "title": "Government of Yukon Human Resources (HR) metrics" },
+                { "href": "/", "title": "Flood mapping layers (Marsh Lake)" }
+              ],
+              "list_cta_title": _("See more open data datasets"),
+              "list_cta_href": "/"
+            }) }}
+          </div>
+        </div>
+        <div class="pt-5 pb-5 border-bottom">
+          <div class="container">
+            {{ components.search_section({
+              "title": _("Completed Access to Information requests"),
+              "description": _("Find completed Access to Information requests and responsive records."),
+              "input_placeholder": _("Enter request search terms"),
+              "action": url_for('dataset.search'),
+              "list_title": _("Recently added:"),
+              "list": [
+                { "href": "/", "title": "24-0070" },
+                { "href": "/", "title": "24-0057" },
+                { "href": "/", "title": "24-0053" }
+              ],
+              "list_cta_title": _("See more completed Access to Information requests"),
+              "list_cta_href": "/"
+            }) }}
+            <div class="row mt-4">
+              <div class="col-lg-5 d-flex flex-column gap-2">
+                <div>
+                  You can also see <a href="#">privacy impact assessment summaries</a>, <a href="#">visit the Access to Information Registry</a>, or <a href="#">submit an Access to Information request.</a>
+                </div>
+                <div>
+                  <a href="#">Learn more about the Government of Yukon’s open government program</a>, or <a href="#">read about recent updates on the eServices blog.</a>
+                </div>
+                <div>
+                  To submit a new publication or dataset, or to report an issue, contact <a href="#">eservices@yukon.ca.</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
