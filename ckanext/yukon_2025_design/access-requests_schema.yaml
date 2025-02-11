@@ -1,0 +1,95 @@
+cheming_version: 2
+dataset_type: access-requests
+about: Completed access to information request dataset schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+
+dataset_fields:
+
+- field_name: title
+  label: 
+    en: Title
+  preset: title
+  validators: not_empty unicode_safe
+  help_text: The title of the dataset.
+- field_name: notes
+  label:
+    en: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+  validators: not_empty unicode_safe
+- field_name: organization
+  label:
+    en: Public Body
+  form_snippet: select.html
+  validators: not_empty
+- field_name: internal_notes
+  label:
+    en: Internal Notes
+  form_snippet: markdown.html
+  required: false
+- field_name: language
+  label:
+    en: Language
+  form_snippet: text.html
+  required: false
+- field_name: date_published
+  label:
+    en: Date Published
+  preset: date
+  required: true
+- field_name: date_updated
+  label:
+    en: Date Updated
+  preset: date
+  required: true
+- field_name: date_publication_updated
+  label:
+    en: Date Publication Updated
+  preset: date
+  required: false
+- field_name: date_metadata_updated
+  label:
+    en: Date Metadata Updated
+  preset: date
+  required: false
+- field_name: date_of_request
+  label:
+    en: Date of Request
+  preset: date
+  required: true
+- field_name: file_id
+  label:
+    en: File ID
+  form_snippet: text
+  required: true
+- field_name: response_type
+  label:
+    en: Response Type
+  preset: select
+  choices:
+  - value: not_specified
+    label: Not specified
+  - value: granted_in_full
+    label: Granted in full
+  - value: granted_in_part
+    label: Granted in part
+  - value: withheld_in_full
+    label: Withheld in full
+  - value: no_records_found
+    label: No records found
+  - value: excluded_information
+    label: Excluded information
+  required: true
+- field_name: fees
+  label:
+    en: Fees
+  preset: radio
+  choices:
+  - value: not_set
+    label: Not set
+  - value: yes
+    label: Yes
+  - value: no
+    label: No
+  required: false

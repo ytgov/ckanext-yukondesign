@@ -1,0 +1,65 @@
+cheming_version: 2
+dataset_type: pia-summaries
+about: Privacy impact assessment summary dataset schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+
+dataset_fields:
+
+- field_name: title
+  label: 
+    en: Title
+  preset: title
+  validators: not_empty unicode_safe
+  help_text: The title of the dataset.
+- field_name: notes
+  label:
+    en: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+  validators: not_empty unicode_safe
+- field_name: organization
+  label:
+    en: Publisher
+  form_snippet: select.html
+  validators: not_empty
+- field_name: internal_notes
+  label:
+    en: Internal Notes
+  form_snippet: markdown.html
+  required: false
+- field_name: language
+  label:
+    en: Language
+  form_snippet: text.html
+  required: false
+- field_name: date_published
+  label:
+    en: Date Published
+  preset: date
+  required: true
+- field_name: date_updated
+  label:
+    en: Date Updated
+  preset: date
+  required: true
+- field_name: date_publication_updated
+  label:
+    en: Date Publication Updated
+  preset: date
+  required: false
+- field_name: date_metadata_updated
+  label:
+    en: Date Metadata Updated
+  preset: date
+  required: false
+- field_name: privacy_impact_assessment_number
+  label:
+    en: Privacy Impact Assessment Number
+  form_snippet: text.html
+  display_snippet: text.html
+  required: true
+- field_name: date_of_approval
+  label: Date of Approval
+  preset: date
+  required: true

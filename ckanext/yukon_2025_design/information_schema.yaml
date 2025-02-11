@@ -1,0 +1,137 @@
+cheming_version: 2
+dataset_type: information
+about: Open information dataset schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+
+dataset_fields:
+
+- field_name: title
+  label: 
+    en: Title
+  preset: title
+  validators: not_empty unicode_safe
+  help_text: The title of the dataset.
+- field_name: notes
+  label:
+    en: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+  validators: not_empty unicode_safe
+# - field_name: group
+#   label: Topic
+#   form_snippet: text
+- field_name: tag_string
+  label:
+    en: Tags
+  preset: tag_string_autocomplete
+  form_placeholder: eg. economy, mental health, government
+- field_name: internal_contact_name
+  label:
+    en: Internal Contact Name
+  form_snippet: text
+  validators: not_empty unicode_safe
+- field_name: internal_contact_email
+  label:
+    en: Internal Contact Email
+  form_snippet: email
+  validators: not_empty unicode_safe
+- field_name: organization
+  label:
+    en: Publisher
+  form_snippet: select.html
+  validators: not_empty
+- field_name: author
+  label:
+    en: Author
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian
+  label:
+    en: Custodian
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian_email
+  label:
+    en: Custodian Email
+  form_snippet: text.html
+  display_snippet: email.html
+  required: false
+- field_name: homepage_url
+  label:
+    en: Homepage URL
+  form_snippet: text.html
+  display_snippet: link.html
+  required: false
+- field_name: internal_notes
+  label:
+    en: Internal Notes
+  form_snippet: markdown.html
+  required: false
+- field_name: language
+  label:
+    en: Language
+  form_snippet: text.html
+  required: false
+- field_name: date_published
+  label:
+    en: Date Published
+  preset: date
+  required: true
+- field_name: date_updated
+  label:
+    en: Date Updated
+  preset: date
+  required: true
+- field_name: date_publication_updated
+  label:
+    en: Date Publication Updated
+  preset: date
+  required: false
+- field_name: date_metadata_updated
+  label:
+    en: Date Metadata Updated
+  preset: date
+  required: false
+- field_name: publication_required_under_atipp_act
+  label:
+    en: Publication Required under the ATIPP Act
+  preset: radio
+  choices:
+    - value: not_set
+      label: Not set
+    - value: yes
+      label: Yes
+    - value: no
+      label: No
+  required: false
+- field_name: publication_type_under_atipp_act
+  label:
+    en: Publication Type under the ATIPP Act
+  preset: select
+  choices:
+  - value: na
+    label: N/A
+  - value: organizational_structures
+    label: Organizational structures
+  - value: organizational_responsibilities_and_functions
+    label: Organizational responsibilities and functions
+  - value: auditor_final_reports
+    label: Auditor final reports
+  - value: departmental_manuals_and_policy_statements
+    label: Departmental Manuals and Policy Statements
+  - value: public_opinion_polls_and_research_studies
+    label: Public opinion polls and research studies
+  - value: statistical_surveys
+    label: Statistical surveys
+  - value: classes_of_information_types_and_records
+    label: Classes of information types and records
+  - value: information_or_record_available_to_public_without_access_request
+    label: Information or a record available to the public without requiring an access request
+  - value: final_performance_reports_on_efficiency_of_department_program_or_activity
+    label: Final performance reports on the efficiency of a department, program or activity
+  - value: final_reports_providing_advice_or_recommendations_to_public_body
+    label: Final reports providing advice or recommendations to the public body
+  - value: appraisal_reports_on_value_or_condition_of_public_property
+    label: Appraisal reports in relation to the value or condition of public property
+  required: false

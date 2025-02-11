@@ -1,0 +1,182 @@
+cheming_version: 2
+dataset_type: data
+about: Open data dataset schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+
+dataset_fields:
+
+- field_name: title
+  label: 
+    en: Title
+  preset: title
+  validators: not_empty unicode_safe
+  help_text: The title of the dataset.
+- field_name: notes
+  label:
+    en: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+  validators: not_empty unicode_safe
+- field_name: methodology
+  label: 
+    en: Methodology
+  form_snippet: markdown.html
+  validators: ignore_missing
+- field_name: changelog
+  label:
+    en: Changelog
+  form_snippet: markdown.html
+  validators: ignore_missing
+- field_name: data_dictionary
+  label:
+    en: Data Dictionary
+  form_snippet: text.html
+  display_snippet: link.html
+  validators: ignore_missing
+- field_name: data_standard
+  label:
+    en: Data Standard
+  form_snippet: text.html
+  display_snippet: link.html
+  validators: ignore_missing
+# - field_name: group
+#   label: Topic
+#   form_snippet: text
+- field_name: tag_string
+  label:
+    en: Tags
+  preset: tag_string_autocomplete
+  form_placeholder: eg. economy, mental health, government
+- field_name: internal_contact_name
+  label:
+    en: Internal Contact Name
+  form_snippet: text
+  validators: not_empty unicode_safe
+- field_name: internal_contact_email
+  label:
+    en: Internal Contact Email
+  form_snippet: email
+  validators: not_empty unicode_safe
+- field_name: organization
+  label:
+    en: Publisher
+  form_snippet: select.html
+  validators: not_empty
+- field_name: author
+  label:
+    en: Author
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian
+  label:
+    en: Custodian
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian_email
+  label:
+    en: Custodian Email
+  form_snippet: text.html
+  display_snippet: email.html
+  required: false
+- field_name: homepage_url
+  label:
+    en: Homepage URL
+  form_snippet: text.html
+  display_snippet: link.html
+  required: false
+- field_name: internal_notes
+  label:
+    en: Internal Notes
+  form_snippet: markdown.html
+  required: false
+- field_name: language
+  label:
+    en: Language
+  form_snippet: text.html
+  required: false
+- field_name: date_published
+  label:
+    en: Date Published
+  preset: date
+  required: true
+- field_name: date_updated
+  label:
+    en: Date Updated
+  preset: date
+  required: true
+- field_name: date_publication_updated
+  label:
+    en: Date Publication Updated
+  preset: date
+  required: false
+- field_name: date_metadata_updated
+  label:
+    en: Date Metadata Updated
+  preset: date
+  required: false
+- field_name: update_frequency
+  label:
+    en: Update Frequency
+  preset: select
+  choices:
+    - value: none
+      label: None
+    - value: ad_hoc
+      label: Ad hoc
+    - value: annual
+      label: Annual
+    - value: semiannual
+      label: Semiannual
+    - value: quarterly
+      label: Quarterly
+    - value: monthly
+      label: Monthly
+    - value: weekly
+      label: Weekly
+    - value: daily
+      label: Daily
+    - value: hourly
+      label: Hourly
+    - value: real_time
+      label: Real-time
+  required: false
+- field_name: update_method
+  label:
+    en: Update Method
+  preset: radio
+  choices:
+    - value: not_set
+      label: Not set
+    - value: manual
+      label: Manual
+    - value: automated
+      label: Automated
+  required: false
+- field_name: spatial_coverage_locations
+  label: Spatial Coverage Locations
+  form_snippet: text.html
+  display_snippet: text.html
+  required: false
+- field_name: temporal_coverage_start_date
+  label: Temporal Coverage Start Date
+  preset: date
+  required: false
+- field_name: temporal_coverage_end_date
+  label: Temporal Coverage End Date
+  preset: date
+  required: false
+- field_name: data_quality_score
+  label:
+    en: Data Quality Score
+  preset: select
+  choices:
+    - value: na
+      label: N/A
+    - value: bronze
+      label: Bronze
+    - value: silver
+      label: Silver
+    - value: gold
+      label: Gold
+  required: false
