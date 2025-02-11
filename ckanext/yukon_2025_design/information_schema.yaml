@@ -29,17 +29,18 @@ dataset_fields:
 - field_name: internal_contact_name
   label:
     en: Internal Contact Name
-  form_snippet: text
+  form_snippet: text.html
   validators: not_empty unicode_safe
 - field_name: internal_contact_email
   label:
     en: Internal Contact Email
-  form_snippet: email
+  form_snippet: text.html
+  display_snippet: email.html
   validators: not_empty unicode_safe
 - field_name: organization
   label:
     en: Publisher
-  form_snippet: select.html
+  form_snippet: organization.html
   validators: not_empty
 - field_name: author
   label:
@@ -110,28 +111,28 @@ dataset_fields:
     en: Publication Type under the ATIPP Act
   preset: select
   choices:
-  - value: na
-    label: N/A
-  - value: organizational_structures
-    label: Organizational structures
-  - value: organizational_responsibilities_and_functions
-    label: Organizational responsibilities and functions
-  - value: auditor_final_reports
-    label: Auditor final reports
-  - value: departmental_manuals_and_policy_statements
-    label: Departmental Manuals and Policy Statements
-  - value: public_opinion_polls_and_research_studies
-    label: Public opinion polls and research studies
-  - value: statistical_surveys
-    label: Statistical surveys
-  - value: classes_of_information_types_and_records
-    label: Classes of information types and records
-  - value: information_or_record_available_to_public_without_access_request
-    label: Information or a record available to the public without requiring an access request
-  - value: final_performance_reports_on_efficiency_of_department_program_or_activity
-    label: Final performance reports on the efficiency of a department, program or activity
-  - value: final_reports_providing_advice_or_recommendations_to_public_body
-    label: Final reports providing advice or recommendations to the public body
-  - value: appraisal_reports_on_value_or_condition_of_public_property
-    label: Appraisal reports in relation to the value or condition of public property
+    - value: not_set
+      label: Not set
+    - value: organizational_structures
+      label: Organizational structures
+    - value: organizational_responsibilities_and_functions
+      label: Organizational responsibilities and functions
+    - value: auditor_final_reports
+      label: Auditor final reports
+    - value: departmental_manuals_and_policy_statements
+      label: Departmental Manuals and Policy Statements
+    - value: public_opinion_polls_and_research_studies
+      label: Public opinion polls and research studies
+    - value: statistical_surveys
+      label: Statistical surveys
+    - value: classes_of_information_types_and_records
+      label: Classes of information types and records
+    - value: information_or_record_available_to_public_without_access_request
+      label: Information or a record available to the public without requiring an access request
+    - value: final_performance_reports_on_efficiency_of_department_program_or_activity
+      label: Final performance reports on the efficiency of a department, program or activity
+    - value: final_reports_providing_advice_or_recommendations_to_public_body
+      label: Final reports providing advice or recommendations to the public body
+    - value: appraisal_reports_on_value_or_condition_of_public_property
+      label: Appraisal reports in relation to the value or condition of public property
   required: false

@@ -51,17 +51,18 @@ dataset_fields:
 - field_name: internal_contact_name
   label:
     en: Internal Contact Name
-  form_snippet: text
+  form_snippet: text.html
   validators: not_empty unicode_safe
 - field_name: internal_contact_email
   label:
     en: Internal Contact Email
-  form_snippet: email
+  form_snippet: text.html
+  display_snippet: email.html
   validators: not_empty unicode_safe
 - field_name: organization
   label:
     en: Publisher
-  form_snippet: select.html
+  form_snippet: organization.html
   validators: not_empty
 - field_name: author
   label:
