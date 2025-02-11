@@ -17,5 +17,9 @@ setup(
             ('**.js', 'javascript', None),
             ('**/templates/**.html', 'ckan', None),
         ],
-    }
+    },
+    entry_points='''
+        yukon_2025_design = ckanext.yukon_2025_design.plugin:Yukon2025DesignPlugin
+    ''',
+    
 )
