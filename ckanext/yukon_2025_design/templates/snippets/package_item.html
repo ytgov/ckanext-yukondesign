@@ -50,7 +50,7 @@ Example:
             {% endif %}
             {% endblock %}
         </div>
-        <div class="d-flex ">
+        <div class="d-flex flex-column flex-md-row gap-1">
             <div class="d-flex flex-column gap-1">
                 <div>
                     <b>{{_("Date updated")}}:</b> 
@@ -61,7 +61,7 @@ Example:
                     {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=package.metadata_created %}
                 </div>
             </div>
-            <div class="ms-auto d-flex flex-column gap-1 text-end">
+            <div class="ms-md-auto d-flex flex-column gap-1 text-md-end">
                 <div>
                     <b>{{_("Publisher")}}:</b> 
                     <span>{{package.organization.title}}</span>

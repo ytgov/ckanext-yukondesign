@@ -47,8 +47,8 @@
   </section>
 
   {% block package_search_results_api %}
-    <section class="module">
-      <div class="module-content">
+    <section class="">
+      <div class="">
         {% block package_search_results_api_inner %}
           <small>
             {% set api_link = h.link_to(_('API'), h.url_for('api.get_api', ver=3)) %}

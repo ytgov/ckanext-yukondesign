@@ -8,14 +8,16 @@ body {
 a {
   text-decoration: none;
 }
-@media(max-width:1023.99px){
+@media (min-width:992px) and (max-width:1023.99px){
   .w-md-33{
-    min-width: 33%;
+    width: 100%;
+    max-width: 25%;
   }
 }
-@media(max-width:1023.99px){
+@media (min-width:992px) and (max-width:1023.99px){
   .w-md-66{
-    min-width: 66%;
+    width: 100%;
+    max-width: 75%;
   }
 }
 @media( min-width:1024px ){
