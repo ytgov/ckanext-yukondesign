@@ -3,63 +3,127 @@ dataset_type: pia-summaries
 about: Privacy impact assessment summary dataset schema
 about_url: http://github.com/ckan/ckanext-scheming
 
-
 dataset_fields:
 
 - field_name: title
-  label: 
+  label:
     en: Title
+    fr: Titre
   preset: title
   validators: not_empty unicode_safe
   help_text: The title of the dataset.
 - field_name: notes
   label:
     en: Description
+    fr: Description
   form_snippet: markdown.html
   form_placeholder: eg. Some useful notes about the data
   validators: not_empty unicode_safe
 - field_name: organization
   label:
     en: Publisher
-  form_snippet: select.html
+    fr: Producteur
+  form_snippet: organization.html
   validators: not_empty
 - field_name: internal_notes
   label:
     en: Internal Notes
+    fr: Notes internes
   form_snippet: markdown.html
   required: false
 - field_name: language
   label:
     en: Language
-  form_snippet: text.html
+    fr: Langue
+  preset: select
+  choices:
+    - value: not_specified
+      label:
+        en: Not specified
+        fr: Non indiqué
+    - value: english
+      label:
+        en: English
+        fr: Anglais
+    - value: french
+      label:
+        en: French
+        fr: Français
+    - value: gwichin
+      label:
+        en: Gwich'in
+        fr: Gwich'in
+    - value: han
+      label:
+        en: Hän
+        fr: Hän
+    - value: kaska
+      label:
+        en: Kaska
+        fr: Kaska
+    - value: northern_tutchone
+      label:
+        en: Northern Tutchone
+        fr: Tutchone de Nord
+    - value: southern_tutchone
+      label:
+        en: Southern Tutchone
+        fr: Tutchone du Sud
+    - value: tagish
+      label:
+        en: Tagish
+        fr: Tagish
+    - value: tlingit
+      label:
+        en: Tlingit
+        fr: Tlingit
+    - value: upper_tanana
+      label:
+        en: Upper Tanana
+        fr: Haut Tanana
+    - value: multiple_languages
+      label:
+        en: Multiple languages
+        fr: Plusieurs langues
+    - value: other
+      label:
+        en: Other
+        fr: Autre
   required: false
 - field_name: date_published
   label:
     en: Date Published
+    fr: Date de publication
   preset: date
   required: true
 - field_name: date_updated
   label:
     en: Date Updated
+    fr: Date de mise à jour
   preset: date
   required: true
 - field_name: date_publication_updated
   label:
     en: Date Publication Updated
+    fr: Date de mise à jour de la publication
   preset: date
   required: false
 - field_name: date_metadata_updated
   label:
     en: Date Metadata Updated
+    fr: Date de mise à jour des métadonnées
   preset: date
   required: false
 - field_name: privacy_impact_assessment_number
   label:
     en: Privacy Impact Assessment Number
+    fr: Numéro d’évaluation des facteurs relatifs à la vie privée
   form_snippet: text.html
   display_snippet: text.html
   required: true
 - field_name: date_of_approval
-  label: Date of Approval
+  label:
+    en: Date of Approval
+    fr: Date d’approbation
   preset: date
   required: true
