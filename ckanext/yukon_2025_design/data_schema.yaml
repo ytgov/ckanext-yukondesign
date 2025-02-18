@@ -1,0 +1,299 @@
+cheming_version: 2
+dataset_type: data
+about: A reimplementation of the default CKAN dataset schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+
+dataset_fields:
+
+- field_name: title
+  label: 
+    en: Title
+    fr: Titre
+  preset: title
+  validators: not_empty unicode_safe
+  help_text: The title of the dataset.
+- field_name: notes
+  label:
+    en: Description
+    fr: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+  validators: not_empty unicode_safe
+- field_name: methodology
+  label: 
+    en: Methodology
+    fr: Méthode
+  form_snippet: markdown.html
+  validators: ignore_missing
+- field_name: changelog
+  label:
+    en: Changelog
+    fr: Journal des changements
+  form_snippet: markdown.html
+  validators: ignore_missing
+- field_name: data_dictionary
+  label:
+    en: Data Dictionary
+    fr: Dictionnaire de données
+  form_snippet: text.html
+  display_snippet: link.html
+  validators: ignore_missing
+- field_name: data_standard
+  label:
+    en: Data Standard
+    fr: Norme de données
+  form_snippet: text.html
+  display_snippet: link.html
+  validators: ignore_missing
+# - field_name: group
+#   label: Topic
+#   form_snippet: text
+- field_name: tag_string
+  label:
+    en: Tags
+    fr: Étiquettes
+  preset: tag_string_autocomplete
+  form_placeholder: eg. economy, mental health, government
+- field_name: internal_contact_name
+  label:
+    en: Internal Contact Name
+    fr: Nom de la personne-ressource interne
+  form_snippet: text.html
+  validators: not_empty unicode_safe
+- field_name: internal_contact_email
+  label:
+    en: Internal Contact Email
+    fr: Courriel de la personne-ressource interne
+  form_snippet: text.html
+  display_snippet: email.html
+  validators: not_empty unicode_safe
+- field_name: organization
+  label:
+    en: Publisher
+    fr: Producteur
+  form_snippet: organization.html
+  validators: not_empty
+- field_name: author
+  label:
+    en: Author
+    fr: Auteur
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian
+  label:
+    en: Custodian
+    fr: Dépositaire
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian_email
+  label:
+    en: Custodian Email
+    fr: Courriel du dépositaire
+  form_snippet: text.html
+  display_snippet: email.html
+  required: false
+- field_name: homepage_url
+  label:
+    en: Homepage URL
+    fr: URL de la page d'accueil
+  form_snippet: text.html
+  display_snippet: link.html
+  required: false
+- field_name: internal_notes
+  label:
+    en: Internal Notes
+    fr: Notes internes
+  form_snippet: markdown.html
+  required: false
+- field_name: language
+  label:
+    en: Language
+    fr: Langue
+  preset: select
+  choices:
+    - value: not_specified
+      label:
+        en: Not specified
+        fr: Non indiqué
+    - value: english
+      label:
+        en: English
+        fr: Anglais
+    - value: french
+      label:
+        en: French
+        fr: Français
+    - value: gwichin
+      label:
+        en: Gwich'in
+        fr: Gwich'in
+    - value: han
+      label:
+        en: Hän
+        fr: Hän
+    - value: kaska
+      label:
+        en: Kaska
+        fr: Kaska
+    - value: northern_tutchone
+      label:
+        en: Northern Tutchone
+        fr: Tutchone de Nord
+    - value: southern_tutchone
+      label:
+        en: Southern Tutchone
+        fr: Tutchone du Sud
+    - value: tagish
+      label:
+        en: Tagish
+        fr: Tagish
+    - value: tlingit
+      label:
+        en: Tlingit
+        fr: Tlingit
+    - value: upper_tanana
+      label:
+        en: Upper Tanana
+        fr: Haut Tanana
+    - value: multiple_languages
+      label:
+        en: Multiple languages
+        fr: Plusieurs langues
+    - value: other
+      label:
+        en: Other
+        fr: Autre
+  required: false
+- field_name: date_published
+  label:
+    en: Date Published
+    fr: Date de publication
+  preset: date
+  required: true
+- field_name: date_updated
+  label:
+    en: Date Updated
+    fr: Date de mise à jour
+  preset: date
+  required: true
+- field_name: date_publication_updated
+  label:
+    en: Date Publication Updated
+    fr: Date de mise à jour de la publication
+  preset: date
+  required: false
+- field_name: date_metadata_updated
+  label:
+    en: Date Metadata Updated
+    fr: Date de mise à jour des métadonnées
+  preset: date
+  required: false
+- field_name: update_frequency
+  label:
+    en: Update Frequency
+    fr: Fréquence de mise à jour
+  preset: select
+  choices:
+    - value: none
+      label:
+        en: None
+        fr: Aucune
+    - value: ad_hoc
+      label:
+        en: Ad hoc
+        fr: Ponctuelle
+    - value: annual
+      label:
+        en: Annual
+        fr: Annuelle
+    - value: semiannual
+      label:
+        en: Semiannual
+        fr: Semestrielle
+    - value: quarterly
+      label:
+        en: Quarterly
+        fr: Trimestrielle
+    - value: monthly
+      label:
+        en: Monthly
+        fr: Mensuelle
+    - value: weekly
+      label:
+        en: Weekly
+        fr: Hebdomadaire
+    - value: daily
+      label:
+        en: Daily
+        fr: Quotidienne
+    - value: hourly
+      label:
+        en: Hourly
+        fr: Horaire
+    - value: real_time
+      label:
+        en: Real-time
+        fr: En temps réel
+  required: false
+- field_name: update_method
+  label:
+    en: Update Method
+    fr: Méthode de mise à jour
+  preset: radio
+  choices:
+    - value: not_set
+      label: 
+        en: Not set
+        fr: Non établie
+    - value: manual
+      label:
+        en: Manual
+        fr: Manuelle
+    - value: automated
+      label:
+        en: Automated
+        fr: Automatisée
+  required: false
+- field_name: spatial_coverage_locations
+  label:
+    en: Spatial Coverage Locations
+    fr: Couverture spatiale – lieux
+  form_snippet: text.html
+  display_snippet: text.html
+  required: false
+- field_name: temporal_coverage_start_date
+  label:
+    en: Temporal Coverage Start Date
+    fr: Couverture temporelle – date de début
+  preset: date
+  required: false
+- field_name: temporal_coverage_end_date
+  label:
+    en: Temporal Coverage End Date
+    fr: Couverture temporelle – date de fin
+  preset: date
+  required: false
+- field_name: data_quality_score
+  label:
+    en: Data Quality Score
+    fr: Cote de qualité des données
+  preset: select
+  choices:
+    - value: na
+      label: 
+        en: N/A
+        fr: S.O.
+    - value: bronze
+      label: 
+        en: Bronze
+        fr: Bronze
+    - value: silver
+      label:
+        en: Silver
+        fr: Argent
+    - value: gold
+      label: 
+        en: Gold
+        fr: Or
+  required: false

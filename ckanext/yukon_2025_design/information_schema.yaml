@@ -1,0 +1,235 @@
+cheming_version: 2
+dataset_type: information
+about: Open information dataset schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+dataset_fields:
+
+- field_name: title
+  label:
+    en: Title
+    fr: Titre
+  preset: title
+  validators: not_empty unicode_safe
+  help_text: The title of the dataset.
+- field_name: notes
+  label:
+    en: Description
+    fr: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+  validators: not_empty unicode_safe
+- field_name: tag_string
+  label:
+    en: Tags
+    fr: Étiquettes
+  preset: tag_string_autocomplete
+  form_placeholder: eg. economy, mental health, government
+- field_name: internal_contact_name
+  label:
+    en: Internal Contact Name
+    fr: Nom de la personne-ressource interne
+  form_snippet: text.html
+  validators: not_empty unicode_safe
+- field_name: internal_contact_email
+  label:
+    en: Internal Contact Email
+    fr: Courriel de la personne-ressource interne
+  form_snippet: text.html
+  display_snippet: email.html
+  validators: not_empty unicode_safe
+- field_name: organization
+  label:
+    en: Publisher
+    fr: Producteur
+  form_snippet: organization.html
+  validators: not_empty
+- field_name: author
+  label:
+    en: Author
+    fr: Auteur
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian
+  label:
+    en: Custodian
+    fr: Dépositaire
+  form_snippet: text.html
+  validators: ignore_missing
+- field_name: custodian_email
+  label:
+    en: Custodian Email
+    fr: Courriel du dépositaire
+  form_snippet: text.html
+  display_snippet: email.html
+  required: false
+- field_name: homepage_url
+  label:
+    en: Homepage URL
+    fr: URL de la page d'accueil
+  form_snippet: text.html
+  display_snippet: link.html
+  required: false
+- field_name: internal_notes
+  label:
+    en: Internal Notes
+    fr: Notes internes
+  form_snippet: markdown.html
+  required: false
+- field_name: language
+  label:
+    en: Language
+    fr: Langue
+  preset: select
+  choices:
+    - value: not_specified
+      label:
+        en: Not specified
+        fr: Non indiqué
+    - value: english
+      label:
+        en: English
+        fr: Anglais
+    - value: french
+      label:
+        en: French
+        fr: Français
+    - value: gwichin
+      label:
+        en: Gwich'in
+        fr: Gwich'in
+    - value: han
+      label:
+        en: Hän
+        fr: Hän
+    - value: kaska
+      label:
+        en: Kaska
+        fr: Kaska
+    - value: northern_tutchone
+      label:
+        en: Northern Tutchone
+        fr: Tutchone de Nord
+    - value: southern_tutchone
+      label:
+        en: Southern Tutchone
+        fr: Tutchone du Sud
+    - value: tagish
+      label:
+        en: Tagish
+        fr: Tagish
+    - value: tlingit
+      label:
+        en: Tlingit
+        fr: Tlingit
+    - value: upper_tanana
+      label:
+        en: Upper Tanana
+        fr: Haut Tanana
+    - value: multiple_languages
+      label:
+        en: Multiple languages
+        fr: Plusieurs langues
+    - value: other
+      label:
+        en: Other
+        fr: Autre
+  required: false
+- field_name: date_published
+  label:
+    en: Date Published
+    fr: Date de publication
+  preset: date
+  required: true
+- field_name: date_updated
+  label:
+    en: Date Updated
+    fr: Date de mise à jour
+  preset: date
+  required: true
+- field_name: date_publication_updated
+  label:
+    en: Date Publication Updated
+    fr: Date de mise à jour de la publication
+  preset: date
+  required: false
+- field_name: date_metadata_updated
+  label:
+    en: Date Metadata Updated
+    fr: Date de mise à jour des métadonnées
+  preset: date
+  required: false
+- field_name: publication_required_under_atipp_act
+  label:
+    en: Publication Required under the ATIPP Act
+    fr: Publication requise par la LAIPVP
+  preset: radio
+  choices:
+    - value: na
+      label:
+        en: N/A
+        fr: S.O.
+    - value: yes
+      label:
+        en: Yes
+        fr: Oui
+    - value: no
+      label:
+        en: No
+        fr: Non
+  required: false
+- field_name: publication_type_under_atipp_act
+  label:
+    en: Publication Type under the ATIPP Act
+    fr: Type de publication selon la LAIPVP
+  preset: select
+  choices:
+    - value: na
+      label:
+        en: N/A
+        fr: S.O.
+    - value: organizational_structures
+      label:
+        en: Organizational structures
+        fr: Structures organisationnelles
+    - value: organizational_responsibilities_and_functions
+      label:
+        en: Organizational responsibilities and functions
+        fr: Responsabilités et fonctions organisationnelles
+    - value: auditor_final_reports
+      label:
+        en: Auditor final reports
+        fr: Rapports de vérification finaux
+    - value: departmental_manuals_and_policy_statements
+      label:
+        en: Departmental Manuals and Policy Statements
+        fr: Manuels et énoncés de politique ministériels
+    - value: public_opinion_polls_and_research_studies
+      label:
+        en: Public opinion polls and research studies
+        fr: Sondage d’opinion publique ou étude de recherche sur l’opinion publique
+    - value: statistical_surveys
+      label:
+        en: Statistical surveys
+        fr: Enquêtes statistiques
+    - value: classes_of_information_types_and_records
+      label:
+        en: Classes of information types and records
+        fr: Types et catégories de renseignements et documents
+    - value: information_or_record_available_to_public_without_access_request
+      label:
+        en: Information or a record available to the public without requiring an access request
+        fr: Renseignements ou documents accessibles au public sans demande d’accès
+    - value: final_performance_reports_on_efficiency_of_department_program_or_activity
+      label:
+        en: Final performance reports on the efficiency of a department, program or activity
+        fr: Rapports de rendement finaux sur l’efficacité d’un ministère, d’un programme ou d’une activité
+    - value: final_reports_providing_advice_or_recommendations_to_public_body
+      label:
+        en: Final reports providing advice or recommendations to the public body
+        fr: Rapports finaux comprenant des avis ou recommandations à l’intention de l’organisme public
+    - value: appraisal_reports_on_value_or_condition_of_public_property
+      label:
+        en: Appraisal reports in relation to the value or condition of public property
+        fr: Rapports d’évaluation de la valeur ou de l’état de biens publics
+  required: false
