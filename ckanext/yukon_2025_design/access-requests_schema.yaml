@@ -1,0 +1,179 @@
+cheming_version: 2
+dataset_type: access-requests
+about: Completed access to information request dataset schema
+about_url: http://github.com/ckan/ckanext-scheming
+
+dataset_fields:
+
+- field_name: title
+  label:
+    en: Title
+    fr: Titre
+  preset: title
+  validators: not_empty unicode_safe
+  help_text: The title of the dataset.
+- field_name: notes
+  label:
+    en: Description
+    fr: Description
+  form_snippet: markdown.html
+  form_placeholder: eg. Some useful notes about the data
+  validators: not_empty unicode_safe
+- field_name: organization
+  label:
+    en: Public Body
+    fr: Organisme public
+  form_snippet: organization.html
+  validators: not_empty
+- field_name: internal_notes
+  label:
+    en: Internal Notes
+    fr: Notes internes
+  form_snippet: markdown.html
+  required: false
+- field_name: language
+  label:
+    en: Language
+    fr: Langue
+  preset: select
+  choices:
+    - value: not_specified
+      label:
+        en: Not specified
+        fr: Non indiqué
+    - value: english
+      label:
+        en: English
+        fr: Anglais
+    - value: french
+      label:
+        en: French
+        fr: Français
+    - value: gwichin
+      label:
+        en: Gwich'in
+        fr: Gwich'in
+    - value: han
+      label:
+        en: Hän
+        fr: Hän
+    - value: kaska
+      label:
+        en: Kaska
+        fr: Kaska
+    - value: northern_tutchone
+      label:
+        en: Northern Tutchone
+        fr: Tutchone de Nord
+    - value: southern_tutchone
+      label:
+        en: Southern Tutchone
+        fr: Tutchone du Sud
+    - value: tagish
+      label:
+        en: Tagish
+        fr: Tagish
+    - value: tlingit
+      label:
+        en: Tlingit
+        fr: Tlingit
+    - value: upper_tanana
+      label:
+        en: Upper Tanana
+        fr: Haut Tanana
+    - value: multiple_languages
+      label:
+        en: Multiple languages
+        fr: Plusieurs langues
+    - value: other
+      label:
+        en: Other
+        fr: Autre
+  required: false
+- field_name: date_published
+  label:
+    en: Date Published
+    fr: Date de publication
+  preset: date
+  required: true
+- field_name: date_updated
+  label:
+    en: Date Updated
+    fr: Date de mise à jour
+  preset: date
+  required: true
+- field_name: date_publication_updated
+  label:
+    en: Date Publication Updated
+    fr: Date de mise à jour de la publication
+  preset: date
+  required: false
+- field_name: date_metadata_updated
+  label:
+    en: Date Metadata Updated
+    fr: Date de mise à jour des métadonnées
+  preset: date
+  required: false
+- field_name: date_of_request
+  label:
+    en: Date of Request
+    fr: Date de la demande
+  preset: date
+  required: true
+- field_name: file_id
+  label:
+    en: File ID
+    fr: Numéro de dossier
+  form_snippet: text.html
+  required: true
+- field_name: response_type
+  label:
+    en: Response Type
+    fr: Type de réponse
+  preset: select
+  choices:
+    - value: not_specified
+      label:
+        en: Not specified
+        fr: Non indiqué
+    - value: granted_in_full
+      label:
+        en: Granted in full
+        fr: Accordé en totalité
+    - value: granted_in_part
+      label:
+        en: Granted in part
+        fr: Accordé en partie
+    - value: withheld_in_full
+      label:
+        en: Withheld in full
+        fr: Refusé en totalité
+    - value: no_records_found
+      label:
+        en: No records found
+        fr: Aucun document trouvé
+    - value: excluded_information
+      label:
+        en: Excluded information
+        fr: Renseignements exclus
+  required: true
+  form_include_blank_choice: true
+- field_name: fees
+  label:
+    en: Fees
+    fr: Frais
+  preset: radio
+  choices:
+    - value: na
+      label:
+        en: N/A
+        fr: S.O.
+    - value: yes
+      label:
+        en: Yes
+        fr: Oui
+    - value: no
+      label:
+        en: No
+        fr: Non
+  required: false
