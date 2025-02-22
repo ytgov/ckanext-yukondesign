@@ -41,7 +41,7 @@ Dictionary with search facets
     {% with items = items or h.get_facet_items_dict(name, search_facets) %}
 	{% if items or not hide_empty %}
 	    {% block facet_list_item %}
-		<section class="facet-wrapper">
+		<section class="facet-wrapper ">
 		    {% block facet_list_heading %}
 			<div class="d-flex align-items-center gap-2 mb-2">
 				<h2 class="facet-title mb-0">

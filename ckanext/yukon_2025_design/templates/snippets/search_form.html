@@ -12,7 +12,7 @@
     <div class="input-group mb-4">
       <input aria-label="{% block header_site_search_label %}{{ placeholder }}{% endblock %}" id="field-giant-search" type="text" class="form-control border border-warning p-2" name="q" value="{{ query }}" autocomplete="off" placeholder="{{ placeholder }}" style="border-width: 2px!important;">
       {% block search_input_button %}
-        <button class="btn btn-warning btn-lg" type="submit" value="search" aria-label="{{_('Submit')}}">
+        <button class="btn btn-warning btn-lg" type="submit" value="search" aria-label="{{_('Submit')}}" style="z-index: 1;">
           <i class="fa fa-search"></i>
         </button>
       {% endblock %}

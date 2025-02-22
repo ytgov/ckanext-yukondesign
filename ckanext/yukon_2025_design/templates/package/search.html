@@ -9,7 +9,15 @@
 
 {% block primary_content %}
   <section class="">
-    <h1>{{_("Open data")}}</h1>
+    <h1>
+      {% if dataset_type == 'data' %}
+        {{_("Open data")}}
+      {% elif dataset_type == 'information' %}
+        {{_("Open information")}}
+      {% elif dataset_type == 'access-requests' %}
+        {{_("Completed Access to Information requests")}}
+      {% endif %}
+    </h1>
     <p class="fs-6">{{_("Find statistical and administrative data, geospatial data, and other machine-readable data.")}}</p>
     <div class="mt-4">
       {% block page_primary_action %}
@@ -72,10 +80,25 @@
 
 
 {% block secondary_content %}
+  {% set facet_order = ['res_format', 'organization', 'groups', 'tags'] %}
+
+  {% set organization_label = {
+      'data': _('Publisher'),
+      'access-requests': _('Publisher'),
+      'information': _('Publisher')
+  }.get(dataset_type, facet_titles.get('organization', _('Organization'))) %}
+
+  {% set reordered_facet_titles = {
+      'res_format': facet_titles.get('res_format'),
+      'organization': organization_label,
+      'groups': facet_titles.get('groups'),
+      'tags': facet_titles.get('tags')
+  } %}
+
   <div class="filters">
-    <div>
-      {% for facet in facet_titles %}
-        {{ h.snippet('snippets/facet_list.html', title=facet_titles[facet], name=facet, search_facets=search_facets) }}
+    <div class="p-4 p-md-0">
+      {% for facet in facet_order if facet in reordered_facet_titles %}
+        {% snippet 'snippets/facet_list.html', title=reordered_facet_titles[facet], name=facet, search_facets=search_facets %}
       {% endfor %}
     </div>
     <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
