@@ -1,0 +1,28 @@
+{% import 'macros/form.html' as form %}
+
+{% set groups_available = h.get_all_groups() %}
+{% set group_error = errors.group_id %}
+{% set selected_groups = data.groups | map(attribute='id') | list  %}
+{% set label=h.scheming_language_text(field.label) %}
+
+<div class="form-group control-medium">
+    <label for="field-groups" class="control-label">
+    {{ _(label) }}
+    </label>
+
+    <div class="controls">
+    {% set not_selected = [] %}
+    <div data-module="auto-complete-arrow">
+        <select id="field-groups" name="groups_list" class="" data-module="autocomplete" multiple>
+        {% for group in groups_available %}
+            <option value="{{ group.id }}" {% if group.id in selected_groups %} selected {% endif %}>
+                {{ group.display_name }}
+            </option>
+        {% endfor %}
+        </select>
+    </div>
+    {% if group_error %}
+        <span id="group_error" class="error-block">{{ group_error }}</span>
+    {% endif %}
+    </div>
+</div>

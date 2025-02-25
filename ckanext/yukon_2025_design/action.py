@@ -38,6 +38,24 @@ def can_view_internal_data(user, org_id):
         return True
     return False
 
+
+def _set_groups_list(context, data_dict):
+    """
+    Set the groupsfield in the data_dict from the groups_list
+    """
+    groups_list = data_dict.get("groups_list", False)
+    if groups_list:
+        groups = []
+        if not isinstance(groups_list, list):
+            groups_list = [groups_list]
+
+        for group_id in groups_list:
+            groups.append({"id": group_id})
+
+        data_dict.pop("groups_list")
+        data_dict["groups"] = groups
+
+
 @toolkit.side_effect_free
 @toolkit.chained_action
 def package_show(up_func, context, data_dict):
@@ -82,3 +100,19 @@ def current_package_list_with_resources(up_func, context, data_dict):
             result.pop('internal_notes', None)
 
     return results
+
+
+@toolkit.side_effect_free
+@toolkit.chained_action
+def package_create(up_func, context, data_dict):
+    _set_groups_list(context, data_dict)
+
+    return up_func(context, data_dict)
+
+
+@toolkit.side_effect_free
+@toolkit.chained_action
+def package_update(up_func, context, data_dict):
+    _set_groups_list(context, data_dict)
+
+    return up_func(context, data_dict)

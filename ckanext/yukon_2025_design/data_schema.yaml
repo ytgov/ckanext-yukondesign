@@ -52,9 +52,12 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: link.html
   validators: ignore_missing
-# - field_name: group
-#   label: Topic
-#   form_snippet: text
+- field_name: groups_list
+  label:
+    en: Topics
+    fr: Sujet
+  form_snippet: topics_autocomplete.html
+  validators: ignore_missing
 - field_name: tag_string
   label:
     en: Tags
