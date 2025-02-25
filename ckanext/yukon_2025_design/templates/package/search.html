@@ -18,7 +18,16 @@
         {{_("Completed Access to Information requests")}}
       {% endif %}
     </h1>
-    <p class="fs-6">{{_("Find statistical and administrative data, geospatial data, and other machine-readable data.")}}</p>
+    <p class="fs-6">
+      {% if dataset_type == 'data' %}
+        {{_("Find statistical and administrative data, geospatial data, and other machine-readable data.")}}
+      {% elif dataset_type == 'information' %}
+        
+      {% elif dataset_type == 'access-requests' %}
+      {{_("Search or browse completed Access to Information (ATIPP) requests and responsive records.")}} <a href="#">Submit an Access to Information request.</a>
+      
+      {% endif %}
+    </p>
     <div class="mt-4">
       {% block page_primary_action %}
         {% if h.check_access('package_create') %}
@@ -42,10 +51,10 @@
           (_('Last Modified'), 'metadata_modified desc'),
           (_('Popular'), 'views_recent desc') if g.tracking_enabled else (false, false) ]
         %}
-        {% snippet 'snippets/search_form.html', form_id='dataset-search-form', type=dataset_type, query=q, sorting=sorting, sorting_selected=sort_by_selected, count=page.item_count, placeholder=h.humanize_entity_type('package', dataset_type, 'search placeholder') or _('Enter search terms'), facets=facets, show_empty=request.args, error=query_error, fields=fields %}
+        {% snippet 'snippets/search_form.html', form_id='dataset-search-form', type=dataset_type, query=q, sorting=sorting, sorting_selected=sort_by_selected, count=page.item_count, placeholder=_("Enter search terms ..."), facets=facets, show_empty=request.args, error=query_error, fields=fields %}
       {% endblock %}
       {% block package_search_results_list %}
-        {{ h.snippet('snippets/package_list.html', packages=page.items) }}
+        {{ h.snippet('snippets/package_list.html', packages=page.items, type=dataset_type) }}
       {% endblock %}
     </div>
 
@@ -84,14 +93,14 @@
 
   {% set organization_label = {
       'data': _('Publisher'),
-      'access-requests': _('Publisher'),
+      'access-requests': _('Public body'),
       'information': _('Publisher')
   }.get(dataset_type, facet_titles.get('organization', _('Organization'))) %}
 
   {% set reordered_facet_titles = {
       'res_format': facet_titles.get('res_format'),
       'organization': organization_label,
-      'groups': facet_titles.get('groups'),
+      'groups': _("Topics"),
       'tags': facet_titles.get('tags')
   } %}
 

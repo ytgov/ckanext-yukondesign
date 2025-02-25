@@ -4,6 +4,7 @@ Displays a single of dataset.
 package        - A package to display.
 item_class     - The class name to use on the list item.
 hide_resources - If true hides the resources (default: false).
+type           - Dataset type
 
 Example:
 
@@ -63,7 +64,10 @@ Example:
             </div>
             <div class="ms-md-auto d-flex flex-column gap-1 text-md-end">
                 <div>
-                    <b>{{_("Publisher")}}:</b> 
+                  {{dataset_type}}
+                    <b>
+                      {% if type == "access-requests" %}{{ _("Public body") }}{% else %}{{ _("Publisher") }}{% endif %}:
+                    </b> 
                     <span>{{package.organization.title}}</span>
                 </div>
                 

@@ -52,6 +52,11 @@ a {
   color: white;
 }
 
+@media (min-width: 767px) {
+  body .aurora--main:before {
+    height: 150px;
+  }
+}
 .main {
   background: transparent;
   padding: 0 !important;
