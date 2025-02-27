@@ -6,11 +6,10 @@
 
 {% block content %}
   <div class="homepage layout-{{ homepage_style }}">
-    <div id="content" class="container">{{ self.flash() }}</div>
     {% block primary_content %}
-      <div class="aurora-town">
-        <span class="aurora--main"></span>
-      </div>
+    <div class="aurora-town">
+      <span class="aurora--main"></span>
+    </div>
       <div style="min-height: 70vh">
         <div class="pt-5 pb-5 border-bottom">
           <div class="container">
@@ -22,16 +21,16 @@
                 </p>
                 <div class="collapse" id="hero-read-more">
                   <p>
-                    This portal is a collection of publications and datasets from Yukon government departments. The public can use and access these resources freely to learn more about how government works, to carry out research, or to use data for commercial or non-commercial purposes.
+                    {{_("This portal is a collection of publications and datasets from Yukon government departments. The public can use and access these resources freely to learn more about how government works, to carry out research, or to use data for commercial or non-commercial purposes.")}}
                   </p>
                   <p>
-                    The open government portal functions as both a library for current resources and an archive for older data and information which have historic value.
+                    {{_("The open government portal functions as both a library for current resources and an archive for older data and information which have historic value.")}}
                   </p>
                   <p>
-                    You can learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog, or visit the Access to Information Registry.
+                    You can <a href="https://yukon.ca/en/your-government/open-government" target="_blank">learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog</a>, or <a href="https://open.yukon.ca/access-information" target="_blank">visit the Access to Information Registry</a>.
                   </p>
                   <p>
-                    For government services and news, visit Yukon.ca
+                    For government services and news, visit <a href="https://yukon.ca/" target="_blank">Yukon.ca</a>
                   </p>
                 </div>
                 <a class="btn btn-link px-0" id="read-more-button" data-bs-toggle="collapse" href="#hero-read-more" role="button" aria-expanded="false" aria-controls="hero-read-more">
@@ -61,7 +60,7 @@
               "title": _("Open information"),
               "description": _("Find annual reports, news releases, scientific research publications, and other information."),
               "input_placeholder": _("Enter open information search terms"),
-              "action": url_for('dataset.search'),
+              "action": url_for('information.search'),
               "list_title": _("Recently updated:"),
               "list": [
                 { "href": "/", "title": "2023-23 Public Accounts" },
@@ -69,7 +68,7 @@
                 { "href": "/", "title": "2019 Yukon JCC - Territorial Court submissions" }
               ],
               "list_cta_title": _("See more open information datasets"),
-              "list_cta_href": "/"
+              "list_cta_href": url_for('information.search'),
             }) }}
           </div>
         </div>
@@ -79,7 +78,7 @@
               "title": _("Open data"),
               "description": _("Find statistical and administrative data, geospatial data, and other machine-readable data."),
               "input_placeholder": _("Enter open data search terms"),
-              "action": url_for('dataset.search'),
+              "action": url_for('data.search'),
               "list_title": _("Featured datasets:"),
               "list": [
                 { "href": "/", "title": "Yukon Snow Survey Network" },
@@ -87,7 +86,7 @@
                 { "href": "/", "title": "Flood mapping layers (Marsh Lake)" }
               ],
               "list_cta_title": _("See more open data datasets"),
-              "list_cta_href": "/"
+              "list_cta_href": url_for('data.search'),
             }) }}
           </div>
         </div>
@@ -97,7 +96,7 @@
               "title": _("Completed Access to Information requests"),
               "description": _("Find completed Access to Information requests and responsive records."),
               "input_placeholder": _("Enter request search terms"),
-              "action": url_for('dataset.search'),
+              "action": url_for('access-requests.search'),
               "list_title": _("Recently added:"),
               "list": [
                 { "href": "/", "title": "24-0070" },
@@ -105,7 +104,7 @@
                 { "href": "/", "title": "24-0053" }
               ],
               "list_cta_title": _("See more completed Access to Information requests"),
-              "list_cta_href": "/"
+              "list_cta_href": url_for('access-requests.search'),
             }) }}
             <div class="row mt-4">
               <div class="col-lg-5 d-flex flex-column gap-2">

@@ -1,0 +1,134 @@
+
+{% if c.userobj %}
+
+    {% ckan_extends %}
+    
+{% else %}
+
+{% extends "base.html" %}
+
+    {%- block page -%}
+
+    {% block skip %}
+        <div class="visually-hidden-focusable">
+        <a href="#content">{{ _('Skip to main content') }}</a>
+        </div>
+    {% endblock %}
+
+    {#
+    Override the header on a page by page basis by extending this block. If
+    making sitewide header changes it is preferable to override the header.html
+    file.
+    #}
+    {%- block header %}
+        {% include "header.html" %}
+    {% endblock -%}
+
+    {# The content block allows you to replace the content of the page if needed #}
+    {%- block content %}
+        {% block maintag %}<div class="main">{% endblock %}
+            {% if not c.userobj %}
+                <div class="aurora-town">
+                    <span class="aurora--main"></span>
+                </div>
+            {% endif %}
+        <div id="content" class="container py-3">
+            {% block main_content %}
+            {% block flash %}
+                <div class="flash-messages">
+                {% block flash_inner %}
+                    {% for category, message in h.get_flashed_messages(with_categories=true) %}
+                    <div class="alert alert-dismissible fade show {{ category }}">
+                        {{ h.literal(message) }}
+                    </div>
+                    {% endfor %}
+                {% endblock %}
+                </div>
+            {% endblock %}
+            {% block toolbar %}
+                <div class="toolbar mb-4" role="navigation" aria-label="{{ _('Breadcrumb') }}">
+                {% block breadcrumb %}
+                    {% if self.breadcrumb_content() | trim %}
+                    <ol class="breadcrumb">
+                        {% snippet 'snippets/home_breadcrumb_item.html' %}
+                        {% block breadcrumb_content %}{% endblock %}
+                    </ol>
+                    {% endif %}
+                {% endblock %}
+                </div>
+            {% endblock %}
+
+            <div class="m-0 w-100 d-flex flex-column flex-lg-row gap-5 {% block wrapper_class %}{% endblock %}{% if self.secondary()|trim == '' or c.action=='resource_read' %} no-nav{% endif %}">
+                {#
+                The pre_primary block can be used to add content before the
+                rendering of the main content columns of the page.
+                #}
+                {% block pre_primary %}{% endblock %}
+
+                {% block secondary %}
+                <aside class="secondary w-100 w-lg-25 w-md-33 position-sticky top-0 ">
+                    {#
+                    The secondary_content block can be used to add content to the
+                    sidebar of the page. This is the main block that is likely to be
+                    used within a template.
+                    #}
+                    {% block secondary_content %}{% endblock %}
+                </aside>
+                {% endblock %}
+
+                {% block primary %}
+                <div class="primary w-100 w-lg-75 w-md-66" role="main">
+                    {#
+                    The primary_content block can be used to add content to the page.
+                    This is the main block that is likely to be used within a template.
+                    #}
+                    {% block primary_content %}
+                    <article>
+                        {% block page_header %}
+                        <header class="d-lg-flex gap-4 flex-row-reverse mb-3 ">
+                            {% if self.content_action() | trim %}
+                            <div class="content_action ms-auto d-flex gap-2 align-items-center">
+                                {% block content_action %}{% endblock %}
+                            </div>
+                            {% endif %}
+                            <ul class="nav nav-tabs w-100 my-3 my-lg-0">
+                            {% block content_primary_nav %}{% endblock %}
+                            </ul>
+                        </header>
+                        {% endblock %}
+                        <div>
+                        {% if self.page_primary_action() | trim %}
+                            <div class="page_primary_action">
+                            {% block page_primary_action %}{% endblock %}
+                            </div>
+                        {% endif %}
+                        {% block primary_content_inner %}{% endblock %}
+                        </div>
+                    </article>
+                    {% endblock %}
+                </div>
+                {% endblock %}
+            </div>
+            {% endblock %}
+        </div>
+        </div>
+    {% endblock -%}
+
+    {#
+    Override the footer on a page by page basis by extending this block. If
+    making sitewide header changes it is preferable to override the footer.html
+    file.
+    #}
+    {%- block footer %}
+        {% include "footer.html" %}
+    {% endblock -%}
+
+    {%- endblock -%}
+
+    {%- block scripts %}
+    {% asset 'base/main' %}
+    {% asset 'base/ckan' %}
+    {{ super() }}
+    {% endblock -%}
+
+{% endif %}
