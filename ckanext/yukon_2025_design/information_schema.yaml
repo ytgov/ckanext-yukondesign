@@ -25,6 +25,12 @@ dataset_fields:
   form_snippet: markdown.html
   form_placeholder: eg. Some useful notes about the data
   validators: not_empty unicode_safe
+- field_name: groups_list
+  label:
+    en: Topics
+    fr: Sujet
+  form_snippet: topics_autocomplete.html
+  validators: ignore_missing
 - field_name: tag_string
   label:
     en: Tags
