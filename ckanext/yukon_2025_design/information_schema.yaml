@@ -186,7 +186,7 @@ dataset_fields:
     fr: Licence
   form_snippet: license.html
   required: true
-  help_text: "The license under which the data is released. If you do not find the appropriate license, please contact the archive manager, providing the Identifier and URL of the license you need (see https://spdx.org/licenses/)."
+  help_text: "The license under which the data is released."
   group_name: publication_details
 - field_name: date_published
   label:
