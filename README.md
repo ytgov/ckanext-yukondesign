@@ -2,32 +2,20 @@
 
 # ckanext-yukon-2025-design
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
+This extension is a CKAN extension that provides a new design for the Yukon 2025 project.
 
 
 ## Requirements
 
-**TODO:** For example, you might want to mention here which versions of CKAN this
-extension works with.
-
-If your extension works across different versions you can add the following table:
-
-Compatibility with core CKAN versions:
-
 | CKAN version    | Compatible?   |
 | --------------- | ------------- |
-| 2.6 and earlier | not tested    |
-| 2.7             | not tested    |
-| 2.8             | not tested    |
-| 2.9             | not tested    |
+| 2.11.1 and earlier | yes    |
 
-Suggested values:
+## Deployment
 
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
+To deploy this extension, you need to have a CKAN instance running. You can follow the [official documentation](https://docs.ckan.org/en/latest/maintaining/installing/index.html) to install CKAN.
 
+Additional information can be found in the [Deployment documentation](DEPLOYMENT.md).
 
 ## Installation
 
@@ -60,13 +48,6 @@ To install ckanext-yukon-2025-design:
 ## Config settings
 
 None at present
-
-**TODO:** Document any optional config settings here. For example:
-
-	# The minimum number of hours to wait before re-checking a resource
-	# (optional, default: 24).
-	ckanext.yukon_2025_design.some_setting = some_default_value
-
 
 ## Developer installation
 
