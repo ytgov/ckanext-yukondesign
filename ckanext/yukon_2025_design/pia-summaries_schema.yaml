@@ -3,6 +3,21 @@ dataset_type: pia-summaries
 about: Privacy impact assessment summary dataset schema
 about_url: http://github.com/ckan/ckanext-scheming
 
+dataset_fields_groups:
+
+- name: publication_details
+  label:
+    en: Publication details
+    fr: Renseignements sur la publication
+- name: assessment_details
+  label:
+    en: Assessment details
+    fr: Renseignements sur l’évaluation
+- name: usage_data
+  label:
+    en: Usage Data
+    fr: Données sur l’utilisation
+
 dataset_fields:
 
 - field_name: title
@@ -27,15 +42,17 @@ dataset_fields:
   validators: not_empty unicode_safe
 - field_name: owner_org
   label:
-    en: Publisher
-    fr: Producteur
+    en: Public Body
+    fr: Organisme public
   preset: dataset_organization
+  group_name: assessment_details
 - field_name: internal_notes
   label:
     en: Internal Notes
     fr: Notes internes
   form_snippet: markdown.html
   required: false
+  group_name: publication_details
 - field_name: language
   label:
     en: Language
@@ -95,30 +112,42 @@ dataset_fields:
         en: Other
         fr: Autre
   required: false
+- field_name: license_id
+  label:
+    en: License
+    fr: Licence
+  form_snippet: license.html
+  required: true
+  help_text: "The license under which the data is released. If you do not find the appropriate license, please contact the archive manager, providing the Identifier and URL of the license you need (see https://spdx.org/licenses/)."
+  group_name: publication_details
 - field_name: date_published
   label:
     en: Date Published
     fr: Date de publication
   preset: date
   required: true
+  group_name: publication_details
 - field_name: date_updated
   label:
     en: Date Updated
     fr: Date de mise à jour
   preset: date
   required: true
+  group_name: publication_details
 - field_name: date_publication_updated
   label:
     en: Date Publication Updated
     fr: Date de mise à jour de la publication
   preset: date
   required: false
+  group_name: publication_details
 - field_name: date_metadata_updated
   label:
     en: Date Metadata Updated
     fr: Date de mise à jour des métadonnées
   preset: date
   required: false
+  group_name: publication_details
 - field_name: privacy_impact_assessment_number
   label:
     en: Privacy Impact Assessment Number
@@ -126,12 +155,46 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   required: true
+  group_name: assessment_details
 - field_name: date_of_approval
   label:
     en: Date of Approval
     fr: Date d’approbation
   preset: date
   required: true
+  group_name: assessment_details
+- field_name: visits
+  label:
+    en: Visits
+    fr: Visites
+  display_snippet: text.html
+  form_snippet: null
+  required: false
+  group_name: usage_data
+- field_name: downloads
+  label:
+    en: Downloads
+    fr: Téléchargements
+  display_snippet: text.html
+  form_snippet: null
+  required: false
+  group_name: usage_data
+- field_name: visit_90_days
+  label:
+    en: Visits (last 90 days)
+    fr: Visites (90 derniers jours)
+  display_snippet: text.html
+  form_snippet: null
+  required: false
+  group_name: usage_data
+- field_name: download_90_days
+  label:
+    en: Downloads (last 90 days)
+    fr: Téléchargements (90 derniers jours)
+  display_snippet: text.html
+  form_snippet: null
+  required: false
+  group_name: usage_data
 
 resource_fields:
 
