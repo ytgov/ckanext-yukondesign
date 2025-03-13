@@ -5,18 +5,14 @@ about_url: http://github.com/ckan/ckanext-scheming
 
 dataset_fields_groups:
 
+- name: publisher
+  label:
+    en: Publisher
+    fr: Éditeur
 - name: publication_details
   label:
     en: Publication details
     fr: Renseignements sur la publication
-- name: topics
-  label:
-    en: Topics
-    fr: Sujets
-- name: Publisher
-  label:
-    en: Publisher
-    fr: Éditeur
 - name: data_coverage
   label:
     en: Data Coverage
@@ -25,6 +21,10 @@ dataset_fields_groups:
   label:
     en: Usage Data
     fr: Données sur l’utilisation
+- name: topics
+  label:
+    en: Topics
+    fr: Sujets
 
 dataset_fields:
 
@@ -53,6 +53,7 @@ dataset_fields:
     en: Topics
     fr: Sujet
   form_snippet: topics_autocomplete.html
+  display_snippet: multiple_text_links.html
   validators: ignore_missing
   group_name: topics
 - field_name: tag_string
@@ -60,6 +61,7 @@ dataset_fields:
     en: Tags
     fr: Étiquettes
   preset: tag_string_autocomplete
+  display_snippet: multiple_text_links.html
   form_placeholder: eg. economy, mental health, government
   group_name: topics
 - field_name: internal_contact_name
@@ -82,6 +84,7 @@ dataset_fields:
     en: Publisher
     fr: Producteur
   preset: dataset_organization
+  display_snippet: organization.html
   group_name: publisher
 - field_name: author
   label:
@@ -118,13 +121,15 @@ dataset_fields:
     en: Internal Notes
     fr: Notes internes
   form_snippet: markdown.html
+  display_snippet: markdown.html
   required: false
   group_name: publication_details
 - field_name: language
   label:
     en: Language
     fr: Langue
-  preset: select
+  form_snippet: select.html
+  display_snippet: select.html
   choices:
     - value: not_specified
       label:
