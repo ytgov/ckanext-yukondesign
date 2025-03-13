@@ -1,0 +1,16 @@
+{% set dataset_type = schema.dataset_type %}
+{% if field.field_name == "groups_list" %}
+  {% set values = data["groups"] %}
+  <ul style="list-style-type: none;">
+    {%- for value in values -%}
+      <li><a href="/{{ dataset_type }}/?groups={{ value.name }}">{{ value.display_name }}</a></li>
+    {%- endfor -%}
+  </ul>    
+{% else %}
+  {%- set values = data["tags"] -%}
+  <ul style="list-style-type: none;">
+    {%- for value in values -%}
+      <li><a href="/{{ dataset_type }}/?tags={{ value.name }}">{{ value.display_name }}</a></li>
+    {%- endfor -%}
+  </ul>    
+{% endif %}
