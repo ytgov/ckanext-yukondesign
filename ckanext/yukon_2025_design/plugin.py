@@ -26,4 +26,5 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
     def get_helpers(self):
         return {
             'get_all_groups': helpers.get_all_groups,
+            'group_is_empty': helpers.group_is_empty,
         }

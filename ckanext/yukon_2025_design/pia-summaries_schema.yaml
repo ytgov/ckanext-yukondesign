@@ -5,14 +5,14 @@ about_url: http://github.com/ckan/ckanext-scheming
 
 dataset_fields_groups:
 
-- name: publication_details
-  label:
-    en: Publication details
-    fr: Renseignements sur la publication
 - name: assessment_details
   label:
     en: Assessment details
     fr: Renseignements sur l’évaluation
+- name: publication_details
+  label:
+    en: Publication details
+    fr: Renseignements sur la publication
 - name: usage_data
   label:
     en: Usage Data
@@ -45,19 +45,22 @@ dataset_fields:
     en: Public Body
     fr: Organisme public
   preset: dataset_organization
+  display_snippet: organization.html
   group_name: assessment_details
 - field_name: internal_notes
   label:
     en: Internal Notes
     fr: Notes internes
   form_snippet: markdown.html
+  display_snippet: markdown.html
   required: false
   group_name: publication_details
 - field_name: language
   label:
     en: Language
     fr: Langue
-  preset: select
+  form_snippet: select.html
+  display_snippet: select.html
   choices:
     - value: not_specified
       label:
