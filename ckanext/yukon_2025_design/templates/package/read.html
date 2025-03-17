@@ -4,7 +4,12 @@
   
 {% endblock %}
 
-
+{% block breadcrumb_content %}
+  <li class="active">{{ h.nav_link(_(dataset_type.title()), named_route='%s.search' % dataset_type) }}</li>
+  <li>
+    <a>{{pkg.title}}</a>
+  </li>
+{% endblock %}
 
 {% block primary %}
   <div class="primary w-100" role="main">
