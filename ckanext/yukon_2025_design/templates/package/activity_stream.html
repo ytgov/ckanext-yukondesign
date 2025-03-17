@@ -1,0 +1,39 @@
+{% if c.userobj %}
+
+    {% ckan_extends %}
+    
+{% else %}
+
+{% extends "package/read.html" %}
+
+  {% block subtitle %}{{ _('Activity Stream') }} {{ g.template_title_delimiter }} {{ super() }}{% endblock %}
+
+  {% block primary_content_inner %}
+    <h1>
+      <a href="{{ h.url_for('%s.read' % pkg.type, id=pkg.name) }}" class="d-flex align-items-center" style=" text-decoration:none!important">
+        <i class="fa fa-chevron-left mt-1" style="font-size:24px;"></i> 
+        {{pkg.title}}
+      </a>
+    </h1>
+
+    <h3>{{_("Changes")}}</h3>
+    {% if activity_types is defined %}
+      {% snippet 'snippets/activity_type_selector.html', id=id, activity_type=activity_type, activity_types=activity_types, blueprint='dataset.activity' %}
+    {% endif %}
+
+    {% if activity_stream|length > 0 %}
+      {% snippet 'snippets/stream.html', activity_stream=activity_stream, id=id, object_type='package' %}
+    {% else %}
+      <p>
+        {% if activity_type %}
+          {{ _('No activity found for this type') }}
+        {% else %}
+          {{ _('No activity found') }}.
+        {% endif %}
+      </p>
+    {% endif %}
+
+    {% snippet 'snippets/pagination.html', newer_activities_url=newer_activities_url, older_activities_url=older_activities_url %}
+
+  {% endblock %}
+{% endif %}

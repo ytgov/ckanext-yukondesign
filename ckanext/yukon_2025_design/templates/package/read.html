@@ -1,3 +1,9 @@
+{% if c.userobj %}
+
+    {% ckan_extends %}
+    
+{% else %}
+
 {% extends "package/read_base.html" %}
 
 {% block secondary %}
@@ -74,7 +80,7 @@
             {% endblock %}
 
             <div class="d-flex flex-column flex-sm-row flex w-100 items-center gap-2 justify-content-end"> 
-              <button class="btn btn-outline-primary">{{_("View changes")}}</button>
+              <a href="{{h.url_for('activity.package_activity', id=pkg.name)}}" class="btn btn-outline-primary">{{_("View changes")}}</a>
               <button class="btn btn-outline-primary">{{_("Access via API")}}</button>
               <button class="btn btn-primary">{{_("Download All")}}</button>
             </div>
@@ -107,3 +113,5 @@
     {% endblock %}
   </div>
 {% endblock %}
+
+{% endif %}
