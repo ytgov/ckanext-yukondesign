@@ -1,8 +1,3 @@
-{% if c.userobj %}
-
-    {% ckan_extends %}
-    
-{% else %}
 
 {% extends "package/read_base.html" %}
 
@@ -99,7 +94,6 @@
               <h2>{{ _('Changelog') }}</h2>
               <p>
                 {{ h.render_markdown(h.get_translated(pkg, 'changelog')) }}
-           
               </p>
             </div>
             {% endif %}
@@ -113,5 +107,3 @@
     {% endblock %}
   </div>
 {% endblock %}
-
-{% endif %}
