@@ -58,7 +58,7 @@ dataset_fields:
   group_name: topics
 - field_name: tag_string
   label:
-    en: Tags
+    en: Keywords
     fr: Étiquettes
   preset: tag_string_autocomplete
   display_snippet: multiple_text_links.html
