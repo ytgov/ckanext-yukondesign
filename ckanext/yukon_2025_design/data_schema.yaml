@@ -126,6 +126,7 @@ dataset_fields:
     en: Custodian
     fr: Dépositaire
   form_snippet: text.html
+  display_snippet: text.html
   validators: ignore_missing
   group_name: publisher
 - field_name: custodian_email
@@ -134,6 +135,7 @@ dataset_fields:
     fr: Courriel du dépositaire
   form_snippet: text.html
   display_snippet: email.html
+  display_email_name_field: custodian
   required: false
   group_name: publisher
 - field_name: homepage_url
