@@ -397,6 +397,13 @@ dataset_fields:
   form_snippet: null
   required: false
   group_name: usage_data
+- field_name: is_featured
+  label:
+    en: Featured
+    fr: En vedette
+  required: false
+  form_snippet: null
+  display_snippet: null
 
 resource_fields:
 
