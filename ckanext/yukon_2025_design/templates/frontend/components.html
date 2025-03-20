@@ -39,7 +39,7 @@
       <ul class="list-unstyled">
         {% for item in args.list %}
           <li>
-            <a href="{{ item.href }}">{{ item.title }}</a>
+            <a href="/{{ item.type }}/{{ item.name }}">{{ item.title | truncate(60) }}</a>
           </li>
         {% endfor %}
         <li>
