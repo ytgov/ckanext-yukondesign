@@ -21,6 +21,7 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'current_package_list_with_resources': action.current_package_list_with_resources,
             'package_create': action.package_create,
             'package_update': action.package_update,
+            'package_set_featured': action.package_set_featured,
         }
 
     def get_helpers(self):
