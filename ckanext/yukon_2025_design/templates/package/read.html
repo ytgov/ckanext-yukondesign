@@ -1,0 +1,104 @@
+{% extends "package/read_base.html" %}
+
+{% block secondary %}
+  
+{% endblock %}
+
+
+
+{% block primary %}
+  <div class="primary w-100" role="main">
+    {#
+    The primary_content block can be used to add content to the page.
+    This is the main block that is likely to be used within a template.
+    #}
+    {% block primary_content %}
+      <article>
+        {% block page_header %}
+          <header class="d-lg-flex gap-4 flex-row-reverse  ">
+            {% if self.content_action() | trim %}
+              <div class="content_action ms-auto d-flex gap-2 align-items-center">
+                {% block content_action %}
+                  {% if h.check_access('package_update', {'id':pkg.id }) %}
+                    {% link_for _('Manage'), named_route=pkg.type ~ '.edit', id=pkg.name, class_='btn btn-light', icon='wrench' %}
+                  {% endif %}
+                {% endblock %}
+              </div>
+            {% endif %}
+            
+          </header>
+        {% endblock %}
+        <div>
+          {% if self.page_primary_action() | trim %}
+            <div class="page_primary_action">
+              {% block page_primary_action %}{% endblock %}
+            </div>
+          {% endif %}
+          {% block primary_content_inner %}
+            {{ super() }}
+            {% block package_description %}
+              {% if pkg.private %}
+                <span class="dataset-private badge badge-inverse pull-right">
+                  <i class="fa fa-lock"></i>
+                  {{ _('Private') }}
+                </span>
+              {% endif %}
+              <h1>
+                {% block page_heading %}
+                  {{ h.dataset_display_name(pkg) }}
+                  {% if pkg.state.startswith('draft') %}
+                    [{{ _('Draft') }}]
+                  {% endif %}
+                  {% if pkg.state == 'deleted' %}
+                    [{{ _('Deleted') }}]
+                  {% endif %}
+                {% endblock %}
+              </h1>
+              {% block package_notes %}
+                {% if pkg.notes %}
+                  <div class="notes embedded-content">
+                    {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
+                  </div>
+                {% endif %}
+              {% endblock %}
+            {% endblock %}
+
+            {% block package_resources %}
+              {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources,
+              can_edit=h.check_access('package_update', {'id':pkg.id }) %}
+            {% endblock %}
+
+            <div class="d-flex flex-column flex-sm-row flex w-100 items-center gap-2 justify-content-end"> 
+              <button class="btn btn-outline-primary">{{_("View changes")}}</button>
+              <button class="btn btn-outline-primary">{{_("Access via API")}}</button>
+              <button class="btn btn-primary">{{_("Download All")}}</button>
+            </div>
+
+            {% if pkg.methodology %}
+            <div>
+              <h2>{{ _('Methodology') }}</h2>
+              <p>
+                {{pkg.methodology}}
+              </p>
+            </div>
+            {% endif %}
+
+            {% if pkg.changelog %}
+            <div>
+              <h2>{{ _('Changelog') }}</h2>
+              <p>
+                {{ h.render_markdown(h.get_translated(pkg, 'changelog')) }}
+           
+              </p>
+            </div>
+            {% endif %}
+            
+            {% block package_tags %}
+              {# snippet "package/snippets/tags.html", tags=pkg.tags #}
+            {% endblock %}
+          {% endblock %}
+        </div>
+      </article>
+    {% endblock %}
+  </div>
+{% endblock %}

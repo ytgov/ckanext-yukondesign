@@ -28,4 +28,5 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'get_all_groups': helpers.get_all_groups,
             'recently_updated_open_informations': helpers.recently_updated_open_informations,
             'recently_added_access_requests': helpers.recently_added_access_requests,
+            'group_is_empty': helpers.group_is_empty,
         }
