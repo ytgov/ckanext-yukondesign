@@ -62,11 +62,7 @@
               "input_placeholder": _("Enter open information search terms"),
               "action": url_for('information.search'),
               "list_title": _("Recently updated:"),
-              "list": [
-                { "href": "/", "title": "2023-23 Public Accounts" },
-                { "href": "/", "title": "Ministerial public body organizational structures" },
-                { "href": "/", "title": "2019 Yukon JCC - Territorial Court submissions" }
-              ],
+              "list": h.recently_updated_open_informations(),
               "list_cta_title": _("See more open information datasets"),
               "list_cta_href": url_for('information.search'),
             }) }}
@@ -80,11 +76,7 @@
               "input_placeholder": _("Enter open data search terms"),
               "action": url_for('data.search'),
               "list_title": _("Featured datasets:"),
-              "list": [
-                { "href": "/", "title": "Yukon Snow Survey Network" },
-                { "href": "/", "title": "Government of Yukon Human Resources (HR) metrics" },
-                { "href": "/", "title": "Flood mapping layers (Marsh Lake)" }
-              ],
+              "list": h.recently_added_access_requests(),
               "list_cta_title": _("See more open data datasets"),
               "list_cta_href": url_for('data.search'),
             }) }}
@@ -98,11 +90,7 @@
               "input_placeholder": _("Enter request search terms"),
               "action": url_for('access-requests.search'),
               "list_title": _("Recently added:"),
-              "list": [
-                { "href": "/", "title": "24-0070" },
-                { "href": "/", "title": "24-0057" },
-                { "href": "/", "title": "24-0053" }
-              ],
+              "list": h.recently_added_access_requests(),
               "list_cta_title": _("See more completed Access to Information requests"),
               "list_cta_href": url_for('access-requests.search'),
             }) }}
