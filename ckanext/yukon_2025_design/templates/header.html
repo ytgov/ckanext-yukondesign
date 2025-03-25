@@ -1,5 +1,15 @@
 {% if c.userobj %}
     {% ckan_extends %}
+    {% block header_site_navigation_tabs %}
+      {% set org_type = h.default_group_type('organization') %}
+      {% set group_type = h.default_group_type('group') %}
+        {{ h.build_nav_main(
+            ('information.search', _("Open Information")),
+            ('data.search', _("Open Data")),
+            ('access-requests.search', _("Access Requests")),
+            (group_type ~ '.index',h.humanize_entity_type('group', group_type, 'main nav') or _('Topics'), ['group']),
+        ) }}
+    {% endblock %}
 {% else %}
     {% include "/frontend/header.html" %}
 {% endif %}
