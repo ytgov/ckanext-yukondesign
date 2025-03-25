@@ -8,6 +8,10 @@
   'changelog',
   'tag_string',
   'groups_list',
+  'temporal_coverage_start_date',
+  'temporal_coverage_end_date',
+  'custodian',
+  'custodian_email',
   ] -%}
 
 {% set groups = schema.dataset_fields_groups %}
@@ -20,6 +24,9 @@
 {% for group in groups %}
   {% if not h.group_is_empty(pkg_dict, group.name, schema.dataset_type) %}
     {% set group_fields = schema.dataset_fields | selectattr("group_name", "equalto", group.name) %}
+    {% set temporal_end_field = schema.dataset_fields | selectattr("field_name", "equalto", "temporal_coverage_end_date") | list | first %}
+    {% set custodian_email_field = schema.dataset_fields | selectattr("field_name", "equalto", "custodian_email") | list | first %}
+
     <h4>{{ h.scheming_language_text(group.label) }}</h4>
     <table class="table table-striped table-bordered table-condensed">
       <tbody>
@@ -41,6 +48,7 @@
               </tr>
             {%- endif -%}
           {%- endif -%}
+
           {% if field.field_name == "tag_string" or field.field_name == "groups_list" %}
             <tr>
               <th scope="row" class="dataset-label">
@@ -51,21 +59,51 @@
               </td>
             </tr>
           {%- endif -%}
-          {% if field.field_name == "license_id" %}
-          <tr>
-            <th scope="row" class="dataset-label">
-              {{ h.scheming_language_text(field.label) }}
-            </th>
-            {% if 'license_url' in pkg_dict %}
+
+
+          {% if field.field_name == "temporal_coverage_start_date" and  pkg_dict[field.field_name] != "" %}
+            <tr>
+              <th scope="row" class="dataset-label">
+                {{ _("Temporal Coverage") }}
+              </th>
               <td>
-                <a href="{{ pkg_dict.license_url }}">{{ pkg_dict.license_title }}</a>
-              </td>
-            {% else %}
-              <td>
-                {{ pkg_dict.license_title }}
+                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}  <span class="mx-2">{{_("to")}}</span>  {%- snippet 'scheming/snippets/display_field.html', field=temporal_end_field, data=pkg_dict, schema=schema -%}
               </td>
             </tr>
-            {% endif %}
+          {%- endif -%}
+  
+          {% if field.field_name == "license_id" %}
+            <tr>
+              <th scope="row" class="dataset-label">
+                {{ h.scheming_language_text(field.label) }}
+              </th>
+              {% if 'license_url' in pkg_dict %}
+                <td>
+                  <a href="{{ pkg_dict.license_url }}">{{ pkg_dict.license_title }}</a>
+                </td>
+              {% else %}
+                <td>
+                  {{ pkg_dict.license_title }}
+                </td>
+              {% endif %}
+            </tr>
+          {%- endif -%}
+
+          {%- if field.field_name == "custodian" and pkg_dict[field.field_name] and pkg_dict[field.field_name] != "" %}
+            <tr>
+              <th scope="row" class="dataset-label">
+                {{ h.scheming_language_text(field.label) }}
+              </th>
+              {% if pkg_dict["custodian_email"] and pkg_dict["custodian_email"] != "" %}
+                <td>
+                  {%- snippet 'scheming/snippets/display_field.html', field=custodian_email_field, data=pkg_dict, schema=schema -%}
+                </td>
+              {% else %}
+                <td>
+                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                </td>
+              {% endif %}
+            </tr>
           {%- endif -%}
         {%- endfor -%}
       </tbody>
