@@ -27,7 +27,7 @@
                     {{_("The open government portal functions as both a library for current resources and an archive for older data and information which have historic value.")}}
                   </p>
                   <p>
-                    You can <a href="https://yukon.ca/en/your-government/open-government" target="_blank">learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog</a>, or <a href="https://open.yukon.ca/access-information" target="_blank">visit the Access to Information Registry</a>.
+                    {{ _('You can <a href="https://yukon.ca/en/your-government/open-government" target="_blank">learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog</a>, or <a href="https://open.yukon.ca/access-information" target="_blank">visit the Access to Information Registry</a>.')|safe }}
                   </p>
                   <p>
                     For government services and news, visit <a href="https://yukon.ca/" target="_blank">Yukon.ca</a>
@@ -44,11 +44,11 @@
                 const collapseElement = document.getElementById("hero-read-more");
                 
                 collapseElement?.addEventListener("shown.bs.collapse", function () {
-                  toggleButton.textContent = "{{ _('Read Less') }}";
+                  toggleButton.textContent = "{{ _('Read less') }}";
                 });
                 
                 collapseElement?.addEventListener("hidden.bs.collapse", function () {
-                  toggleButton.textContent = "{{ _('Read More') }}";
+                  toggleButton.textContent = "{{ _('Read more') }}";
                 });
               });
             </script>
