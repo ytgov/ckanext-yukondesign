@@ -31,4 +31,5 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'recently_added_access_requests': helpers.recently_added_access_requests,
             'group_is_empty': helpers.group_is_empty,
             'get_current_year': helpers.get_current_year,
+            'dataset_type_title' : helpers.dataset_type_title
         }

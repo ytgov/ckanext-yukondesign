@@ -58,12 +58,13 @@
           <div class="container">
             {{ components.search_section({
               "title": _("Open information"),
+              "id": "open-information",
               "description": _("Find annual reports, news releases, scientific research publications, and other information."),
               "input_placeholder": _("Enter open information search terms"),
               "action": url_for('information.search'),
               "list_title": _("Recently updated:"),
               "list": h.recently_updated_open_informations(),
-              "list_cta_title": _("See more open information datasets"),
+              "list_cta_title": _("See more open information publications"),
               "list_cta_href": url_for('information.search'),
             }) }}
           </div>
@@ -72,6 +73,7 @@
           <div class="container">
             {{ components.search_section({
               "title": _("Open data"),
+              "id": "open-data",
               "description": _("Find statistical and administrative data, geospatial data, and other machine-readable data."),
               "input_placeholder": _("Enter open data search terms"),
               "action": url_for('data.search'),
@@ -86,6 +88,7 @@
           <div class="container">
             {{ components.search_section({
               "title": _("Completed Access to Information requests"),
+              "id": "completed-access-to-information-requests",
               "description": _("Find completed Access to Information requests and responsive records."),
               "input_placeholder": _("Enter request search terms"),
               "action": url_for('access-requests.search'),

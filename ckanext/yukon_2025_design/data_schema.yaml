@@ -1,6 +1,6 @@
 cheming_version: 2
 dataset_type: data
-about: A reimplementation of the default CKAN dataset schema
+about: Open Data
 about_url: http://github.com/ckan/ckanext-scheming
 
 dataset_fields_groups:
