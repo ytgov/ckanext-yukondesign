@@ -22,8 +22,8 @@
 {% endmacro %}
 
 {% macro search_section(args) %}
-  <div class="row gx-lg-5 gy-3">
-    <h4 class="mb-0">{{ args.title }}</h4>
+  <div class="row gx-lg-5 gy-3 yt-dataset-type-section" id="{{args.id}}">
+    <h2 class="mb-0 yt-section-heading">{{ args.title }}</h2>
     <div class="col-lg-5">
       <div class="mb-3">
         {{ args.description }}
@@ -48,5 +48,14 @@
       </ul>
     </div>
   </div>
+{% endmacro %}
 
+{% macro dataset_type_title(dataset_type) %}
+  {% set mapping = {
+    "pia-summaries": "Privacy impact assessment summary",
+    "information": "Open information",
+    "data": "Open data",
+    "access-requests": "Completed Access to Information requests"
+  } %}
+  {{ mapping.get(dataset_type, "Unknown Dataset Type") }}
 {% endmacro %}

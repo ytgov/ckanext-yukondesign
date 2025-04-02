@@ -190,3 +190,7 @@ header:not(.module-content)  .content_action .btn-light{
   border-width: 2px;
   border-color: #858585;
 }
+
+.yt-section-heading{
+  font-size: 24px;
+}

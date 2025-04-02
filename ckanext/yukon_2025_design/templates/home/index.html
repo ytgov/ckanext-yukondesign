@@ -27,7 +27,7 @@
                     {{_("The open government portal functions as both a library for current resources and an archive for older data and information which have historic value.")}}
                   </p>
                   <p>
-                    You can <a href="https://yukon.ca/en/your-government/open-government" target="_blank">learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog</a>, or <a href="https://open.yukon.ca/access-information" target="_blank">visit the Access to Information Registry</a>.
+                    {{ _('You can <a href="https://yukon.ca/en/your-government/open-government" target="_blank">learn more about the Government of Yukon’s open government program, read about recent updates on the eServices blog</a>, or <a href="https://open.yukon.ca/access-information" target="_blank">visit the Access to Information Registry</a>.')|safe }}
                   </p>
                   <p>
                     For government services and news, visit <a href="https://yukon.ca/" target="_blank">Yukon.ca</a>
@@ -44,11 +44,11 @@
                 const collapseElement = document.getElementById("hero-read-more");
                 
                 collapseElement?.addEventListener("shown.bs.collapse", function () {
-                  toggleButton.textContent = "{{ _('Read Less') }}";
+                  toggleButton.textContent = "{{ _('Read less') }}";
                 });
                 
                 collapseElement?.addEventListener("hidden.bs.collapse", function () {
-                  toggleButton.textContent = "{{ _('Read More') }}";
+                  toggleButton.textContent = "{{ _('Read more') }}";
                 });
               });
             </script>
@@ -58,12 +58,13 @@
           <div class="container">
             {{ components.search_section({
               "title": _("Open information"),
+              "id": "open-information",
               "description": _("Find annual reports, news releases, scientific research publications, and other information."),
               "input_placeholder": _("Enter open information search terms"),
               "action": url_for('information.search'),
               "list_title": _("Recently updated:"),
               "list": h.recently_updated_open_informations(),
-              "list_cta_title": _("See more open information datasets"),
+              "list_cta_title": _("See more open information publications"),
               "list_cta_href": url_for('information.search'),
             }) }}
           </div>
@@ -72,6 +73,7 @@
           <div class="container">
             {{ components.search_section({
               "title": _("Open data"),
+              "id": "open-data",
               "description": _("Find statistical and administrative data, geospatial data, and other machine-readable data."),
               "input_placeholder": _("Enter open data search terms"),
               "action": url_for('data.search'),
@@ -86,6 +88,7 @@
           <div class="container">
             {{ components.search_section({
               "title": _("Completed Access to Information requests"),
+              "id": "completed-access-to-information-requests",
               "description": _("Find completed Access to Information requests and responsive records."),
               "input_placeholder": _("Enter request search terms"),
               "action": url_for('access-requests.search'),
@@ -97,13 +100,20 @@
             <div class="row mt-4">
               <div class="col-lg-5 d-flex flex-column gap-2">
                 <div>
-                  You can also see <a href="#">privacy impact assessment summaries</a>, <a href="#">visit the Access to Information Registry</a>, or <a href="#">submit an Access to Information request.</a>
+                  {{ _("You can also see") }} 
+                  <a href="https://yukon.ca/en/privacy-statement" target="_blank">{{ _("privacy impact assessment summaries") }}</a>, 
+                  <a target="_blank" href="https://open.yukon.ca/access-information">{{ _("visit the Access to Information Registry") }}</a>, 
+                  {{ _("or") }} 
+                  <a target="_blank" href="https://yukon.ca/en/legal-and-social-supports/legal-services/request-access-information-records">{{ _("submit an Access to Information request.") }}</a>
                 </div>
                 <div>
-                  <a href="#">Learn more about the Government of Yukon’s open government program</a>, or <a href="#">read about recent updates on the eServices blog.</a>
+                  <a target="_blank" href="https://yukon.ca/en/your-government/open-government">{{ _("Learn more about the Government of Yukon’s open government program") }}</a>, 
+                  {{ _("or") }} 
+                  <a target="_blank" href="https://yukon.ca/en/blogs/digital-information-and-services">{{ _("read about recent updates on the eServices blog.") }}</a>
                 </div>
                 <div>
-                  To submit a new publication or dataset, or to report an issue, contact <a href="#">eservices@yukon.ca.</a>
+                  {{ _("To submit a new publication or dataset, or to report an issue, contact") }} 
+                  <a target="_blank" href="mailto:eservices@yukon.ca">eservices@yukon.ca</a>.
                 </div>
               </div>
             </div>

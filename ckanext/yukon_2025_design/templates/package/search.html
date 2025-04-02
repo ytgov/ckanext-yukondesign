@@ -1,31 +1,28 @@
 {% extends "page.html" %}
 {% import 'macros/form.html' as form %}
 
-{% block subtitle %}{{ _(dataset_type.title()) }}{% endblock %}
+{% set dataset_type_title=h.dataset_type_title(dataset_type) %}
+
+{% block subtitle %}{{ _(dataset_type_title) }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li class="active">{{ h.nav_link(_(dataset_type.title()), named_route='%s.search' % dataset_type) }}</li>
+  <li class="active">{{ h.nav_link(_(dataset_type_title), named_route='%s.search' % dataset_type) }}</li>
 {% endblock %}
 
 {% block primary_content %}
   <section class="">
     <h1>
-      {% if dataset_type == 'data' %}
-        {{_("Open data")}}
-      {% elif dataset_type == 'information' %}
-        {{_("Open information")}}
-      {% elif dataset_type == 'access-requests' %}
-        {{_("Completed Access to Information requests")}}
-      {% endif %}
+      {{dataset_type_title}}
     </h1>
     <p class="fs-6">
       {% if dataset_type == 'data' %}
         {{_("Find statistical and administrative data, geospatial data, and other machine-readable data.")}}
       {% elif dataset_type == 'information' %}
-        
+        {{_("Find annual reports, news releases, scientific research publications, and other information.")}}
       {% elif dataset_type == 'access-requests' %}
-      {{_("Search or browse completed Access to Information (ATIPP) requests and responsive records.")}} <a href="#">Submit an Access to Information request.</a>
-      
+        {{_("Search or browse completed Access to Information (ATIPP) requests and responsive records.")}} <a href="#">Submit an Access to Information request.</a>
+      {% elif dataset_type == 'pia-summaries' %}
+        {{_("Find summaries of completed Privacy Impact Assessments (PIAs).")}}
       {% endif %}
     </p>
     <div class="mt-4">
