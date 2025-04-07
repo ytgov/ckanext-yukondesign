@@ -96,7 +96,7 @@
   }.get(dataset_type, facet_titles.get('organization', _('Organization'))) %}
 
   {% set reordered_facet_titles = {
-      'res_format': facet_titles.get('res_format'),
+      'res_format': _("Format"),
       'organization': organization_label,
       'groups': _("Topics"),
       'tags': facet_titles.get('tags')

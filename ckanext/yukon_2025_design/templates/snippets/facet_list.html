@@ -37,7 +37,7 @@ Dictionary with search facets
 
 #}
 {% block facet_list %}
-    {% set hide_empty = hide_empty or false %}
+    {% set hide_empty = hide_empty or true %}
     {% with items = items or h.get_facet_items_dict(name, search_facets) %}
 	{% if items or not hide_empty %}
 	    {% block facet_list_item %}
@@ -74,6 +74,7 @@ Dictionary with search facets
 					    {% set label = label_function(item) if label_function else item.display_name %}
 					    {% set label_truncated = label|truncate(44) if not label_function else label %}
 					    {% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
+
 					    <li class="nav-item {% if item.active %} active{% endif %} facet-option" >
                             <a href="{{ href }}" title="{{ label if label != label_truncated else '' }}">
                                 <span class="item-label">{{ label }}</span>
