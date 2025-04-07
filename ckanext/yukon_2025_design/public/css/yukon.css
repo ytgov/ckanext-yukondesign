@@ -51,6 +51,16 @@ a {
   background: var(--bs-primary);
   color: white;
 }
+/*header sm button*/
+.navbar-toggler span{
+  color: var(--bs-body-color)!important;
+}
+
+@media (max-width:991px){
+  .main-navbar{
+    padding-top: 20px;
+  }
+}
 
 @media (min-width: 767px) {
   body .aurora--main:before {
