@@ -194,3 +194,21 @@ header:not(.module-content)  .content_action .btn-light{
 .yt-section-heading{
   font-size: 24px;
 }
+
+
+/*publication page*/
+.resource-item .description{
+  font-size: 16px;
+  min-height: 16px;
+}
+.resource-item .heading{
+  font-size: 16px;;
+}
+
+.resource-item .resource-name{
+  font-size: 20px;
+}
+
+.resource-item .heading{
+  color:var(--bs-body-color)
+}
