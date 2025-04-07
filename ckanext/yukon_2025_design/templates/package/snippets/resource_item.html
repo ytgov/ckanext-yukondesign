@@ -15,7 +15,7 @@
 {% set url_action = pkg.type ~ ('_resource.edit' if url_is_edit and can_edit else '_resource.read') %}
 {% set url = url or h.url_for(url_action, id=pkg.name, resource_id=res.id) %}
 
-<li class="resource-item d-flex w-100 gap-2" data-id="{{ res.id }}">
+<li class="resource-item d-flex w-100 gap-2" data-id="{{ res.id }}" id="resource-{{ res.id }}">
 
   <div>
     {% block resource_item_title %}
