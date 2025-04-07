@@ -41,6 +41,7 @@
           'translated_fields': translated_fields,
           'remove_field': remove_field }
         %}
+        {% set sort_by_selected = request.args.get('sort', 'metadata_modified desc') %}
         {% set sorting = [
           (_('Relevance'), 'score desc, metadata_modified desc'),
           (_('Name Ascending'), 'title_string asc'),
