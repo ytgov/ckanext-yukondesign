@@ -212,3 +212,10 @@ header:not(.module-content)  .content_action .btn-light{
 .resource-item .heading{
   color:var(--bs-body-color)
 }
+
+/*form label */
+
+form .control-label,
+form strong{
+  font-weight: 600!important;
+}
