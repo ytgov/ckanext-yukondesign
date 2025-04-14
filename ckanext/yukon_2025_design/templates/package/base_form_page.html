@@ -1,0 +1,41 @@
+{% ckan_extends %}
+
+{% block secondary_content %}
+  {% block info_module %}
+    {% set type = dataset_type or pkg_type or '' %}
+
+    {% set dataset_info_map = {
+      'information': {
+        'title': _('What is open information?'),
+        'description': _('Open information publications include annual reports, news releases, scientific research publications, and other information.')
+      },
+      'data': {
+        'title': _('What is open data?'),
+        'description': _('Open data datasets include statistical and administrative data, geospatial data, and other machine-readable data.')
+      },
+      'access-requests': {
+        'title': _('What are Completed Access to Information requests?'),
+        'description': _('Completed Access to Information requests and responsive records are published for program-related Access to Information requests.')
+      },
+      'pia-summaries': {
+        'title': _('What are Privacy Impact Assessment summaries?'),
+        'description': _('Privacy Impact Assessment summaries are published for Privacy Impact Assessments completed by public bodies.')
+      },
+      'default': {
+        'title': _('What are datasets?'),
+        'description': _('A CKAN Dataset is a collection of data resources (such as files), together with a description and other information, at a fixed URL. Datasets are what users see when searching for data.')
+      }
+    } %}
+
+    {% set info = dataset_info_map.get(type, dataset_info_map['default']) %}
+
+    <section class="module module-narrow module-shallow">
+      <h2 class="module-heading">
+        <i class="fa fa-info-circle"></i> {{ info.title }}
+      </h2>
+      <div class="module-content">
+        <p>{{ info.description }}</p>
+      </div>
+    </section>
+  {% endblock %}
+{% endblock %}

@@ -1,6 +1,6 @@
 cheming_version: 2
 dataset_type: data
-about: A reimplementation of the default CKAN dataset schema
+about: Open Data
 about_url: http://github.com/ckan/ckanext-scheming
 
 dataset_fields_groups:
@@ -86,7 +86,7 @@ dataset_fields:
   group_name: topics
 - field_name: tag_string
   label:
-    en: Tags
+    en: Keywords
     fr: Étiquettes
   preset: tag_string_autocomplete
   display_snippet: multiple_text_links.html
@@ -126,6 +126,7 @@ dataset_fields:
     en: Custodian
     fr: Dépositaire
   form_snippet: text.html
+  display_snippet: text.html
   validators: ignore_missing
   group_name: publisher
 - field_name: custodian_email
@@ -134,6 +135,7 @@ dataset_fields:
     fr: Courriel du dépositaire
   form_snippet: text.html
   display_snippet: email.html
+  display_email_name_field: custodian
   required: false
   group_name: publisher
 - field_name: homepage_url
@@ -395,6 +397,13 @@ dataset_fields:
   form_snippet: null
   required: false
   group_name: usage_data
+- field_name: is_featured
+  label:
+    en: Featured
+    fr: En vedette
+  required: false
+  form_snippet: null
+  display_snippet: null
 
 resource_fields:
 

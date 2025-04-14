@@ -1,0 +1,11 @@
+{# Adds 'Add Dataset' button #}
+
+{% set dataset_type = dataset_type if dataset_type else h.default_package_type() %}
+{% set link_label = h.humanize_entity_type('package', dataset_type, 'add link') or _("Add Dataset") %}
+{% set route_name = dataset_type ~ '.new' %}
+
+{% if group %}
+    {% snippet 'snippets/add_dataset_dropdown.html',group=group %}
+{% else %}
+    {% link_for _("Add")+" "+h.dataset_type_title(dataset_type), named_route=route_name, class_='btn btn-primary', icon='plus-square' %}
+{% endif %}

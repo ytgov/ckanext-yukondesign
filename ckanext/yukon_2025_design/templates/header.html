@@ -1,5 +1,20 @@
 {% if c.userobj %}
     {% ckan_extends %}
+    {% block header_site_navigation_tabs %}
+      {% set org_type = h.default_group_type('organization') %}
+      {% set group_type = h.default_group_type('group') %}
+        {{ h.build_nav_main(
+            ('information.search', _("Open information")),
+            ('data.search', _("Open data")),
+            ('access-requests.search', _("Access requests")),
+            ('pia-summaries.search', _("PIA summaries")),
+            (group_type ~ '.index',h.humanize_entity_type('group', group_type, 'main nav') or _('Topics'), ['group']),
+        ) }}
+    {% endblock %}
+
+    {% block header_site_search %}{% endblock %}
+
+
 {% else %}
     {% include "/frontend/header.html" %}
 {% endif %}
