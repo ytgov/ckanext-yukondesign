@@ -92,7 +92,7 @@
             <div>
               <h2>{{ _('Methodology') }}</h2>
               <p>
-                {{pkg.methodology}}
+                {{ h.render_markdown(h.get_translated(pkg, 'methodology')) }}
               </p>
             </div>
             {% endif %}

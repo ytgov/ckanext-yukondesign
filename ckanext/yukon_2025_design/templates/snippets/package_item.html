@@ -74,7 +74,7 @@ Example:
                     {% if package.resources and not hide_resources %}
                     {% block resources_outer %}
                     <div>
-                        <b>{{_("Formats")}}:</b> 
+                        <b>{{_("Format")}}:</b> 
                        
                         {% block resources_inner %}
                             {% set formats = h.dict_list_reduce(package.resources, 'format') %}

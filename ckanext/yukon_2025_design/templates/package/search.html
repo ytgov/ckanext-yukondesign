@@ -41,6 +41,7 @@
           'translated_fields': translated_fields,
           'remove_field': remove_field }
         %}
+        {% set sort_by_selected = request.args.get('sort', 'metadata_modified desc') %}
         {% set sorting = [
           (_('Relevance'), 'score desc, metadata_modified desc'),
           (_('Name Ascending'), 'title_string asc'),
@@ -95,7 +96,7 @@
   }.get(dataset_type, facet_titles.get('organization', _('Organization'))) %}
 
   {% set reordered_facet_titles = {
-      'res_format': facet_titles.get('res_format'),
+      'res_format': _("Format"),
       'organization': organization_label,
       'groups': _("Topics"),
       'tags': facet_titles.get('tags')
