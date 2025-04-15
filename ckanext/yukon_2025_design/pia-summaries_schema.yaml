@@ -207,7 +207,7 @@ resource_fields:
 
 - field_name: name
   label: Name
-  form_placeholder: eg. January 2011 Gold Prices
+  form_placeholder: The title of the resource
 
 - field_name: description
   label: Description
