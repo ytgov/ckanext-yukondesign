@@ -204,20 +204,20 @@ dataset_fields:
   label:
     en: Fees
     fr: Frais
-  preset: radio
   choices:
     - value: na
       label:
         en: N/A
         fr: S.O.
-    - value: yes
+    - value: "Yes"
       label:
-        en: Yes
+        en: "Yes"
         fr: Oui
-    - value: no
+    - value: "No"
       label:
-        en: No
+        en: "No"
         fr: Non
+  preset: select
   required: false
   group_name: request_details
 - field_name: visits
