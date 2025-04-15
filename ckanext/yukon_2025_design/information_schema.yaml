@@ -227,20 +227,20 @@ dataset_fields:
   label:
     en: Publication Required under the ATIPP Act
     fr: Publication requise par la LAIPVP
-  preset: radio
   choices:
     - value: na
       label:
         en: N/A
         fr: S.O.
-    - value: yes
+    - value: "Yes"
       label:
-        en: Yes
+        en: "Yes"
         fr: Oui
-    - value: no
+    - value: "No"
       label:
-        en: No
+        en: "No"
         fr: Non
+  preset: select
   required: false
   group_name: publication_details
 - field_name: publication_type_under_atipp_act
