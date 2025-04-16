@@ -123,33 +123,19 @@ dataset_fields:
   required: true
   help_text: "The license under which the data is released"
   group_name: publication_details
-- field_name: date_published
+- field_name: metadata_created
   label:
     en: Date Published
     fr: Date de publication
-  preset: date
-  required: true
+  form_snippet: null
+  display_snippet: date.html
   group_name: publication_details
-- field_name: date_updated
+- field_name: metadata_modified
   label:
     en: Date Updated
     fr: Date de mise à jour
-  preset: date
-  required: true
-  group_name: publication_details
-- field_name: date_publication_updated
-  label:
-    en: Date Publication Updated
-    fr: Date de mise à jour de la publication
-  preset: date
-  required: false
-  group_name: publication_details
-- field_name: date_metadata_updated
-  label:
-    en: Date Metadata Updated
-    fr: Date de mise à jour des métadonnées
-  preset: date
-  required: false
+  form_snippet: null
+  display_snippet: date.html
   group_name: publication_details
 - field_name: privacy_impact_assessment_number
   label:
