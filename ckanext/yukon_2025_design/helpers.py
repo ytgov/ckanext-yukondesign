@@ -60,6 +60,20 @@ def recently_added_access_requests():
         return []
 
 
+def get_featured_datasets():
+    """
+    Returns a list of all featured datasets.
+    """
+    try:
+        result = toolkit.get_action('package_search')(
+            {'ignore_auth': True},
+            {'fq': 'is_featured:true', 'rows': 1000}
+        )  # Bypass auth
+        return result['results']
+    except toolkit.ObjectNotFound:
+        return []
+    
+
 def group_is_empty(data_dict, group_name, dataset_type):
     """
     Returns True if the group is empty, False otherwise.

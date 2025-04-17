@@ -73,10 +73,12 @@
               {% endblock %}
             {% endblock %}
 
-            {% block package_resources %}
-              {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources,
-              can_edit=h.check_access('package_update', {'id':pkg.id }) %}
-            {% endblock %}
+            {% if pkg.resources %}
+              {% block package_resources %}
+                {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources,
+                can_edit=h.check_access('package_update', {'id':pkg.id }) %}
+              {% endblock %}
+            {% endif %}
 
             
 

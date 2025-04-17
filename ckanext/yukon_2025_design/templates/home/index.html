@@ -78,7 +78,7 @@
               "input_placeholder": _("Enter open data search terms"),
               "action": url_for('data.search'),
               "list_title": _("Featured datasets:"),
-              "list": h.recently_added_access_requests(),
+              "list": h.get_featured_datasets(),
               "list_cta_title": _("See more open data datasets"),
               "list_cta_href": url_for('data.search'),
             }) }}
