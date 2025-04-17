@@ -5,8 +5,12 @@
   
 {% endblock %}
 
+{% set dataset_type_title=h.dataset_type_title(dataset_type) %}
+
 {% block breadcrumb_content %}
-  <li class="active">{{ h.nav_link(_(dataset_type.title()), named_route='%s.search' % dataset_type) }}</li>
+  <li class="active">
+    {{ h.nav_link(_(dataset_type_title), named_route='%s.search' % dataset_type) }}
+  </li>
   <li>
     <a>{{pkg.title}}</a>
   </li>
@@ -90,7 +94,7 @@
             <div>
               <h2>{{ _('Methodology') }}</h2>
               <p>
-                {{pkg.methodology}}
+                {{ h.render_markdown(h.get_translated(pkg, 'methodology')) }}
               </p>
             </div>
             {% endif %}

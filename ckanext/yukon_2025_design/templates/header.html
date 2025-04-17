@@ -4,12 +4,17 @@
       {% set org_type = h.default_group_type('organization') %}
       {% set group_type = h.default_group_type('group') %}
         {{ h.build_nav_main(
-            ('information.search', _("Open Information")),
-            ('data.search', _("Open Data")),
-            ('access-requests.search', _("Access Requests")),
+            ('information.search', _("Open information")),
+            ('data.search', _("Open data")),
+            ('access-requests.search', _("Access requests")),
+            ('pia-summaries.search', _("PIA summaries")),
             (group_type ~ '.index',h.humanize_entity_type('group', group_type, 'main nav') or _('Topics'), ['group']),
         ) }}
     {% endblock %}
+
+    {% block header_site_search %}{% endblock %}
+
+
 {% else %}
     {% include "/frontend/header.html" %}
 {% endif %}

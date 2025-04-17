@@ -7,11 +7,11 @@
 <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
       {{_("Add")}}
-    
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <li><a class="dropdown-item" href="{{ h.url_for('data.new') }}">{{_("Open Data")}}</a></li>
-      <li><a class="dropdown-item" href="{{ h.url_for('information.new') }}">{{_("Open information")}}</a></li>
-      <li><a class="dropdown-item" href="{{ h.url_for('access-requests.new') }}">{{_("Completed Access to Information requests")}}</a></li>
+      <li><a class="dropdown-item" href="{{ h.url_for('data.new', group=group) }}">{{_("Open data")}}</a></li>
+      <li><a class="dropdown-item" href="{{ h.url_for('information.new', group=group) }}">{{_("Open information")}}</a></li>
+      <li><a class="dropdown-item" href="{{ h.url_for('access-requests.new', group=group) }}">{{_("Completed access to information request")}}</a></li>
+      <li><a class="dropdown-item" href="{{ h.url_for('pia-summaries.new', group=group) }}">{{_("Privacy impact assessment summary")}}</a></li>
     </ul>
   </div>

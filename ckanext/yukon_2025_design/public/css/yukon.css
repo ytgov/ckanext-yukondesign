@@ -51,6 +51,16 @@ a {
   background: var(--bs-primary);
   color: white;
 }
+/*header sm button*/
+.navbar-toggler span{
+  color: var(--bs-body-color)!important;
+}
+
+@media (max-width:991px){
+  .main-navbar{
+    padding-top: 20px;
+  }
+}
 
 @media (min-width: 767px) {
   body .aurora--main:before {
@@ -189,4 +199,33 @@ header:not(.module-content)  .content_action .btn-light{
   box-shadow: none;
   border-width: 2px;
   border-color: #858585;
+}
+
+.yt-section-heading{
+  font-size: 24px;
+}
+
+
+/*publication page*/
+.resource-item .description{
+  font-size: 16px;
+  min-height: 16px;
+}
+.resource-item .heading{
+  font-size: 16px;;
+}
+
+.resource-item .resource-name{
+  font-size: 20px;
+}
+
+.resource-item .heading{
+  color:var(--bs-body-color)
+}
+
+/*form label */
+
+form .control-label,
+form strong{
+  font-weight: 600!important;
 }

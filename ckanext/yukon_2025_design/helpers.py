@@ -1,3 +1,4 @@
+import datetime
 import ckan.plugins.toolkit as toolkit
 from ckanext.scheming.helpers import scheming_get_dataset_schema
 
@@ -95,3 +96,18 @@ def group_is_empty(data_dict, group_name, dataset_type):
     if len(group_fields) == 0:
         return True
     return False
+
+
+def get_current_year():
+    """Returns the current year as an integer."""
+    return datetime.datetime.now().year
+
+def dataset_type_title(dataset_type):
+  """Convert dataset type to a human-readable title."""
+  mapping = {
+    "pia-summaries": "Privacy impact assessment summaries",
+    "information": "Open information",
+    "data": "Open Data",
+    "access-requests": "Completed Access to Information requests"
+  }
+  return mapping.get(dataset_type, dataset_type)
