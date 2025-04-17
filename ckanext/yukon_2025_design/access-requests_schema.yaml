@@ -198,12 +198,12 @@ dataset_fields:
     - value: "Yes"
       label:
         en: "Yes"
-        fr: Oui
+        fr: "Oui"
     - value: "No"
       label:
         en: "No"
-        fr: Non
-  preset: select
+        fr: "Non"
+  preset: radio
   required: false
   group_name: request_details
 - field_name: visits

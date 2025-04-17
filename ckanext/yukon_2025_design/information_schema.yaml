@@ -221,12 +221,12 @@ dataset_fields:
     - value: "Yes"
       label:
         en: "Yes"
-        fr: Oui
+        fr: "Oui"
     - value: "No"
       label:
         en: "No"
-        fr: Non
-  preset: select
+        fr: "Non"
+  preset: radio
   required: false
   group_name: publication_details
 - field_name: publication_type_under_atipp_act
