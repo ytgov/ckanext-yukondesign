@@ -61,16 +61,20 @@
           {%- endif -%}
 
 
-          {% if field.field_name == "temporal_coverage_start_date" and  pkg_dict[field.field_name] != "" %}
+          {% if field.field_name == "temporal_coverage_start_date" and pkg_dict[field.field_name] != "" %}
             <tr>
               <th scope="row" class="dataset-label">
                 {{ _("Temporal Coverage") }}
               </th>
               <td>
-                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}  <span class="mx-2">{{_("to")}}</span>  {%- snippet 'scheming/snippets/display_field.html', field=temporal_end_field, data=pkg_dict, schema=schema -%}
+                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                {% if temporal_end_field and pkg_dict[temporal_end_field.field_name]|trim %}
+                  <span class="mx-2">{{ _("to") }}</span>
+                  {%- snippet 'scheming/snippets/display_field.html', field=temporal_end_field, data=pkg_dict, schema=schema -%}
+                {% endif %}
               </td>
             </tr>
-          {%- endif -%}
+          {% endif %}
   
           {% if field.field_name == "license_id" %}
             <tr>
