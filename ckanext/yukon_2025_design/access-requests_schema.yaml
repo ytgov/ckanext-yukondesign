@@ -15,7 +15,7 @@ dataset_fields_groups:
     fr: Renseignements sur la publication
 - name: usage_data
   label:
-    en: Usage Data
+    en: Usage data
     fr: Données sur l’utilisation
 
 dataset_fields:
@@ -42,14 +42,14 @@ dataset_fields:
   validators: not_empty unicode_safe
 - field_name: owner_org
   label:
-    en: Public Body
+    en: Public body
     fr: Organisme public
   preset: dataset_organization
   display_snippet: organization.html
   group_name: request_details
 - field_name: internal_notes
   label:
-    en: Internal Notes
+    en: Internal notes
     fr: Notes internes
   form_snippet: markdown.html
   display_snippet: markdown.html
@@ -126,21 +126,21 @@ dataset_fields:
   group_name: publication_details
 - field_name: metadata_created
   label:
-    en: Date Published
+    en: Date published
     fr: Date de publication
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
 - field_name: metadata_modified
   label:
-    en: Date Updated
+    en: Date updated
     fr: Date de mise à jour
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
 - field_name: date_of_request
   label:
-    en: Date of Request
+    en: Date of request
     fr: Date de la demande
   preset: date
   required: true
@@ -155,7 +155,7 @@ dataset_fields:
   group_name: request_details
 - field_name: response_type
   label:
-    en: Response Type
+    en: Response type
     fr: Type de réponse
   preset: select
   choices:

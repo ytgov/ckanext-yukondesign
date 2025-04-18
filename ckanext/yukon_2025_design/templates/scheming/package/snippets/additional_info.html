@@ -64,7 +64,7 @@
           {% if field.field_name == "temporal_coverage_start_date" and pkg_dict[field.field_name] != "" %}
             <tr>
               <th scope="row" class="dataset-label">
-                {{ _("Temporal Coverage") }}
+                {{ _("Temporal coverage") }}
               </th>
               <td>
                 {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}

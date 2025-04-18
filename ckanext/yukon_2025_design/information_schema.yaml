@@ -15,11 +15,11 @@ dataset_fields_groups:
     fr: Renseignements sur la publication
 - name: data_coverage
   label:
-    en: Data Coverage
+    en: Data coverage
     fr: Couverture des données
 - name: usage_data
   label:
-    en: Usage Data
+    en: Usage data
     fr: Données sur l’utilisation
 - name: topics
   label:
@@ -66,14 +66,14 @@ dataset_fields:
   group_name: topics
 - field_name: internal_contact_name
   label:
-    en: Internal Contact Name
+    en: Internal contact name
     fr: Nom de la personne-ressource interne
   form_snippet: text.html
   validators: not_empty unicode_safe
   group_name: publisher
 - field_name: internal_contact_email
   label:
-    en: Internal Contact Email
+    en: Internal contact email
     fr: Courriel de la personne-ressource interne
   form_snippet: text.html
   display_snippet: email.html
@@ -103,7 +103,7 @@ dataset_fields:
   group_name: publisher
 - field_name: custodian_email
   label:
-    en: Custodian Email
+    en: Custodian email
     fr: Courriel du dépositaire
   form_snippet: text.html
   display_snippet: email.html
@@ -120,7 +120,7 @@ dataset_fields:
   group_name: publisher
 - field_name: internal_notes
   label:
-    en: Internal Notes
+    en: Internal notes
     fr: Notes internes
   form_snippet: markdown.html
   display_snippet: markdown.html
@@ -197,21 +197,21 @@ dataset_fields:
   group_name: publication_details
 - field_name: metadata_created
   label:
-    en: Date Published
+    en: Date published
     fr: Date de publication
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
 - field_name: metadata_modified
   label:
-    en: Date Updated
+    en: Date updated
     fr: Date de mise à jour
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
 - field_name: publication_required_under_atipp_act
   label:
-    en: Publication Required under the ATIPP Act
+    en: Publication required under the ATIPP Act
     fr: Publication requise par la LAIPVP
   choices:
     - value: na
@@ -231,7 +231,7 @@ dataset_fields:
   group_name: publication_details
 - field_name: publication_type_under_atipp_act
   label:
-    en: Publication Type under the ATIPP Act
+    en: Publication type under the ATIPP Act
     fr: Type de publication selon la LAIPVP
   preset: select
   choices:
@@ -253,7 +253,7 @@ dataset_fields:
         fr: Rapports de vérification finaux
     - value: departmental_manuals_and_policy_statements
       label:
-        en: Departmental Manuals and Policy Statements
+        en: Departmental manuals and policy statements
         fr: Manuels et énoncés de politique ministériels
     - value: public_opinion_polls_and_research_studies
       label:
