@@ -3,6 +3,12 @@
 
 {% set dataset_type_title=h.dataset_type_title(dataset_type) %}
 
+{% do facet_titles.update({'tags': _('Keywords')}) %}
+
+{% do facet_titles.update({'groups': _('Topics')}) %}
+
+{% do facet_titles.update({'res_format': _('Format')}) %}
+
 {% block subtitle %}{{ _(dataset_type_title) }}{% endblock %}
 
 {% block breadcrumb_content %}
@@ -98,7 +104,7 @@
   {% set reordered_facet_titles = {
       'res_format': _("Format"),
       'organization': organization_label,
-      'groups': _("Topics"),
+      'groups': facet_titles.get('groups'),
       'tags': facet_titles.get('tags')
   } %}
 
