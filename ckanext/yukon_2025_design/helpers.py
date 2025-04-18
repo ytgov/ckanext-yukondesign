@@ -105,9 +105,9 @@ def get_current_year():
 def dataset_type_title(dataset_type):
   """Convert dataset type to a human-readable title."""
   mapping = {
-    "pia-summaries": "Privacy impact assessment summaries",
+    "pia-summaries": "Privacy Impact Assessment summaries",
     "information": "Open information",
-    "data": "Open Data",
-    "access-requests": "Completed Access to Information requests"
+    "data": "Open data",
+    "access-requests": "Completed access to information requests"
   }
   return mapping.get(dataset_type, dataset_type)
