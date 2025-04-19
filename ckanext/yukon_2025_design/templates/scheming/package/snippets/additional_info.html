@@ -18,17 +18,17 @@
 {% block package_additional_info_header %} {% endblock %}
 
 {% block package_additional_info %}
-<section class="additional-info">
-<h3>
+<section class="additional-info mt-4 mt-lg-0">
+<h2 class="h3">
 {{ _('Metadata information') }}
-</h3>
+</h2>
 {% for group in groups %}
   {% if not h.group_is_empty(pkg_dict, group.name, schema.dataset_type) %}
     {% set group_fields = schema.dataset_fields | selectattr("group_name", "equalto", group.name) %}
     {% set temporal_end_field = schema.dataset_fields | selectattr("field_name", "equalto", "temporal_coverage_end_date") | list | first %}
     {% set custodian_email_field = schema.dataset_fields | selectattr("field_name", "equalto", "custodian_email") | list | first %}
 
-    <h4>{{ h.scheming_language_text(group.label) }}</h4>
+    <h3 class="h4">{{ h.scheming_language_text(group.label) }}</h3>
     <table class="table table-striped table-bordered table-condensed">
       <tbody>
         {%- for field in group_fields -%}
@@ -78,16 +78,20 @@
           {%- endif -%}
 
 
-          {% if field.field_name == "temporal_coverage_start_date" and  pkg_dict[field.field_name] != "" %}
+          {% if field.field_name == "temporal_coverage_start_date" and pkg_dict[field.field_name] != "" %}
             <tr>
               <th scope="row" class="dataset-label">
-                {{ _("Temporal Coverage") }}
+                {{ _("Temporal coverage") }}
               </th>
               <td>
-                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}  <span class="mx-2">{{_("to")}}</span>  {%- snippet 'scheming/snippets/display_field.html', field=temporal_end_field, data=pkg_dict, schema=schema -%}
+                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                {% if temporal_end_field and pkg_dict[temporal_end_field.field_name]|trim %}
+                  <span class="mx-2">{{ _("to") }}</span>
+                  {%- snippet 'scheming/snippets/display_field.html', field=temporal_end_field, data=pkg_dict, schema=schema -%}
+                {% endif %}
               </td>
             </tr>
-          {%- endif -%}
+          {% endif %}
   
           {% if field.field_name == "license_id" %}
             <tr>

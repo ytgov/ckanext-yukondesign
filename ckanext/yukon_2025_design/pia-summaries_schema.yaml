@@ -15,7 +15,7 @@ dataset_fields_groups:
     fr: Renseignements sur la publication
 - name: usage_data
   label:
-    en: Usage Data
+    en: Usage data
     fr: Données sur l’utilisation
 
 dataset_fields:
@@ -42,14 +42,14 @@ dataset_fields:
   validators: not_empty unicode_safe
 - field_name: owner_org
   label:
-    en: Public Body
+    en: Public body
     fr: Organisme public
   preset: dataset_organization
   display_snippet: organization.html
   group_name: assessment_details
 - field_name: internal_notes
   label:
-    en: Internal Notes
+    en: Internal notes
     fr: Notes internes
   form_snippet: markdown.html
   display_snippet: markdown.html
@@ -125,21 +125,21 @@ dataset_fields:
   group_name: publication_details
 - field_name: date_published
   label:
-    en: Date Published
+    en: Date published
     fr: Date de publication
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
 - field_name: date_updated
   label:
-    en: Date Updated
+    en: Date updated
     fr: Date de mise à jour
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
 - field_name: privacy_impact_assessment_number
   label:
-    en: Privacy Impact Assessment Number
+    en: Privacy impact assessment number
     fr: Numéro d’évaluation des facteurs relatifs à la vie privée
   form_snippet: text.html
   display_snippet: text.html
@@ -147,7 +147,7 @@ dataset_fields:
   group_name: assessment_details
 - field_name: date_of_approval
   label:
-    en: Date of Approval
+    en: Date of approval
     fr: Date d’approbation
   preset: date
   required: true
