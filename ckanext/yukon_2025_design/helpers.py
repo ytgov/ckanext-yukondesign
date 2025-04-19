@@ -102,12 +102,13 @@ def get_current_year():
     """Returns the current year as an integer."""
     return datetime.datetime.now().year
 
+
 def dataset_type_title(dataset_type):
-  """Convert dataset type to a human-readable title."""
-  mapping = {
-    "pia-summaries": "Privacy Impact Assessment summaries",
-    "information": "Open information",
-    "data": "Open data",
-    "access-requests": "Completed access to information requests"
-  }
-  return mapping.get(dataset_type, dataset_type)
+    """Convert dataset type to a human-readable title."""
+    mapping = {
+        "pia-summaries": "Privacy Impact Assessment summaries",
+        "information": "Open information",
+        "data": "Open data",
+        "access-requests": "Completed access to information requests"
+    }
+    return mapping.get(dataset_type, dataset_type)
