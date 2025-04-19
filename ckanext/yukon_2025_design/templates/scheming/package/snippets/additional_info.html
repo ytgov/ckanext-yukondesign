@@ -15,6 +15,7 @@
   ] -%}
 
 {% set groups = schema.dataset_fields_groups %}
+{% block package_additional_info_header %} {% endblock %}
 
 {% block package_additional_info %}
 <section class="additional-info mt-4 mt-lg-0">
@@ -32,21 +33,37 @@
       <tbody>
         {%- for field in group_fields -%}
           {%- if field.field_name not in exclude_fields and field.display_snippet is not none -%}
-            {% if pkg_dict[field.field_name] and pkg_dict[field.field_name] != "" %}
-              <tr>
-                <th scope="row" class="dataset-label">
-                  {{ h.scheming_language_text(field.label) }}
-                </th>
-                <td
-                  class="dataset-details"
-                  {% if field.display_property %}
-                    property="{{ field.display_property }}"
-                  {% endif %}
-                >
-                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
-                </td>
-              </tr>
-            {%- endif -%}
+            {% if pkg_dict[field.field_name] %}
+              {% if pkg_dict[field.field_name] != "" %}
+                <tr>
+                  <th scope="row" class="dataset-label">
+                    {{ h.scheming_language_text(field.label) }}
+                  </th>
+                  <td
+                    class="dataset-details"
+                    {% if field.display_property %}
+                      property="{{ field.display_property }}"
+                    {% endif %}
+                  >
+                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                  </td>
+                </tr>
+              {%- else -%}
+                <tr>
+                  <th scope="row" class="dataset-label">
+                    {{ h.scheming_language_text(field.label) }}
+                  </th>
+                  <td
+                    class="dataset-details"
+                    {% if field.display_property %}
+                      property="{{ field.display_property }}"
+                    {% endif %}
+                  >
+                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                  </td>
+                </tr>
+              {%- endif -%}
+            {% endif %}
           {%- endif -%}
 
           {% if field.field_name == "tag_string" or field.field_name == "groups_list" %}

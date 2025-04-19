@@ -123,14 +123,14 @@ dataset_fields:
   required: true
   help_text: "The license under which the data is released"
   group_name: publication_details
-- field_name: metadata_created
+- field_name: date_published
   label:
     en: Date published
     fr: Date de publication
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
-- field_name: metadata_modified
+- field_name: date_updated
   label:
     en: Date updated
     fr: Date de mise à jour
