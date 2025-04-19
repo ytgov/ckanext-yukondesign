@@ -1,6 +1,6 @@
 cheming_version: 2
 dataset_type: data
-about: Open Data
+about: A reimplementation of the default CKAN dataset schema
 about_url: http://github.com/ckan/ckanext-scheming
 
 dataset_fields_groups:
@@ -223,14 +223,14 @@ dataset_fields:
   required: true
   help_text: "The license under which the data is released."
   group_name: publication_details
-- field_name: metadata_created
+- field_name: date_published
   label:
     en: Date Published
     fr: Date de publication
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
-- field_name: metadata_modified
+- field_name: date_updated
   label:
     en: Date Updated
     fr: Date de mise à jour

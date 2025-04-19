@@ -1,3 +1,11 @@
-{% if data[field.field_name] %}
-  {{ data[field.field_name].split('T')[0] }}
+{% if data[field.field_name] and 
+  (data[field.field_name] == "date_published" or data[field.field_name] == "date_updated") %}
+    {% if data[field.field_name] == "date_published" %}
+      {{ data["metadata_created"].split('T')[0] }}
+    {% endif %}
+    {% if data[field.field_name] == "date_updated" %}
+      {{ data["metadata_modified"].split('T')[0] }}
+    {% endif %}
+{% else %}
+    {{ data[field.field_name].split()[0] }}
 {% endif %}
