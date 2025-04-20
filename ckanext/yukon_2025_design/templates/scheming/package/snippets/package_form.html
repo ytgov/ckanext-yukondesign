@@ -1,6 +1,6 @@
 {% ckan_extends %}
   {% block stages %}
     {% if form_style != 'edit' %}
-      {% snippet 'package/snippets/stages.html', stages=stage, dataset_type=h.dataset_type_title(dataset_type) %}
+      {% snippet 'package/snippets/stages.html', stages=stage, dataset_type=h.dataset_type_menu_title(dataset_type) %}
     {% endif %}
   {% endblock %}

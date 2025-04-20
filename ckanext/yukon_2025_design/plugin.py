@@ -32,5 +32,6 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'group_is_empty': helpers.group_is_empty,
             'get_featured_datasets': helpers.get_featured_datasets,
             'get_current_year': helpers.get_current_year,
-            'dataset_type_title' : helpers.dataset_type_title
+            'dataset_type_title' : helpers.dataset_type_title,
+            'dataset_type_menu_title' : helpers.dataset_type_menu_title
         }

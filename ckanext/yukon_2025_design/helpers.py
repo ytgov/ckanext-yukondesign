@@ -117,3 +117,13 @@ def dataset_type_title(dataset_type, plural=True):
 
   title_pair = mapping.get(dataset_type, (dataset_type, dataset_type))
   return title_pair[1] if plural else title_pair[0]
+
+def dataset_type_menu_title(dataset_type):
+    """Convert dataset type to a human-readable title for menus."""
+    mapping = {
+        "pia-summaries": "a PIA summary",
+        "information": "open information",
+        "data": "open data",
+        "access-requests": " a completed access request"
+    }
+    return mapping.get(dataset_type, dataset_type)
