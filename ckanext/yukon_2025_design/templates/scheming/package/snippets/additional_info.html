@@ -12,6 +12,9 @@
   'temporal_coverage_end_date',
   'custodian',
   'custodian_email',
+  'internal_notes',
+  'internal_contact_email',
+  'internal_contact_name'
   ] -%}
 
 {% set groups = schema.dataset_fields_groups %}
@@ -58,6 +61,40 @@
                 {%- snippet 'scheming/display_snippets/multiple_text_links.html', field=field, data=pkg_dict, schema=schema -%}
               </td>
             </tr>
+          {%- endif -%}
+
+          {% if c.user %}
+            {% if field.field_name == "internal_notes" %}
+              <tr class="d-print-none">
+                <th scope="row" class="dataset-label">
+                  {{ h.scheming_language_text(field.label) }}
+                </th>
+                <td>
+                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                </td>
+              </tr>
+            {%- endif -%}
+            {% if field.field_name == "internal_contact_email" %}
+              <tr class="d-print-none">
+                <th scope="row" class="dataset-label">
+                  {{ h.scheming_language_text(field.label) }}
+                </th>
+                <td>
+                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                </td>
+              </tr>
+            {%- endif -%}
+            {% if field.field_name == "internal_contact_name" %}
+              <tr class="d-print-none">
+                <th scope="row" class="dataset-label">
+                  {{ h.scheming_language_text(field.label) }}
+                </th>
+                <td>
+                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                </td>
+              </tr>
+            {%- endif -%}
+
           {%- endif -%}
 
 
