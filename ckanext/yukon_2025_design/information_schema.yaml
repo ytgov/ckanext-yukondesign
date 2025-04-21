@@ -191,6 +191,7 @@ dataset_fields:
   label:
     en: License
     fr: Licence
+  default: "OGL-Yukon-2.0"
   form_snippet: license.html
   required: true
   help_text: "The license under which the data is released."
@@ -214,7 +215,7 @@ dataset_fields:
     en: Publication required under the ATIPP Act
     fr: Publication requise par la LAIPVP
   choices:
-    - value: na
+    - value: ""
       label:
         en: N/A
         fr: S.O.

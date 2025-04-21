@@ -120,6 +120,7 @@ dataset_fields:
   label:
     en: License
     fr: Licence
+  default: "OGL-Yukon-2.0"
   form_snippet: license.html
   help_text: "The license under which the data is released"
   required: true
@@ -191,7 +192,7 @@ dataset_fields:
     en: Fees
     fr: Frais
   choices:
-    - value: na
+    - value: ""
       label:
         en: N/A
         fr: S.O.
