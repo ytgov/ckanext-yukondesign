@@ -118,6 +118,7 @@ def dataset_type_title(dataset_type, plural=True):
   title_pair = mapping.get(dataset_type, (dataset_type, dataset_type))
   return title_pair[1] if plural else title_pair[0]
 
+
 def dataset_type_menu_title(dataset_type):
     """Convert dataset type to a human-readable title for menus."""
     mapping = {
@@ -127,3 +128,15 @@ def dataset_type_menu_title(dataset_type):
         "access-requests": " a completed access request"
     }
     return mapping.get(dataset_type, dataset_type)
+
+
+def add_matomo_siteid_to_context():
+    """
+    Adds the Matomo site ID to the template context.
+    This is used for tracking purposes.
+    """
+    # Get the Matomo site ID from the CKAN configuration
+    matomo_siteid = toolkit.config.get('ckan.matomo_siteid', '1')
+    print(f"====================> Matomo site ID: {matomo_siteid}")
+    # Return the Matomo site ID for direct use in templates
+    return matomo_siteid
