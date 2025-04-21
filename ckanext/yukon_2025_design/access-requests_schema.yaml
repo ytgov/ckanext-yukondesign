@@ -192,7 +192,7 @@ dataset_fields:
     en: Fees
     fr: Frais
   choices:
-    - value: na
+    - value: ""
       label:
         en: N/A
         fr: S.O.
