@@ -137,6 +137,5 @@ def add_matomo_siteid_to_context():
     """
     # Get the Matomo site ID from the CKAN configuration
     matomo_siteid = toolkit.config.get('ckan.matomo_siteid', '1')
-    print(f"====================> Matomo site ID: {matomo_siteid}")
     # Return the Matomo site ID for direct use in templates
     return matomo_siteid
