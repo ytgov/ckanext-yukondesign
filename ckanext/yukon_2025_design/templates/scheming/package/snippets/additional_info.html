@@ -36,37 +36,48 @@
       <tbody>
         {%- for field in group_fields -%}
           {%- if field.field_name not in exclude_fields and field.display_snippet is not none -%}
-            {% if pkg_dict[field.field_name] %}
-              {% if pkg_dict[field.field_name] != "" %}
-                <tr>
-                  <th scope="row" class="dataset-label">
-                    {{ h.scheming_language_text(field.label) }}
-                  </th>
-                  <td
-                    class="dataset-details"
-                    {% if field.display_property %}
-                      property="{{ field.display_property }}"
-                    {% endif %}
-                  >
-                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
-                  </td>
-                </tr>
-              {%- else -%}
-                <tr>
-                  <th scope="row" class="dataset-label">
-                    {{ h.scheming_language_text(field.label) }}
-                  </th>
-                  <td
-                    class="dataset-details"
-                    {% if field.display_property %}
-                      property="{{ field.display_property }}"
-                    {% endif %}
-                  >
-                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
-                  </td>
-                </tr>
-              {%- endif -%}
+            {% if pkg_dict[field.field_name] and pkg_dict[field.field_name] != "" %}
+              <tr>
+                <th scope="row" class="dataset-label">
+                  {{ h.scheming_language_text(field.label) }}
+                </th>
+                <td
+                  class="dataset-details"
+                  {% if field.display_property %}
+                    property="{{ field.display_property }}"
+                  {% endif %}
+                >
+                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                </td>
+              </tr>
             {% endif %}
+          {%- endif -%}
+
+          {% if field.field_name == "date_published" or field.field_name == "date_updated" %}
+            <tr>
+              <th scope="row" class="dataset-label">
+                {{ h.scheming_language_text(field.label) }}
+              </th>
+              <td>
+                {% if field.field_name == "date_published" %}
+                  {{ pkg_dict["metadata_created"].split('T')[0] }}
+                {% endif %}
+                {% if field.field_name == "date_updated" %}
+                  {{ pkg_dict["metadata_modified"].split('T')[0] }}
+                {% endif %}
+              </td>
+            </tr>
+          {%- endif -%}
+
+          {% if field.field_name == "methodology" %}
+            <tr>
+              <th scope="row" class="dataset-label">
+                {{ h.scheming_language_text(field.label) }}
+              </th>
+              <td>
+                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+              </td>
+            </tr>
           {%- endif -%}
 
           {% if field.field_name == "tag_string" or field.field_name == "groups_list" %}
