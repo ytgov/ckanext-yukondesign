@@ -1,4 +1,3 @@
-
 {% extends "package/read_base.html" %}
 
 {% block secondary %}
@@ -73,22 +72,29 @@
               {% endblock %}
             {% endblock %}
 
-            {% if pkg.resources %}
-              {% block package_resources %}
+            {% block package_resources %}
+              {% if pkg.resources %}
                 {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources,
                 can_edit=h.check_access('package_update', {'id':pkg.id }) %}
-              {% endblock %}
-            {% endif %}
-
-            
-
-            <div class="d-flex flex-column flex-sm-row flex w-100 items-center gap-2 justify-content-end"> 
-              <a href="{{h.url_for('activity.package_activity', id=pkg.name)}}" class="btn btn-outline-primary">{{_("View changes")}}</a>
-              <button class="btn btn-outline-primary btn-api-access"  data-toggle="modal" data-target="#api-access-modal">{{_("Access via API")}}</button>
-              {% if (pkg.resources | length ) > 1 %}
-                <button class="btn btn-primary">{{_("Download All")}}</button>
+                <div class="d-flex flex-column flex-sm-row flex w-100 items-center gap-2 justify-content-end"> 
+                  <a href="{{h.url_for('activity.package_activity', id=pkg.name)}}" class="btn btn-outline-primary">{{_("View changes")}}</a>
+                  <button class="btn btn-outline-primary btn-api-access"  data-toggle="modal" data-target="#api-access-modal">{{_("Access via API")}}</button>
+                  {% if (pkg.resources | length ) > 1 %}
+                    <div class="btn-group" style="float:right;">
+                      {% set zip_res = h.downloadall__pop_zip_resource(pkg) %}
+                      {% if zip_res %}
+                        <a class="btn btn-primary resource-url-analytics resource-type-{{ zip_res.resource_type }}" href="{{ zip_res.url }}">
+                      {% else %}
+                        <a class="btn btn-primary" disabled="disabled" title="{{ _('This download is not currently available') }}" href="#">
+                      {% endif %}
+                          <i class="fa fa-arrow-circle-o-down"></i> {{ _('Download all') }}
+                        </a>
+                    </div>
+                  {% endif %}
+                </div>
+                
               {% endif %}
-            </div>
+            {% endblock %}
 
             {% if pkg.methodology %}
             <div>

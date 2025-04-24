@@ -8,6 +8,7 @@ from ckan.lib.jobs import DEFAULT_QUEUE_NAME
 from ckan import model
 
 from .tasks import update_zip
+import re  # added for regex in enqueue_update_zip
 
 log = __import__('logging').getLogger(__name__)
 
@@ -20,7 +21,6 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IDomainObjectModification)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(plugins.IClick)
-    plugins.implements(plugins.ITranslation)
 
     def update_config(self, config_):
         toolkit.add_template_directory(config_, "templates")
@@ -56,7 +56,7 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
         # SO if package.json (not including Package Zip bits) remains the same
         # then we don't need to regenerate zip.
         if isinstance(entity, model.Package):
-            enqueue_update_zip(entity.name, entity.id, operation)
+            self.enqueue_update_zip(entity.name, entity.id, operation)
         elif isinstance(entity, model.Resource):
             if entity.extras.get('downloadall_metadata_modified'):
                 # this is the zip of all the resources - no need to react to
@@ -68,35 +68,6 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
         else:
             return
 
-
-    def enqueue_update_zip(dataset_name, dataset_id, operation):
-    # skip task if the dataset is already queued
-        queue = DEFAULT_QUEUE_NAME
-        jobs = toolkit.get_action('job_list')(
-            {'ignore_auth': True}, {'queues': [queue]})
-        if jobs:
-            for job in jobs:
-                if not job['title']:
-                    continue
-                match = re.match(
-                    r'DownloadAll \w+ "[^"]*" ([\w-]+)', job[u'title'])
-                if match:
-                    queued_dataset_id = match.groups()[0]
-                    if dataset_id == queued_dataset_id:
-                        log.info('Already queued dataset: {} {}'
-                                .format(dataset_name, dataset_id))
-                        return
-
-        # add this dataset to the queue
-        log.debug(u'Queuing job update_zip: {} {}'
-                .format(operation, dataset_name))
-
-        toolkit.enqueue_job(
-            update_zip, [dataset_id],
-            title=u'DownloadAll {} "{}" {}'.format(operation, dataset_name,
-                                                dataset_id),
-            queue=queue)
-    
 
     def get_actions(self):
         return {
@@ -126,3 +97,36 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'matomo_siteid': helpers.add_matomo_siteid_to_context,
             'downloadall__pop_zip_resource': helpers.pop_zip_resource,
         }
+
+    # implement IClick requirement
+    def get_commands(self):
+        return []
+
+
+def enqueue_update_zip(dataset_name, dataset_id, operation):
+    # skip task if the dataset is already queued
+    queue = DEFAULT_QUEUE_NAME
+    jobs = toolkit.get_action('job_list')(
+        {'ignore_auth': True}, {'queues': [queue]})
+    if jobs:
+        for job in jobs:
+            if not job['title']:
+                continue
+            match = re.match(
+                r'DownloadAll \w+ "[^"]*" ([\w-]+)', job[u'title'])
+            if match:
+                queued_dataset_id = match.groups()[0]
+                if dataset_id == queued_dataset_id:
+                    log.info('Already queued dataset: {} {}'
+                             .format(dataset_name, dataset_id))
+                    return
+
+    # add this dataset to the queue
+    log.debug(u'Queuing job update_zip: {} {}'
+              .format(operation, dataset_name))
+
+    toolkit.enqueue_job(
+        update_zip, [dataset_id],
+        title=u'DownloadAll {} "{}" {}'.format(operation, dataset_name,
+                                               dataset_id),
+        queue=queue)
