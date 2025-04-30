@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{{ super() }}
+
+{% block content_action %}
+    {% link_for h.humanize_entity_type('package', h.dataset_type_menu_title(dataset_type), 'view label') or _('View dataset'), named_route=pkg.type ~ '.read', id=pkg.name, class_='btn btn-secondary', icon='eye' %}
+{% endblock %}
