@@ -6,25 +6,25 @@ from setuptools import setup
 # to pyproject.toml
 # See https://github.com/ckan/ckan/issues/8382 for details
 
-setup(
-    # If you are changing from the default layout of your extension, you may
-    # have to change the message extractors, you can read more about babel
-    # message extraction at
-    # http://babel.pocoo.org/docs/messages/#extraction-method-mapping-and-configuration
-    message_extractors={
-        'ckanext': [
-            ('**.py', 'python', None),
-            ('**.js', 'javascript', None),
-            ('**/templates/**.html', 'jinja2', None),
-        ],
-    },
-   entry_points="""
-    [ckan.plugins]
-    yukon_2025_design = ckanext.yukon_2025_design.plugin:Yukon2025DesignPlugin
+# setup(
+#     # If you are changing from the default layout of your extension, you may
+#     # have to change the message extractors, you can read more about babel
+#     # message extraction at
+#     # http://babel.pocoo.org/docs/messages/#extraction-method-mapping-and-configuration
+#     message_extractors={
+#         'ckanext': [
+#             ('**.py', 'python', None),
+#             ('**.js', 'javascript', None),
+#             ('**/templates/**.html', 'ckan', None),
+#         ],
+#     },
+#     entry_points="""
+#         [ckan.plugins]
+#         yukon_2025_design = ckanext.yukon_2025_design.plugin:Yukon2025DesignPlugin
 
-    [babel.extractors]
-    ckan = ckan.lib.extract:extract_ckan
-    """    
-)
+#         [babel.extractors]
+#         ckan = ckan.lib.extract:extract_ckan
+#         """
+# )
 
-# setup()
+setup()
