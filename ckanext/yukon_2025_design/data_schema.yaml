@@ -1,6 +1,6 @@
 cheming_version: 2
 dataset_type: data
-about: Open Data
+about: A reimplementation of the default CKAN dataset schema
 about_url: http://github.com/ckan/ckanext-scheming
 
 dataset_fields_groups:
@@ -15,11 +15,11 @@ dataset_fields_groups:
     fr: Renseignements sur la publication
 - name: data_coverage
   label:
-    en: Data Coverage
+    en: Data coverage
     fr: Couverture des données
 - name: usage_data
   label:
-    en: Usage Data
+    en: Usage data
     fr: Données sur l’utilisation
 - name: topics
   label:
@@ -62,7 +62,7 @@ dataset_fields:
   validators: ignore_missing
 - field_name: data_dictionary
   label:
-    en: Data Dictionary
+    en: Data dictionary
     fr: Dictionnaire de données
   form_snippet: text.html
   display_snippet: link.html
@@ -70,7 +70,7 @@ dataset_fields:
   group_name: publication_details
 - field_name: data_standard
   label:
-    en: Data Standard
+    en: Data standard
     fr: Norme de données
   form_snippet: text.html
   display_snippet: link.html
@@ -94,14 +94,14 @@ dataset_fields:
   group_name: topics
 - field_name: internal_contact_name
   label:
-    en: Internal Contact Name
+    en: Internal contact name
     fr: Nom de la personne-ressource interne
   form_snippet: text.html
   validators: not_empty unicode_safe
   group_name: publisher
 - field_name: internal_contact_email
   label:
-    en: Internal Contact Email
+    en: Internal contact email
     fr: Courriel de la personne-ressource interne
   form_snippet: text.html
   display_snippet: email.html
@@ -131,7 +131,7 @@ dataset_fields:
   group_name: publisher
 - field_name: custodian_email
   label:
-    en: Custodian Email
+    en: Custodian email
     fr: Courriel du dépositaire
   form_snippet: text.html
   display_snippet: email.html
@@ -148,7 +148,7 @@ dataset_fields:
   group_name: publisher
 - field_name: internal_notes
   label:
-    en: Internal Notes
+    en: Internal notes
     fr: Notes internes
   form_snippet: markdown.html
   display_snippet: markdown.html
@@ -219,27 +219,28 @@ dataset_fields:
   label:
     en: License
     fr: Licence
+  default: "OGL-Yukon-2.0"
   form_snippet: license.html
   required: true
   help_text: "The license under which the data is released."
   group_name: publication_details
-- field_name: metadata_created
+- field_name: date_published
   label:
-    en: Date Published
+    en: Date published
     fr: Date de publication
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
-- field_name: metadata_modified
+- field_name: date_updated
   label:
-    en: Date Updated
+    en: Date updated
     fr: Date de mise à jour
   form_snippet: null
   display_snippet: date.html
   group_name: publication_details
 - field_name: update_frequency
   label:
-    en: Update Frequency
+    en: Update frequency
     fr: Fréquence de mise à jour
   preset: select
   choices:
@@ -287,7 +288,7 @@ dataset_fields:
   group_name: publication_details
 - field_name: update_method
   label:
-    en: Update Method
+    en: Update method
     fr: Méthode de mise à jour
   preset: radio
   choices:
@@ -307,7 +308,7 @@ dataset_fields:
   group_name: publication_details
 - field_name: spatial_coverage_locations
   label:
-    en: Spatial Coverage Locations
+    en: Spatial coverage locations
     fr: Couverture spatiale – lieux
   form_snippet: text.html
   display_snippet: text.html
@@ -315,21 +316,21 @@ dataset_fields:
   group_name: data_coverage
 - field_name: temporal_coverage_start_date
   label:
-    en: Temporal Coverage Start Date
+    en: Temporal coverage start date
     fr: Couverture temporelle – date de début
   preset: date
   required: false
   group_name: data_coverage
 - field_name: temporal_coverage_end_date
   label:
-    en: Temporal Coverage End Date
+    en: Temporal coverage end date
     fr: Couverture temporelle – date de fin
   preset: date
   required: false
   group_name: data_coverage
 - field_name: data_quality_score
   label:
-    en: Data Quality Score
+    en: Data quality score
     fr: Cote de qualité des données
   preset: select
   choices:
@@ -342,7 +343,7 @@ dataset_fields:
         en: Bronze
         fr: Bronze
     - value: silver
-      label:
+      label: 
         en: Silver
         fr: Argent
     - value: gold

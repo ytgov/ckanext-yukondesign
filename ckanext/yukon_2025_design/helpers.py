@@ -102,12 +102,40 @@ def get_current_year():
     """Returns the current year as an integer."""
     return datetime.datetime.now().year
 
-def dataset_type_title(dataset_type):
-  """Convert dataset type to a human-readable title."""
+
+def dataset_type_title(dataset_type, plural=True):
+  """Convert dataset type to a human-readable title, supporting singular and plural."""
   mapping = {
-    "pia-summaries": "Privacy impact assessment summaries",
-    "information": "Open information",
-    "data": "Open Data",
-    "access-requests": "Completed Access to Information requests"
+    "pia-summaries": ("Privacy Impact Assessment summary", "Privacy Impact Assessment summaries"),
+    "information": ("Open information", "Open information"),
+    "data": ("Open data", "Open data"),
+    "access-requests": (
+      "Completed access to information request",
+      "Completed access to information requests"
+    )
   }
-  return mapping.get(dataset_type, dataset_type)
+
+  title_pair = mapping.get(dataset_type, (dataset_type, dataset_type))
+  return title_pair[1] if plural else title_pair[0]
+
+
+def dataset_type_menu_title(dataset_type):
+    """Convert dataset type to a human-readable title for menus."""
+    mapping = {
+        "pia-summaries": "a PIA summary",
+        "information": "open information",
+        "data": "open data",
+        "access-requests": " a completed access request"
+    }
+    return mapping.get(dataset_type, dataset_type)
+
+
+def add_matomo_siteid_to_context():
+    """
+    Adds the Matomo site ID to the template context.
+    This is used for tracking purposes.
+    """
+    # Get the Matomo site ID from the CKAN configuration
+    matomo_siteid = toolkit.config.get('ckan.matomo_siteid', '1')
+    # Return the Matomo site ID for direct use in templates
+    return matomo_siteid

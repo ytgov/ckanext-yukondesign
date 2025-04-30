@@ -3,6 +3,12 @@
 
 {% set dataset_type_title=h.dataset_type_title(dataset_type) %}
 
+{% do facet_titles.update({'tags': _('Keywords')}) %}
+
+{% do facet_titles.update({'groups': _('Topics')}) %}
+
+{% do facet_titles.update({'res_format': _('Format')}) %}
+
 {% block subtitle %}{{ _(dataset_type_title) }}{% endblock %}
 
 {% block breadcrumb_content %}
@@ -20,7 +26,7 @@
       {% elif dataset_type == 'information' %}
         {{_("Find annual reports, news releases, scientific research publications, and other information.")}}
       {% elif dataset_type == 'access-requests' %}
-        {{_("Search or browse completed Access to Information (ATIPP) requests and responsive records.")}} <a href="#">Submit an Access to Information request.</a>
+        {{_("Search or browse completed Access to Information (ATIPP) requests and responsive records.")}} <a target="_blank" href="https://yukon.ca/en/legal-and-social-supports/legal-services/request-access-information-records">{{_("Submit an Access to Information request.")}}</a>
       {% elif dataset_type == 'pia-summaries' %}
         {{_("Find summaries of completed Privacy Impact Assessments (PIAs).")}}
       {% endif %}
@@ -98,7 +104,7 @@
   {% set reordered_facet_titles = {
       'res_format': _("Format"),
       'organization': organization_label,
-      'groups': _("Topics"),
+      'groups': facet_titles.get('groups'),
       'tags': facet_titles.get('tags')
   } %}
 
