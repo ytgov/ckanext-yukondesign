@@ -1,0 +1,24 @@
+{% ckan_extends %}
+
+{% block title %}
+    {%- block subtitle %}
+        {{ _('Edit') }} {{ _(h.dataset_type_menu_title(pkg_dict.type)) }}
+    {% endblock -%}
+    {%- if self.subtitle()|trim %} {{ g.template_title_delimiter }} {% endif -%}
+    {{ g.site_title }}
+{% endblock %}
+{{ super() }}
+
+{% set dataset_type_title=h.dataset_type_title(dataset_type) %}
+{% block breadcrumb_content %}
+    {% if pkg %}
+    <li class="active">
+        {{ h.nav_link(_(dataset_type_title), named_route='%s.search' % dataset_type) }}
+    </li>
+	<li class="active">{% link_for _('Edit'), named_route=pkg.type ~ '.edit', id=pkg.name %}</li>
+    {% endif %}
+{% endblock %}
+
+{% block content_action %}
+    {% link_for h.humanize_entity_type('package', h.dataset_type_menu_title(dataset_type), 'view label') or _('View dataset'), named_route=pkg.type ~ '.read', id=pkg.name, class_='btn btn-secondary', icon='eye' %}
+{% endblock %}
