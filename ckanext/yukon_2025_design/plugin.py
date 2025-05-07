@@ -4,24 +4,12 @@ import ckanext.yukon_2025_design.action as action
 import ckanext.yukon_2025_design.helpers as helpers
 from ckanext.yukon_2025_design.auth import package_delete_sysadmin_only
 
-# Check for ITranslation interface for compatibility with all CKAN versions
-try:
-    ITranslation = plugins.ITranslation
-    has_translation = True
-except AttributeError:
-    ITranslation = object
-    has_translation = False
-
-bases = (plugins.SingletonPlugin,)
-if has_translation:
-    bases += (ITranslation,)
 
 class Yukon2025DesignPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
     plugins.implements(plugins.ITemplateHelpers)
-    # if has_translation:
     plugins.implements(plugins.ITranslation)
 
     def i18n_directory(self):
