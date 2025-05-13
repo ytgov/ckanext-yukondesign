@@ -1,0 +1,14 @@
+# yukondesign-js:
+#   filter: rjsmin
+#   output: ckanext-yukondesign/%(version)s-yukondesign.js
+#   contents:
+#     - js/yukondesign.js
+#   extra:
+#     preload:
+#       - base/main
+
+# yukondesign-css:
+#   filter: cssrewrite
+#   output: ckanext-yukondesign/%(version)s-yukondesign.css
+#   contents:
+#     - css/yukondesign.css

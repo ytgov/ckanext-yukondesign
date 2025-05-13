@@ -1,5 +1,5 @@
 [project]
-name = "ckanext-yukon-2025-design"
+name = "ckanext-yukondesign"
 version = "0.0.1"
 description = ""
 readme = "README.md"
@@ -19,10 +19,10 @@ keywords = [ "CKAN", ]
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/datopian/ckanext-yukon-2025-design"
+Homepage = "https://github.com/datopian/ckanext-yukondesign"
 
 [project.entry-points."ckan.plugins"]
-yukon_2025_design = "ckanext.yukon_2025_design.plugin:Yukon2025DesignPlugin"
+yukondesign = "ckanext.yukondesign.plugin:Yukon2025DesignPlugin"
 
 
 [build-system]

@@ -10,9 +10,9 @@ Deployment documentation
 We need to setup the following configuration settings in the CKAN configuration file (`/etc/ckan/default/ckan.ini`), or in the environment variables:
 
 ```
-CKAN__PLUGINS="scheming_datasets yukon_2025_design envvars"
-CKAN__LICENSES_GROUP_URL=file:///srv/app/src_extensions/ckanext-yukon-2025-design/licenses-yukon.json
-CKAN___SCHEMING__DATASET_SCHEMAS="ckanext.yukon_2025_design:data_schema.yaml ckanext.yukon_2025_design:information_schema.yaml ckanext.yukon_2025_design:access-requests_schema.yaml ckanext.yukon_2025_design:pia-summaries_schema.yaml"
+CKAN__PLUGINS="scheming_datasets yukondesign envvars"
+CKAN__LICENSES_GROUP_URL=file:///srv/app/src_extensions/ckanext-yukondesign/licenses-yukon.json
+CKAN___SCHEMING__DATASET_SCHEMAS="ckanext.yukondesign:data_schema.yaml ckanext.yukondesign:information_schema.yaml ckanext.yukondesign:access-requests_schema.yaml ckanext.yukondesign:pia-summaries_schema.yaml"
 ```
 
 License file is provided in the `licenses-yukon.json` file in the repository. You can change the path to the file if needed.

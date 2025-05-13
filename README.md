@@ -1,6 +1,6 @@
-[![Tests](https://github.com/datopian/ckanext-yukon-2025-design/workflows/Tests/badge.svg?branch=main)](https://github.com/datopian/ckanext-yukon-2025-design/actions)
+[![Tests](https://github.com/datopian/ckanext-yukondesign/workflows/Tests/badge.svg?branch=main)](https://github.com/datopian/ckanext-yukondesign/actions)
 
-# ckanext-yukon-2025-design
+# ckanext-yukondesign
 
 This extension is a CKAN extension that provides a new design for the Yukon 2025 project.
 
@@ -23,7 +23,7 @@ Additional information can be found in the [Deployment documentation](DEPLOYMENT
    For example installing any non-Python dependencies or adding any required
    config settings.
 
-To install ckanext-yukon-2025-design:
+To install ckanext-yukondesign:
 
 1. Activate your CKAN virtual environment, for example:
 
@@ -31,12 +31,12 @@ To install ckanext-yukon-2025-design:
 
 2. Clone the source and install it on the virtualenv
 
-    git clone https://github.com/datopian/ckanext-yukon-2025-design.git
-    cd ckanext-yukon-2025-design
+    git clone https://github.com/datopian/ckanext-yukondesign.git
+    cd ckanext-yukondesign
     pip install -e .
 	pip install -r requirements.txt
 
-3. Add `yukon-2025-design` to the `ckan.plugins` setting in your CKAN
+3. Add `yukondesign` to the `ckan.plugins` setting in your CKAN
    config file (by default the config file is located at
    `/etc/ckan/default/ckan.ini`).
 
@@ -51,11 +51,11 @@ None at present
 
 ## Developer installation
 
-To install ckanext-yukon-2025-design for development, activate your CKAN virtualenv and
+To install ckanext-yukondesign for development, activate your CKAN virtualenv and
 do:
 
-    git clone https://github.com/datopian/ckanext-yukon-2025-design.git
-    cd ckanext-yukon-2025-design
+    git clone https://github.com/datopian/ckanext-yukondesign.git
+    cd ckanext-yukondesign
     pip install -e .
     pip install -r dev-requirements.txt
 
@@ -67,9 +67,9 @@ To run the tests, do:
     pytest --ckan-ini=test.ini
 
 
-## Releasing a new version of ckanext-yukon-2025-design
+## Releasing a new version of ckanext-yukondesign
 
-If ckanext-yukon-2025-design should be available on PyPI you can follow these steps to publish a new version:
+If ckanext-yukondesign should be available on PyPI you can follow these steps to publish a new version:
 
 1. Update the version number in the `pyproject.toml` file. See [PEP 440](http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers) for how to choose version numbers.
 
