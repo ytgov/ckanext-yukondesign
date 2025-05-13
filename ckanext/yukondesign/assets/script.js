@@ -1,4 +1,4 @@
-ckan.module("yukon_2025_design-module", function ($, _) {
+ckan.module("yukondesign-module", function ($, _) {
   "use strict";
   return {
     options: {

@@ -1,8 +1,8 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-import ckanext.yukon_2025_design.action as action
-import ckanext.yukon_2025_design.helpers as helpers
-from ckanext.yukon_2025_design.auth import package_delete_sysadmin_only
+import ckanext.yukondesign.action as action
+import ckanext.yukondesign.helpers as helpers
+from ckanext.yukondesign.auth import package_delete_sysadmin_only
 
 
 class Yukon2025DesignPlugin(plugins.SingletonPlugin):
@@ -14,7 +14,7 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
     def update_config(self, config_):
         toolkit.add_template_directory(config_, "templates")
         toolkit.add_public_directory(config_, "public")
-        toolkit.add_resource("assets", "yukon_2025_design")
+        toolkit.add_resource("assets", "yukondesign")
 
     def get_actions(self):
         return {
