@@ -1,0 +1,322 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-05-14 21:19+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: ckanext/yukondesign/templates/footer.html:22
+msgid "Footer menu"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:27
+#: ckanext/yukondesign/templates/snippets/home_breadcrumb_item.html:2
+msgid "Home"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:30
+msgid "Documents"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:33
+msgid "Events"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:36
+msgid "Forms"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:39
+msgid "News"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:44
+msgid "Legislation"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:48
+msgid "Places"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:62
+msgid "Secondary Footer Menu"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:70
+msgid "Contact us"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:77
+msgid "Copyright"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:84
+msgid "Disclaimer"
+msgstr ""
+
+#: ckanext/yukondesign/templates/footer.html:91
+msgid "Privacy statement"
+msgstr ""
+
+#: ckanext/yukondesign/templates/group/snippets/helper.html:15
+msgid "What are Topics?"
+msgstr ""
+
+#: ckanext/yukondesign/templates/group/snippets/helper.html:19
+msgid ""
+"You can use Topics to create and manage collections of datasets. This "
+"could be to catalogue datasets for a particular project or team, or on a "
+"particular theme, or as a very simple way to help people find and search "
+"your own published datasets."
+msgstr ""
+
+#: ckanext/yukondesign/templates/group/index.html:3
+msgid "Add Topic"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:17
+msgid "Open government"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:20
+msgid ""
+"Open government is designed to improve government transparency, promote "
+"civic participation, and provide economic and social benefits."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:24
+msgid ""
+"This portal is a collection of publications and datasets from Yukon "
+"government departments. The public can use and access these resources "
+"freely to learn more about how government works, to carry out research, "
+"or to use data for commercial or non-commercial purposes."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:27
+msgid ""
+"The open government portal functions as both a library for current "
+"resources and an archive for older data and information which have "
+"historic value."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:30
+msgid ""
+"You can <a href=\"https://yukon.ca/en/your-government/open-government\" "
+"target=\"_blank\">learn more about the Government of Yukon’s open "
+"government program, read about recent updates on the eServices blog</a>, "
+"or <a href=\"https://open.yukon.ca/access-information\" "
+"target=\"_blank\">visit the Access to Information Registry</a>."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:37
+#: ckanext/yukondesign/templates/home/index.html:51
+msgid "Read more"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:47
+msgid "Read less"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:60
+#: ckanext/yukondesign/templates/snippets/add_dataset_dropdown.html:13
+msgid "Open information"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:62
+msgid ""
+"Find annual reports, news releases, scientific research publications, and"
+" other information."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:63
+msgid "Enter open information search terms"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:65
+msgid "Recently updated:"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:67
+msgid "See more open information publications"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:75
+#: ckanext/yukondesign/templates/snippets/add_dataset_dropdown.html:12
+msgid "Open data"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:77
+msgid ""
+"Find statistical and administrative data, geospatial data, and other "
+"machine-readable data."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:78
+msgid "Enter open data search terms"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:80
+msgid "Featured datasets:"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:82
+msgid "See more open data datasets"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:90
+msgid "Completed Access to Information requests"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:92
+msgid "Find completed Access to Information requests and responsive records."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:93
+msgid "Enter request search terms"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:95
+msgid "Recently added:"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:97
+msgid "See more completed Access to Information requests"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:103
+msgid "You can also see"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:104
+msgid "privacy impact assessment summaries"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:105
+msgid "visit the Access to Information Registry"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:106
+#: ckanext/yukondesign/templates/home/index.html:111
+msgid "or"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:107
+msgid "submit an Access to Information request."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:110
+msgid "Learn more about the Government of Yukon’s open government program"
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:112
+msgid "read about recent updates on the eServices blog."
+msgstr ""
+
+#: ckanext/yukondesign/templates/home/index.html:115
+msgid "To submit a new publication or dataset, or to report an issue, contact"
+msgstr ""
+
+#: ckanext/yukondesign/templates/package/new.html:9
+msgid "Create Dataset"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/add_dataset_dropdown.html:4
+msgid "Add Dataset"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/add_dataset_dropdown.html:9
+msgid "Add"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/add_dataset_dropdown.html:14
+msgid "Completed access to information request"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/add_dataset_dropdown.html:15
+msgid "Privacy impact assessment summary"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/facet_list.html:54
+msgid "Show all"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/facet_list.html:60
+msgid "Show popular"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/facet_list.html:98
+msgid "There are no {facet_type} that match this search"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:15
+msgid "{number} dataset found for \"{query}\""
+msgid_plural "{number} datasets found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:16
+msgid "No datasets found for \"{query}\""
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:17
+msgid "{number} dataset found"
+msgid_plural "{number} datasets found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:18
+msgid "No datasets found"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:21
+msgid "{number} topic found for \"{query}\""
+msgid_plural "{number} topics found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:22
+msgid "No topics found for \"{query}\""
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:23
+msgid "{number} topic found"
+msgid_plural "{number} topics found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:24
+msgid "No topics found"
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:27
+msgid "{number} organization found for \"{query}\""
+msgid_plural "{number} organizations found for \"{query}\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:28
+msgid "No organizations found for \"{query}\""
+msgstr ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:29
+msgid "{number} organization found"
+msgid_plural "{number} organizations found"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ckanext/yukondesign/templates/snippets/search_result_text.html:30
+msgid "No organizations found"
+msgstr ""
+

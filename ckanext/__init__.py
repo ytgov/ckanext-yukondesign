@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 # this is a namespace package
 try:
     import pkg_resources

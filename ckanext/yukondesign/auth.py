@@ -7,6 +7,8 @@ def package_delete_sysadmin_only(context, data_dict):
     """
     # Check if user has sysadmin role
     if not toolkit.check_access('sysadmin', context):
-        raise toolkit.NotAuthorized("Only sysadmins can delete datasets.")
+        raise toolkit.NotAuthorized(
+            "Only sysadmins can delete datasets."
+        )
     # Allow deletion
     return context

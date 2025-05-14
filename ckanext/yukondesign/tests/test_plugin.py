@@ -38,7 +38,6 @@ For functional tests that involve requests to the application, you can use the
 
         assert response.status_code == 200
 
-
 To temporary patch the CKAN configuration for the duration of a test you can use:
 
     import pytest
