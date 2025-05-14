@@ -93,6 +93,10 @@ msgstr ""
 msgid "Add Topic"
 msgstr "Ajouter un sujet"
 
+#: ckanext/yukondesign/templates/header.html:11
+msgid "Topics"
+msgstr "Sujets"
+
 #: ckanext/yukondesign/templates/home/index.html:17
 msgid "Open government"
 msgstr "Gouvernement ouvert"
