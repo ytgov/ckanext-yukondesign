@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-yukondesign 0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-13 11:34+0200\n"
+"POT-Creation-Date: 2025-05-14 21:06+0200\n"
 "PO-Revision-Date: 2025-05-13 13:25+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.15.0\n"
 
 #: ckanext/yukondesign/templates/footer.html:22
 msgid "Footer menu"
@@ -78,21 +78,20 @@ msgstr "Que sont les sujets ?"
 
 #: ckanext/yukondesign/templates/group/snippets/helper.html:19
 msgid ""
-"\n"
-"          You can use Topics to create and manage collections of "
-"datasets.\n"
-"          This could be to catalogue datasets for a particular project or"
-" team,\n"
-"          or on a particular theme, or as a very simple way to help "
-"people find\n"
-"          and search your own published datasets.\n"
-"        "
+"You can use Topics to create and manage collections of datasets. This "
+"could be to catalogue datasets for a particular project or team, or on a "
+"particular theme, or as a very simple way to help people find and search "
+"your own published datasets."
 msgstr ""
-" Vous pouvez utiliser des sujets pour créer et gérer des collections "
+"Vous pouvez utiliser des sujets pour créer et gérer des collections "
 "d'ensembles de données. Il peut s'agir de cataloguer des jeux de données "
 "pour un projet, une équipe ou un thème spécifique, ou encore d'aider les "
 "utilisateurs à trouver et à rechercher facilement vos propres jeux de "
 "données publiés."
+
+#: ckanext/yukondesign/templates/group/index.html:3
+msgid "Add Topic"
+msgstr "Ajouter un sujet"
 
 #: ckanext/yukondesign/templates/home/index.html:17
 msgid "Open government"
@@ -264,7 +263,7 @@ msgstr ""
 
 #: ckanext/yukondesign/templates/package/new.html:9
 msgid "Create Dataset"
-msgstr ""
+msgstr "Créer un ensemble de données"
 
 #: ckanext/yukondesign/templates/snippets/add_dataset_dropdown.html:4
 msgid "Add Dataset"
