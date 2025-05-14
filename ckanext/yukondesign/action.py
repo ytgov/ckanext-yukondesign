@@ -66,8 +66,8 @@ def package_show(up_func, context, data_dict):
         result.pop('internal_contact_name', None)
         result.pop('internal_contact_email', None)
         result.pop('internal_notes', None)
-    
     return result
+
 
 @toolkit.side_effect_free
 @toolkit.chained_action
@@ -142,7 +142,9 @@ def package_set_featured(context, data_dict):
     # Extract dataset IDs from data_dict
     dataset_ids = data_dict.get('dataset_ids')
     if not dataset_ids or len(dataset_ids) != 3:
-        raise toolkit.ValidationError("Exactly three dataset IDs or names must be provided.")
+        raise toolkit.ValidationError(
+            "Exactly three dataset IDs or names must be provided."
+        )
 
     # Check if all provided datasets exist and are of type 'data'
     non_existent_datasets = []

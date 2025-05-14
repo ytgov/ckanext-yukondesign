@@ -15,7 +15,7 @@ setup(
         'ckanext': [
             ('**.py', 'python', None),
             ('**.js', 'javascript', None),
-            ('**/templates/**.html', 'ckan', None),
+            ('**/templates/**.html', 'jinja2', None),
         ],
     },
     entry_points="""
@@ -26,5 +26,3 @@ setup(
         ckan = ckan.lib.extract:extract_ckan
         """
 )
-
-# setup()
