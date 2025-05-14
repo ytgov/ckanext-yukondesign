@@ -11,13 +11,7 @@ setup(
     # have to change the message extractors, you can read more about babel
     # message extraction at
     # http://babel.pocoo.org/docs/messages/#extraction-method-mapping-and-configuration
-    message_extractors={
-        'ckanext': [
-            ('**.py', 'python', None),
-            ('**.js', 'javascript', None),
-            ('**/templates/**.html', 'jinja2', None),
-        ],
-    },
+    # Removed message_extractors as it is not supported by setuptools
     entry_points="""
         [ckan.plugins]
         yukondesign = ckanext.yukon.plugin:Yukon2025DesignPlugin
