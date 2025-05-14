@@ -6,11 +6,21 @@ from ckanext.yukondesign.auth import package_delete_sysadmin_only
 
 
 class Yukon2025DesignPlugin(plugins.SingletonPlugin):
+    plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
     plugins.implements(plugins.ITemplateHelpers)
 
+    def i18n_domain(self):
+        return 'yukondesign'
+    
+    def i18n_directory(self):
+        return 'ckanext/yukondesign/i18n'
+    
+    def i18n_locales(self):
+        return ['en', 'fr']
+    
     def update_config(self, config_):
         toolkit.add_template_directory(config_, "templates")
         toolkit.add_public_directory(config_, "public")
