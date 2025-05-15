@@ -1,7 +1,7 @@
 {% extends "page.html" %}
 {% import 'macros/form.html' as form %}
 
-{% set dataset_type_title=h.dataset_type_title(dataset_type) %}
+{% set dataset_type_title = _(h.dataset_type_title(dataset_type)) %}
 
 {% do facet_titles.update({'tags': _('Keywords')}) %}
 
@@ -9,10 +9,10 @@
 
 {% do facet_titles.update({'res_format': _('Format')}) %}
 
-{% block subtitle %}{{ _(dataset_type_title) }}{% endblock %}
+{% block subtitle %}{{ dataset_type_title }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li class="active">{{ h.nav_link(_(dataset_type_title), named_route='%s.search' % dataset_type) }}</li>
+  <li class="active">{{ h.nav_link(dataset_type_title, named_route='%s.search' % dataset_type) }}</li>
 {% endblock %}
 
 {% block primary_content %}

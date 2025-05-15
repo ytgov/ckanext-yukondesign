@@ -13,7 +13,7 @@
 {% block breadcrumb_content %}
     {% if pkg %}
     <li class="active">
-        {{ h.nav_link(_(dataset_type_title), named_route='%s.search' % dataset_type) }}
+        {{ _(h.nav_link(_(dataset_type_title), named_route='%s.search' % dataset_type)) }}
     </li>
 	<li class="active">{% link_for _('Edit'), named_route=pkg.type ~ '.edit', id=pkg.name %}</li>
     {% endif %}

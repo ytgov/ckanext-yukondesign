@@ -202,7 +202,7 @@ msgstr "Entrer les termes d’interrogation pour les données ouvertes"
 
 #: ckanext/yukondesign/templates/home/index.html:80
 msgid "Featured datasets:"
-msgstr "Ensembles de données en vedette :"
+msgstr "Ensembles de données en vedette:"
 
 #: ckanext/yukondesign/templates/home/index.html:82
 msgid "See more open data datasets"
@@ -210,6 +210,10 @@ msgstr "Voir plus d’ensembles de données ouvertes"
 
 #: ckanext/yukondesign/templates/home/index.html:90
 msgid "Completed Access to Information requests"
+msgstr "Demandes d’accès à l’information remplies"
+
+#: ckanext/yukondesign/templates/package/search.html:12
+msgid "Completed access to information requests"
 msgstr "Demandes d’accès à l’information remplies"
 
 #: ckanext/yukondesign/templates/home/index.html:92
@@ -237,6 +241,10 @@ msgstr "Pour consulter "
 #: ckanext/yukondesign/templates/home/index.html:104
 msgid "privacy impact assessment summaries"
 msgstr "des résumés d’évaluation des facteurs relatifs à la vie privée, "
+
+#: ckanext/yukondesign/templates/package/search.html:12
+msgid "Privacy Impact Assessment summaries"
+msgstr "Des résumés d’évaluation des facteurs relatifs à la vie privée"
 
 #: ckanext/yukondesign/templates/home/index.html:105
 msgid "visit the Access to Information Registry"
