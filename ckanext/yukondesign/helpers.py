@@ -131,14 +131,15 @@ def dataset_type_title(dataset_type, plural=True):
 
 
 def dataset_type_menu_title(dataset_type):
-    """Convert dataset type to a human-readable title for menus."""
+    """Convert dataset type to a human-readable title for menus, translated."""
+    _ = toolkit._
     mapping = {
-        "pia-summaries": "a PIA summary",
-        "information": "open information",
-        "data": "open data",
-        "access-requests": " a completed access request"
+        "pia-summaries": _("a PIA summary"),
+        "information": _("open information"),
+        "data": _("open data"),
+        "access-requests": _("a completed access request")
     }
-    return mapping.get(dataset_type, dataset_type)
+    return mapping.get(dataset_type, _(dataset_type))
 
 
 def add_matomo_siteid_to_context():

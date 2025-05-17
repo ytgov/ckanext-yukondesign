@@ -9,12 +9,14 @@
             style="max-width: 130px;"
         /></a>
       </div>
-
+      
       <ul class="list-inline yt-nav-items mb-0 mt-2 mt-md-0">
         <li class="list-inline-item">
-          <a href="/fr" class="btn btn-link" hreflang="fr" lang="fr"
-            >Français</a
-          >
+          {% if g.locale == 'fr' %}
+            <a href="{{ request.path.replace('/fr', '', 1) or '/' }}" class="btn btn-link" hreflang="en" lang="en">English</a>
+          {% else %}
+            <a href="/fr{{ request.path if not request.path.startswith('/fr') else request.path[3:] }}" class="btn btn-link" hreflang="fr" lang="fr">Français</a>
+          {% endif %}
         </li>
       </ul>
     </header>

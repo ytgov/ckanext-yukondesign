@@ -22,9 +22,9 @@ Example:
 <ol class="stages {{ class }}">
   <li class="first {{ s1 }}">
     {% if s1 != 'complete' %}
-      <span class="highlight">{{_("Create")}} {{ h.dataset_type_menu_title(dataset_type) }}</span>
+      <span class="highlight">{{ _("Create") }} {{ h.dataset_type_menu_title(dataset_type) }}</span>
     {% else %}
-      <button class="highlight" name="save" value="go-dataset" type="submit">{{_("Create")}} {{ h.dataset_type_menu_title(dataset_type) }}</button>
+      <button class="highlight" name="save" value="go-dataset" type="submit">{{ _("Create") }} {{ h.dataset_type_menu_title(dataset_type) }}</button>
     {% endif %}
   </li>
   <li class="last {{ s2 }}">

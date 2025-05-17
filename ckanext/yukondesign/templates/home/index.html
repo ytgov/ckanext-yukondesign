@@ -1,5 +1,6 @@
 {% extends "page.html" %}
 {% import "frontend/components.html" as components %}
+{% set lang_prefix = '/fr' if request.environ.CKAN_LANG == 'fr' and not request.path.startswith('/fr') else '' %}
 
 {% block maintag %}{% endblock %}
 {% block toolbar %}{% endblock %}
@@ -61,11 +62,12 @@
               "id": "open-information",
               "description": _("Find annual reports, news releases, scientific research publications, and other information."),
               "input_placeholder": _("Enter open information search terms"),
-              "action": url_for('information.search'),
+              "action": lang_prefix ~ url_for('information.search'),
               "list_title": _("Recently updated:"),
               "list": h.recently_updated_open_informations(),
               "list_cta_title": _("See more open information publications"),
-              "list_cta_href": url_for('information.search'),
+              "list_cta_href": lang_prefix ~ url_for('information.search'),
+              "lang_prefix": lang_prefix
             }) }}
           </div>
         </div>
@@ -76,11 +78,12 @@
               "id": "open-data",
               "description": _("Find statistical and administrative data, geospatial data, and other machine-readable data."),
               "input_placeholder": _("Enter open data search terms"),
-              "action": url_for('data.search'),
+              "action": lang_prefix ~ url_for('data.search'),
               "list_title": _("Featured datasets:"),
               "list": h.get_featured_datasets(),
               "list_cta_title": _("See more open data datasets"),
-              "list_cta_href": url_for('data.search'),
+              "list_cta_href": lang_prefix ~ url_for('data.search'),
+              "lang_prefix": lang_prefix
             }) }}
           </div>
         </div>
@@ -91,18 +94,19 @@
               "id": "completed-access-to-information-requests",
               "description": _("Find completed Access to Information requests and responsive records."),
               "input_placeholder": _("Enter request search terms"),
-              "action": url_for('access-requests.search'),
+              "action": lang_prefix ~ url_for('access-requests.search'),
               "list_title": _("Recently added:"),
               "list": h.recently_added_access_requests(),
               "list_cta_title": _("See more completed Access to Information requests"),
-              "list_cta_href": url_for('access-requests.search'),
+              "list_cta_href": lang_prefix ~ url_for('access-requests.search'),
+              "lang_prefix": lang_prefix
             }) }}
             <div class="row mt-4">
               <div class="col-lg-5 d-flex flex-column gap-2">
                 <div>
                   {{ _("You can also see") }} 
-                  <a href="{{url_for('pia-summaries.search')}}" target="_blank">{{ _("privacy impact assessment summaries") }}</a>, 
-                  <a target="_blank" href="https://open.yukon.ca/access-information">{{ _("visit the Access to Information Registry") }}</a>, 
+                  <a href="{{ lang_prefix }}{{url_for('pia-summaries.search')}}" target="_blank">{{ _("privacy impact assessment summaries") }}</a>, 
+                  <a target="_blank" href="https://open.yukon.ca{{ lang_prefix }}/access-information">{{ _("visit the Access to Information Registry") }}</a>, 
                   {{ _("or") }} 
                   <a target="_blank" href="https://yukon.ca/en/legal-and-social-supports/legal-services/request-access-information-records">{{ _("submit an Access to Information request.") }}</a>
                 </div>

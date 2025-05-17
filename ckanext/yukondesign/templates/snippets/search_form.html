@@ -1,11 +1,22 @@
 {% import 'macros/form.html' as form %}
 
-{% set placeholder = placeholder if placeholder else _('Enter search terms') %}
 {% set sorting = sorting if sorting else [(_('Name Ascending'), 'name asc'), (_('Name Descending'), 'name desc')] %}
 {% set search_class = search_class if search_class else 'search-giant' %}
 {% set no_bottom_border = no_bottom_border if no_bottom_border else true %}
 {% set form_id = form_id if form_id else false %}
+{% if type == 'data' %}
+  {% set placeholder = _("Enter open data search terms") %}
+{% elif type == 'information' %}
+  {% set placeholder = _("Enter open information search terms") %}
+{% elif type == 'access-requests' %}
+  {% set placeholder = _("Enter request search terms") %}
+{% elif type == 'pia-summaries' %}
+  {% set placeholder = _("Enter PIA summaries search terms") %}
+{% endif %}
 
+{# Set the query and error variables #}
+{% set query = query if query else '' %}
+{% set error = error if error else false %}
 <form {% if form_id %}id="{{ form_id }}" {% endif %}class="search-form{% if no_bottom_border %} no-bottom-border{% endif %} pb-0" method="get" data-module="select-switch">
 
   {% block search_input %}
