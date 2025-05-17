@@ -414,3 +414,53 @@ msgstr "Étiquettes"
 msgid "Organisations"
 msgstr "Organisations"
 
+msgid "What is open data?"
+msgstr "Qu'est-ce que les données ouvertes?"
+
+msgid "Open data datasets include statistical and administrative data, geospatial data, and other machine-readable data."
+msgstr "Les ensembles de données ouvertes comprennent des données statistiques et administratives, des données géospatiales et d'autres données lisibles par machine."
+
+msgid "What is open information?"
+msgstr "Qu'est-ce que les informations ouvertes?"
+
+msgid "Open information publications include annual reports, news releases, scientific research publications, and other information."
+msgstr "Les publications d'informations ouvertes comprennent des rapports annuels, des communiqués de presse, des publications de recherche scientifique et d'autres informations."
+
+msgid "What are Completed Access to Information requests?"
+msgstr "Qu'est-ce que les demandes d'accès à l'information terminées?"
+
+msgid "Completed Access to Information requests and responsive records are published for program-related Access to Information requests."
+msgstr "Les demandes d'accès à l'information terminées et les dossiers correspondants sont publiés pour les demandes d'accès à l'information liées aux programmes."
+
+msgid "What are Privacy Impact Assessment summaries?"
+msgstr "Qu'est-ce que les résumés d'évaluation des facteurs relatifs à la vie privée?"
+
+msgid "Privacy Impact Assessment summaries are published for Privacy Impact Assessments completed by public bodies."
+msgstr "Les résumés d'évaluation des facteurs relatifs à la vie privée sont publiés pour les évaluations des facteurs relatifs à la vie privée effectuées par les organismes publics."
+
+msgid "Create"
+msgstr "Créer"
+
+msgid "a completed access request"
+msgstr " une demande d'accès terminée"
+
+msgid "a PIA summary"
+msgstr "un résumé EFVP"
+
+msgid "open data"
+msgstr "données ouvertes"
+
+msgid "open information"
+msgstr "informations ouvertes"
+
+msgid "Access requests"
+msgstr "Demandes d'accès"
+
+msgid "PIA summaries"
+msgstr "Résumés EFVP"
+
+msgid "Update"
+msgstr "Mettre à jour"
+
+msgid "View"
+msgstr "Voir"

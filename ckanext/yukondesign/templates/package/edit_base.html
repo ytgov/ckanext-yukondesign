@@ -2,7 +2,7 @@
 
 {% block title %}
     {%- block subtitle %}
-        {{ _('Edit') }} {{ _(h.dataset_type_menu_title(pkg_dict.type)) }}
+        {{ _('Edit') }} {{ h.dataset_type_menu_title(pkg_dict.type) }}
     {% endblock -%}
     {%- if self.subtitle()|trim %} {{ g.template_title_delimiter }} {% endif -%}
     {{ g.site_title }}
@@ -20,5 +20,5 @@
 {% endblock %}
 
 {% block content_action %}
-    {% link_for h.humanize_entity_type('package', h.dataset_type_menu_title(dataset_type), 'view label') or _('View dataset'), named_route=pkg.type ~ '.read', id=pkg.name, class_='btn btn-secondary', icon='eye' %}
+    {% link_for _('View') ~ ' ' ~ h.dataset_type_menu_title(dataset_type), named_route=pkg.type ~ '.read', id=pkg.name, class_='btn btn-secondary', icon='eye' %}
 {% endblock %}
