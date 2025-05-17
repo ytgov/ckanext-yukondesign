@@ -405,8 +405,8 @@ msgstr "Informations sur les métadonnées"
 msgid "View changes"
 msgstr "Voir les changements"
 
-msgid " Access via API"
-msgstr " Accès via l'API"
+msgid "Access via API"
+msgstr "Accès via l'API"
 
 msgid "Keywords"
 msgstr "Étiquettes"
