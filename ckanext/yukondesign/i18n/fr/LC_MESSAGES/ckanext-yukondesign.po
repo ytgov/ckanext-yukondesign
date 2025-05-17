@@ -259,6 +259,14 @@ msgstr "ou"
 msgid "submit an Access to Information request."
 msgstr "soumettez une demande d’accès à l’information."
 
+#: ckanext/yukondesign/templates/package/search.html:29
+msgid "Search or browse completed Access to Information (ATIPP) requests and responsive records."
+msgstr "Rechercher ou parcourir les demandes d’accès à l’information (AIPRP) remplies et les dossiers correspondants."
+
+#: ckanext/yukondesign/templates/package/search.html:29
+msgid "Submit an Access to Information request."
+msgstr "Soumettre une demande d’accès à l’information."
+
 #: ckanext/yukondesign/templates/home/index.html:110
 msgid "Learn more about the Government of Yukon’s open government program"
 msgstr "En savoir plus sur le programme du gouvernement ouvert du Yukon"
@@ -364,4 +372,45 @@ msgstr[1] "{number} organisations trouvées"
 #: ckanext/yukondesign/templates/snippets/search_result_text.html:30
 msgid "No organizations found"
 msgstr "Aucune organisation trouvée"
+
+#: ckanext/yukondesign/templates/snippets/search_form.html:14
+msgid "Enter PIA summaries search terms"
+msgstr "Entrer les termes de recherche pour les résumés d’évaluation des facteurs relatifs à la vie privée"
+
+#: ckanext/yukondesign/templates/package/search.html:31
+msgid "Find summaries of completed Privacy Impact Assessments (PIAs)."
+msgstr "Accéder aux résumés des évaluations des facteurs relatifs à la vie privée (EFVP) terminées."
+
+msgid "Date updated"
+msgstr "Date de mise à jour"
+
+msgid "Date created"
+msgstr "Date de création"
+
+msgid "Publisher"
+msgstr "Éditeur"
+
+msgid "Public body"
+msgstr "Organisme public"
+
+msgid "Methodology"
+msgstr "Méthode"
+
+msgid "Changelog"
+msgstr "Journal des changements"
+
+msgid "Metadata information"
+msgstr "Informations sur les métadonnées"
+
+msgid "View changes"
+msgstr "Voir les changements"
+
+msgid " Access via API"
+msgstr " Accès via l'API"
+
+msgid "Keywords"
+msgstr "Étiquettes"
+
+msgid "Organisations"
+msgstr "Organisations"
 
