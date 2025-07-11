@@ -125,23 +125,24 @@
 
           {%- endif -%}
 
-
-          {% if field.field_name == "temporal_coverage_start_date" and pkg_dict[field.field_name] != "" %}
-            <tr>
-              <th scope="row" class="dataset-label">
-                {{ _("Temporal coverage") }}
-              </th>
-              <td>
-                {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
-                {% if temporal_end_field and pkg_dict[temporal_end_field.field_name]|trim %}
-                  {% if pkg_dict["temporal_coverage_start_date"] and pkg_dict["temporal_coverage_end_date"] %}
-                    <span class="mx-2">{{ _("to") }}</span>
+          {% if pkg_dict["temporal_coverage_start_date"] or pkg_dict["temporal_coverage_end_date"] %}
+            {% if field.field_name == "temporal_coverage_start_date" and pkg_dict[field.field_name] != "" %}
+              <tr>
+                <th scope="row" class="dataset-label">
+                  {{ _("Temporal coverage") }}
+                </th>
+                <td>
+                  {%- snippet 'scheming/snippets/display_field.html', field=field, data=pkg_dict, schema=schema -%}
+                  {% if temporal_end_field and pkg_dict[temporal_end_field.field_name]|trim %}
+                    {% if pkg_dict["temporal_coverage_start_date"] and pkg_dict["temporal_coverage_end_date"] %}
+                      <span class="mx-2">{{ _("to") }}</span>
+                    {% endif %}
+                    {%- snippet 'scheming/snippets/display_field.html', field=temporal_end_field, data=pkg_dict, schema=schema -%}
                   {% endif %}
-                  {%- snippet 'scheming/snippets/display_field.html', field=temporal_end_field, data=pkg_dict, schema=schema -%}
-                {% endif %}
-              </td>
-            </tr>
-          {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+          {%- endif -%}
   
           {% if field.field_name == "license_id" %}
             <tr>
