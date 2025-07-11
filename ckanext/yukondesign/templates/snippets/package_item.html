@@ -79,7 +79,7 @@ Example:
                         {% block resources_inner %}
                             {% set formats = h.dict_list_reduce(package.resources, 'format') %}
                             {% for resource in formats %}
-                                <a href="{{ h.url_for(package.type ~ '.read', id=package.name) }}" class="" data-format="{{ resource.lower() }}">{{ resource }}</a>{% if not loop.last %}, {% endif %}
+                                <a href="{{ h.url_for(package.type ~ '.read', id=package.name) }}#dataset-resources" class="" data-format="{{ resource.lower() }}">{{ resource }}</a>{% if not loop.last %}, {% endif %}
                             {% endfor %}
                         {% endblock %}
                    
