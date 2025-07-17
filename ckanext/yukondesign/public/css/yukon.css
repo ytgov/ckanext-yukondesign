@@ -2,7 +2,6 @@ body {
   --bs-border-color: #f1f1f1;
   --bs-link-color-rgb: 0, 131, 146;
   --bs-link-color: #008392;
-  --bs-link-hover-color: #1a5668;
   font-family: var(--bs-body-font-family);
 }
 a {
