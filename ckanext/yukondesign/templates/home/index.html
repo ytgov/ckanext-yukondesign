@@ -28,11 +28,7 @@
                     {{_("The open government portal functions as both a library for current resources and an archive for older data and information which have historic value.")}}
                   </p>
                   <p>
-                    {{ _('You can') }}
-                    <a href="https://yukon.ca/en/your-government/open-government" target="_blank">{{ _('learn more about the Government of Yukon’s open government program') }}</a>,
-                    <a href="https://yukon.ca/en/blogs/digital-information-and-services" target="_blank">{{ _('read about recent updates on the eServices blog.') }}</a>,
-                    {{ _('or') }}
-                    <a href="https://yukon.ca/en/your-government/open-government/access-information" target="_blank">{{ _('visit the Access to Information Registry') }}</a>.
+                    {{ _('You can <a href="https://yukon.ca/en/your-government/open-government" target="_blank">learn more about the Government of Yukon’s open government program</a> <a href="https://yukon.ca/en/blogs/digital-information-and-services" target="_blank">read about recent updates on the eServices blog</a> or <a href="https://yukon.ca/en/your-government/open-government/access-information" target="_blank">visit the Access to Information Registry</a>.')|safe }}
                   </p>
                   <p>
                     {{ _('<p>\n                    For government services and news, visit <a href="https://yukon.ca/" target="_blank">Yukon.ca</a>\n                  </p>')|safe }}
@@ -110,7 +106,7 @@
                 <div>
                   {{ _("You can also see") }} 
                   <a href="{{ lang_prefix }}{{url_for('pia-summaries.search')}}" target="_blank">{{ _("privacy impact assessment summaries") }}</a>, 
-                  <a target="_blank" href="https://open.yukon.ca{{ lang_prefix }}/access-information">{{ _("visit the Access to Information Registry") }}</a>, 
+                  <a target="_blank" href="https://open.yukon.ca{{ lang_prefix }}/access-information">{{ _("visit the Access to Information Registry") }}</a>
                   {{ _("or") }}
                   {% if lang_prefix != '/fr' %}
                     <a target="_blank" href="https://yukon.ca/en/legal-and-social-supports/legal-services/request-access-information-records">{{ _("submit an Access to Information request.") }}</a>
@@ -119,12 +115,12 @@
                   {% endif %}
                 </div>
                 <div>
-                  {% if lang_prefix != '/fr' %}}
-                    <a target="_blank" href="https://yukon.ca/en/your-government/open-government">{{ _("Learn more about the Government of Yukon’s open government program") }}</a>, 
+                  {% if lang_prefix != '/fr' %}
+                    <a target="_blank" href="https://yukon.ca/en/your-government/open-government">{{ _("Learn more about the Government of Yukon’s open government program") }}</a>
                     {{ _("or") }} 
                     <a target="_blank" href="https://yukon.ca/en/blogs/digital-information-and-services">{{ _("read about recent updates on the eServices blog.") }}</a>
                   {% else %}
-                    <a target="_blank" href="https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert">{{ _("Learn more about the Government of Yukon’s open government program") }}</a>, 
+                    <a target="_blank" href="https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert">{{ _("Learn more about the Government of Yukon’s open government program") }}</a> 
                     {{ _("or") }} 
                     <a target="_blank" href="https://yukon.ca/fr/blogs/blogue-sur-les-renseignements-et-les-services-en-ligne">{{ _("read about recent updates on the eServices blog.") }}</a>
                   {% endif %}

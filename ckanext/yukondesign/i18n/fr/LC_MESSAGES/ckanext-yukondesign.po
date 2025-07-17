@@ -133,28 +133,11 @@ msgstr ""
 "ressources récentes et d’archives pour les données et renseignements plus"
 " anciens ayant une valeur historique."
 
-
-#: ckanext/yukondesign/templates/home/index.html:30
-msgid "You can"
-msgstr "Vous pouvez"
-
 #: ckanext/yukondesign/templates/home/index.html:31
-msgid "learn more about the Government of Yukon’s open government program"
-msgstr "<a href=\"https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert\" target=\"_blank\">en savoir plus sur le programme du gouvernement ouvert du Yukon</a>"
-
-#: ckanext/yukondesign/templates/home/index.html:32
-msgid "read about recent updates on the eServices blog."
-msgstr "<a href=\"https://yukon.ca/fr/blogs/blogue-sur-les-renseignements-et-les-services-en-ligne\" target=\"_blank\">lisez les plus récents billets sur le blogue des Services en ligne</a>"
-
-#: ckanext/yukondesign/templates/home/index.html:33
-msgid "or"
-msgstr "ou"
+msgid "You can <a href=\"https://yukon.ca/en/your-government/open-government\" target=\"_blank\">learn more about the Government of Yukon’s open government program</a>, <a href=\"https://yukon.ca/en/blogs/digital-information-and-services\" target=\"_blank\">read about recent updates on the eServices blog</a>, or <a href=\"https://yukon.ca/en/your-government/open-government/access-information\" target=\"_blank\">visit the Access to Information Registry</a>."
+msgstr "<a href=\"https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert\" target=\"_blank\">Renseignez-vous sur le programme du gouvernement ouvert du Yukon</a>, <a href=\"https://yukon.ca/fr/blogs/blogue-sur-les-renseignements-et-les-services-en-ligne\" target=\"_blank\">lisez les plus récents billets sur le blogue des Services en ligne</a> ou <a href=\"https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert/acces-information\" target=\"_blank\">consultez le registre de l’accès à l’information</a>."
 
 #: ckanext/yukondesign/templates/home/index.html:34
-msgid "visit the Access to Information Registry"
-msgstr "<a href=\"https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert/acces-information\" target=\"_blank\">consultez le registre de l’accès à l’information</a>"
-
-#: ckanext/yukondesign/templates/home/index.html:120
 msgid "<p>\n                    For government services and news, visit <a href=\"https://yukon.ca/\" target=\"_blank\">Yukon.ca</a>\n                  </p>"
 msgstr "<p>\n                    Pour les services gouvernementaux et les nouvelles, visitez <a href=\"https://yukon.ca/fr\" target=\"_blank\">Yukon.ca</a>\n                  </p>"
 
@@ -249,7 +232,7 @@ msgstr "Pour consulter "
 
 #: ckanext/yukondesign/templates/home/index.html:104
 msgid "privacy impact assessment summaries"
-msgstr "des résumés d’évaluation des facteurs relatifs à la vie privée, "
+msgstr "des résumés d’évaluation des facteurs relatifs à la vie privée "
 
 #: ckanext/yukondesign/templates/package/search.html:12
 msgid "Privacy Impact Assessment summaries"
@@ -270,7 +253,7 @@ msgstr "soumettez une demande d’accès à l’information."
 
 #: ckanext/yukondesign/templates/package/search.html:29
 msgid "Search or browse completed Access to Information (ATIPP) requests and responsive records."
-msgstr "Rechercher ou parcourir les demandes d’accès à l’information (AIPRP) remplies et les dossiers correspondants."
+msgstr "Accéder aux demandes d’accès à l’information remplies (LAIPVP) et aux dossiers correspondants."
 
 #: ckanext/yukondesign/templates/package/search.html:29
 msgid "Submit an Access to Information request."
@@ -278,11 +261,11 @@ msgstr "Soumettre une demande d’accès à l’information."
 
 #: ckanext/yukondesign/templates/home/index.html:110
 msgid "Learn more about the Government of Yukon’s open government program"
-msgstr "En savoir plus sur le programme du gouvernement ouvert du Yukon"
+msgstr "Renseignez-vous sur le programme du gouvernement ouvert du Yukon"
 
 #: ckanext/yukondesign/templates/home/index.html:112
 msgid "read about recent updates on the eServices blog."
-msgstr "consultez le blogue des Services en ligne."
+msgstr "consultez le blogue des Services en ligne pour connaître les nouveautés."
 
 #: ckanext/yukondesign/templates/home/index.html:115
 msgid "To submit a new publication or dataset, or to report an issue, contact"
@@ -473,3 +456,6 @@ msgstr "Mettre à jour"
 
 msgid "View"
 msgstr "Voir"
+
+msgid "Government of Yukon"
+msgstr "Gouvernement du Yukon"

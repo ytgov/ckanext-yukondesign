@@ -153,7 +153,7 @@
         </div>
       </div>
       <div class="footer__legal font-light w-auto flex pt-2 pt-md-4 pb-2 ms-1">
-        ©&nbsp;{{ h.get_current_year() }}&nbsp;<a href="https://yukon.ca">Government of Yukon</a>
+        ©&nbsp;{{ h.get_current_year() }}&nbsp;<a href="https://yukon.ca{% if lang_prefix == '/fr' %}/fr{% endif %}">{{ _("Government of Yukon") }}</a>
       </div>
     </div>
   </div>
