@@ -133,21 +133,30 @@ msgstr ""
 "ressources récentes et d’archives pour les données et renseignements plus"
 " anciens ayant une valeur historique."
 
+
 #: ckanext/yukondesign/templates/home/index.html:30
-msgid ""
-"You can <a href=\"https://yukon.ca/en/your-government/open-government\" "
-"target=\"_blank\">learn more about the Government of Yukon’s open "
-"government program, read about recent updates on the eServices blog</a>, "
-"or <a href=\"https://open.yukon.ca/access-information\" "
-"target=\"_blank\">visit the Access to Information Registry</a>."
-msgstr ""
-"Pour <a href=\"https://yukon.ca/fr/votre-gouvernement/gouvernement-"
-"ouvert\">en savoir plus sur le programme du gouvernement ouvert du "
-"Yukon</a>, <a href=\"https://yukon.ca/fr/blogs/blogue-sur-les-"
-"renseignements-et-les-services-en-ligne\">lisez les plus récents billets "
-"sur le blogue des Services en ligne</a> ou <a "
-"href=\"https://open.yukon.ca/fr/access-information\">consultez le "
-"registre de l’accès à l’information</a>."
+msgid "You can"
+msgstr "Vous pouvez"
+
+#: ckanext/yukondesign/templates/home/index.html:31
+msgid "learn more about the Government of Yukon’s open government program"
+msgstr "<a href=\"https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert\" target=\"_blank\">en savoir plus sur le programme du gouvernement ouvert du Yukon</a>"
+
+#: ckanext/yukondesign/templates/home/index.html:32
+msgid "read about recent updates on the eServices blog."
+msgstr "<a href=\"https://yukon.ca/fr/blogs/blogue-sur-les-renseignements-et-les-services-en-ligne\" target=\"_blank\">lisez les plus récents billets sur le blogue des Services en ligne</a>"
+
+#: ckanext/yukondesign/templates/home/index.html:33
+msgid "or"
+msgstr "ou"
+
+#: ckanext/yukondesign/templates/home/index.html:34
+msgid "visit the Access to Information Registry"
+msgstr "<a href=\"https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert/acces-information\" target=\"_blank\">consultez le registre de l’accès à l’information</a>"
+
+#: ckanext/yukondesign/templates/home/index.html:120
+msgid "<p>\n                    For government services and news, visit <a href=\"https://yukon.ca/\" target=\"_blank\">Yukon.ca</a>\n                  </p>"
+msgstr "<p>\n                    Pour les services gouvernementaux et les nouvelles, visitez <a href=\"https://yukon.ca/fr\" target=\"_blank\">Yukon.ca</a>\n                  </p>"
 
 #: ckanext/yukondesign/templates/home/index.html:37
 #: ckanext/yukondesign/templates/home/index.html:51
