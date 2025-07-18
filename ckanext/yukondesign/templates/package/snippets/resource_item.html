@@ -20,10 +20,11 @@
   <div>
     {% block resource_item_title %}
     <a class="heading resource-name" href="{{ res.url }}" target="_blank" title="{{ res.name or res.description }}">
-      {{ h.resource_display_name(res) | truncate(50) }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
+      {{ h.resource_display_name(res) }}
+      <span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
     </a>
     {% endblock %}
-    <div class="d-flex items-center gap-1">
+    <div class="d-flex items-center gap-1 my-2">
       <div class="heading">
         {{_("Date updated:")}}
       </div>
@@ -34,7 +35,7 @@
     {% block resource_item_description %}
         {% if res.description %}
         <p class="description">
-          {{ h.markdown_extract(h.get_translated(res, 'description'), extract_length=80) }}
+          {{ h.markdown_extract(h.get_translated(res, 'description'), extract_length=250) }}
         </p>
         {% endif %}
     {% endblock %}
