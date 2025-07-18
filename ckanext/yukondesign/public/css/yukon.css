@@ -242,3 +242,8 @@ form strong{
   font-weight: 600!important;
 }
 
+/*  nav links */
+.page-header .nav-tabs li a,
+header:not(.module-content) .nav.nav-tabs > li > a{
+  text-decoration: none;
+}
