@@ -459,3 +459,11 @@ msgstr "Voir"
 
 msgid "Government of Yukon"
 msgstr "Gouvernement du Yukon"
+
+msgid ""
+"The Government of Yukon acknowledges that Indigenous Peoples have traditional "
+"territories throughout the Yukon and celebrates their role as stewards of the lands and waters and their ongoing "
+"connection to this place."
+msgstr ""
+"Le gouvernement du Yukon reconnaît l’existence des territoires traditionnels des peuples autochtones partout au Yukon "
+"et souligne leur intendance de la terre et de l’eau ainsi que leur lien ancestral avec le territoire."
