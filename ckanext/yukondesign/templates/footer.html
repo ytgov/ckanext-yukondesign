@@ -29,7 +29,7 @@
 
             <ul class="menu">
               <li class="menu-item">
-                <a href="{{ h.url_for('home.index') }}">{% trans %}Home{% endtrans %}</a>
+                <a href="https://yukon.ca{% if lang_prefix == '/fr' %}/fr{% endif %}">{% trans %}Home{% endtrans %}</a>
               </li>
               <li class="menu-item">
                 <a href="https://yukon.ca{% if lang_prefix == '/fr' %}/fr{% endif %}/documents">{% trans %}Documents{% endtrans %}</a>
