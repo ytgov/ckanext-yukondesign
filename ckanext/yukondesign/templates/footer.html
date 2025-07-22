@@ -1,8 +1,5 @@
 <div id="acknowledgment-statement" class="mt-4">
-  <div class="statement container">{{_("The Government of Yukon acknowledges that Indigenous Peoples have traditional
-    territories throughout the Yukon and celebrates their role as stewards of the lands and waters and their ongoing
-    connection to this place.")}}
-  </div>
+  <div class="statement container">{{ _("The Government of Yukon acknowledges that Indigenous Peoples have traditional territories throughout the Yukon and celebrates their role as stewards of the lands and waters and their ongoing connection to this place.") }}</div>
 </div>
 
 {% set lang_prefix = '/fr' if request.environ.CKAN_LANG == 'fr' and not request.path.startswith('/fr') else '' %}
@@ -32,7 +29,7 @@
 
             <ul class="menu">
               <li class="menu-item">
-                <a href="{{ h.url_for('home.index') }}">{% trans %}Home{% endtrans %}</a>
+                <a href="https://yukon.ca{% if lang_prefix == '/fr' %}/fr{% endif %}">{% trans %}Home{% endtrans %}</a>
               </li>
               <li class="menu-item">
                 <a href="https://yukon.ca{% if lang_prefix == '/fr' %}/fr{% endif %}/documents">{% trans %}Documents{% endtrans %}</a>
@@ -159,8 +156,30 @@
           </nav>
         </div>
       </div>
-      <div class="footer__legal font-light w-auto flex pt-2 pt-md-4 pb-2 ms-1">
+      <div class="footer__legal font-light w-auto flex pt-2 pt-md-4 pb-2 ms-1 text-end">
         ©&nbsp;{{ h.get_current_year() }}&nbsp;<a href="https://yukon.ca{% if lang_prefix == '/fr' %}/fr{% endif %}">{{ _("Government of Yukon") }}</a>
+        <div class="footer__feedback mt-1" style="font-weight: normal;">
+          {% if lang_prefix == '/fr' %}
+            <a id="footer-feedback-link" href="#">{{ _("Formuler un commentaire") }}</a>
+          {% else %}
+            <a id="footer-feedback-link" href="#">{{ _("Submit website feedback") }}</a>
+          {% endif %}
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            var feedbackLink = document.getElementById('footer-feedback-link');
+            if (!feedbackLink) return;
+            var pageUrl = window.location.href;
+            var isFrench = feedbackLink.textContent.trim() === 'Formuler un commentaire';
+            if (isFrench) {
+              var mailto = 'mailto:eservices@yukon.ca?subject=Des%20suggestions%20pour%20am%C3%A9liorer%20le%20portail%20de%20gouvernement%20ouvert&body=Adresse%20de%20la%20page%20Web%3A%0A' + encodeURIComponent(pageUrl) + '%0A%0ADes%20commentaires%20sur%20le%20site%20%3F%0A%0A%0A%0AQue%20pouvons-nous%20faire%20pour%20am%C3%A9liorer%20ce%20service%20%3F%0A%0A';
+              feedbackLink.setAttribute('href', mailto);
+            } else {
+              var mailto = 'mailto:eservices@yukon.ca?subject=Open%20government%20portal%20website%20feedback&body=Webpage%20address%3A%0A' + encodeURIComponent(pageUrl) + '%0A%0AWhat\'s%20your%20feedback%3F%0A%0A%0A%0AWhat%20can%20we%20do%20to%20improve%20this%20service%3F%0A%0A';
+              feedbackLink.setAttribute('href', mailto);
+            }
+          });
+        </script>
       </div>
     </div>
   </div>
