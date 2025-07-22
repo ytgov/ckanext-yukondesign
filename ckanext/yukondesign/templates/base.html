@@ -16,3 +16,7 @@
         })();
     </script>
 {% endblock %}
+
+{% block links %}
+  <link rel="shortcut icon" type="image/x-icon" href="{{ h.url_for_static('/images/favicon.ico') }}?v=2" />
+{% endblock %}
