@@ -232,7 +232,7 @@ msgstr "Pour consulter "
 
 #: ckanext/yukondesign/templates/home/index.html:104
 msgid "privacy impact assessment summaries"
-msgstr "des résumés d’évaluation des facteurs relatifs à la vie privée "
+msgstr "des résumés d’évaluation des facteurs relatifs à la vie privée"
 
 #: ckanext/yukondesign/templates/package/search.html:12
 msgid "Privacy Impact Assessment summaries"
