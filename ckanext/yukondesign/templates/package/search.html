@@ -26,7 +26,12 @@
       {% elif dataset_type == 'information' %}
         {{_("Find annual reports, news releases, scientific research publications, and other information.")}}
       {% elif dataset_type == 'access-requests' %}
-        {{_("Search or browse completed Access to Information (ATIPP) requests and responsive records.")}} <a target="_blank" href="https://yukon.ca/en/legal-and-social-supports/legal-services/request-access-information-records">{{_("Submit an Access to Information request.")}}</a>
+        {{_("Search or browse completed Access to Information (ATIPP) requests and responsive records.")}}
+        {% if request.environ.CKAN_LANG == 'fr' %}
+          <a target="_blank" href="https://yukon.ca/fr/ressources-sociales-et-juridiques/services-juridiques/presenter-une-demande-dacces-des">{{_("Submit an Access to Information request.")}}</a>
+        {% else %}
+          <a target="_blank" href="https://yukon.ca/en/legal-and-social-supports/legal-services/request-access-information-records">{{_("Submit an Access to Information request.")}}</a>
+        {% endif %}
       {% elif dataset_type == 'pia-summaries' %}
         {{_("Find summaries of completed Privacy Impact Assessments (PIAs).")}}
       {% endif %}

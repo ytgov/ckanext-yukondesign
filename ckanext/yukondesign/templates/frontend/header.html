@@ -12,10 +12,11 @@
       
       <ul class="list-inline yt-nav-items mb-0 mt-2 mt-md-0">
         <li class="list-inline-item">
-          {% if g.locale == 'fr' %}
-            <a href="{{ request.path.replace('/fr', '', 1) or '/' }}" class="btn btn-link" hreflang="en" lang="en">English</a>
+          {% set current_lang = g._flask_babel.babel_locale.language if g._flask_babel and g._flask_babel.babel_locale else 'en' %}
+          {% if current_lang == 'fr' %}
+            <a href="{{ request.path.replace('/fr', '', 1) if request.path.startswith('/fr') else request.path }}" class="btn btn-link" hreflang="en" lang="en">{{ _('English') }}</a>
           {% else %}
-            <a href="/fr{{ request.path if not request.path.startswith('/fr') else request.path[3:] }}" class="btn btn-link" hreflang="fr" lang="fr">Français</a>
+            <a href="/fr{{ request.path if not request.path.startswith('/fr') else request.path[3:] }}" class="btn btn-link" hreflang="fr" lang="fr">{{ _('Français') }}</a>
           {% endif %}
         </li>
       </ul>
