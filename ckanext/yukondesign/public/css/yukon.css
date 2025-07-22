@@ -247,3 +247,7 @@ form strong{
 header:not(.module-content) .nav.nav-tabs > li > a{
   text-decoration: none;
 }
+
+.module.module-narrow.resources>ul{
+  flex-direction: column;
+}

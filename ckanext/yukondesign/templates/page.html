@@ -57,8 +57,10 @@
                 {% endblock %}
                 </div>
             {% endblock %}
+            
 
-            <div class="m-0 w-100 d-flex flex-column flex-lg-row gap-5 {% block wrapper_class %}{% endblock %}{% if self.secondary()|trim == '' or c.action=='resource_read' %} no-nav{% endif %}">
+            
+            <div class="m-0 gx-5 row {% block wrapper_class %}{% endblock %}{% if self.secondary()|trim == '' or c.action=='resource_read' %} no-nav{% endif %}">
                 {#
                 The pre_primary block can be used to add content before the
                 rendering of the main content columns of the page.
@@ -66,7 +68,7 @@
                 {% block pre_primary %}{% endblock %}
 
                 {% block secondary %}
-                <aside class="secondary w-100 w-lg-25 w-md-33 position-sticky top-0 ">
+                <aside class="secondary col-12 col-lg-3 position-sticky top-0">
                     {#
                     The secondary_content block can be used to add content to the
                     sidebar of the page. This is the main block that is likely to be
@@ -77,7 +79,7 @@
                 {% endblock %}
 
                 {% block primary %}
-                <div class="primary w-100 w-lg-75 w-md-66" role="main">
+                <div class="primary col-lg-9 col-12" role="main">
                     {#
                     The primary_content block can be used to add content to the page.
                     This is the main block that is likely to be used within a template.
