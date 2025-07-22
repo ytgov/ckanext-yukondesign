@@ -106,7 +106,11 @@
                 <div>
                   {{ _("You can also see") }} 
                   <a href="{{ lang_prefix }}{{url_for('pia-summaries.search')}}" target="_blank">{{ _("privacy impact assessment summaries") }}</a>, 
-                  <a target="_blank" href="https://open.yukon.ca{{ lang_prefix }}/access-information">{{ _("visit the Access to Information Registry") }}</a>
+                  {% if lang_prefix != '/fr' %}
+                    <a target="_blank" href="https://yukon.ca/en/your-government/open-government/access-information">{{ _("visit the Access to Information Registry") }}</a>
+                  {% else %}
+                    <a target="_blank" href="https://yukon.ca/fr/votre-gouvernement/gouvernement-ouvert/acces-information">{{ _("visit the Access to Information Registry") }}</a>
+                  {% endif %}
                   {{ _("or") }}
                   {% if lang_prefix != '/fr' %}
                     <a target="_blank" href="https://yukon.ca/en/legal-and-social-supports/legal-services/request-access-information-records">{{ _("submit an Access to Information request.") }}</a>
