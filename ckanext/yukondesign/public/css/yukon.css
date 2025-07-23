@@ -19,7 +19,8 @@ a:hover {
 }
 @media( min-width:1024px ){
   .w-md-25{
-    min-width: 25%;
+    max-width: 25%;
+    width: 100%;
   }
   
   .w-lg-75{
