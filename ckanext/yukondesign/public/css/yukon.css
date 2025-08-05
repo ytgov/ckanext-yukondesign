@@ -29,8 +29,8 @@ a:hover {
 }
 
 .footer-right .footer__menus .region-footer-menu ul.menu li a {
-  font-weight: normal;
-  text-decoration: none;
+  font-weight: 600;
+  text-decoration: underline;
 }
 .footer-right .footer__menus .region-footer-menu ul.menu li a:hover {
   text-decoration: underline;
@@ -251,4 +251,9 @@ header:not(.module-content) .nav.nav-tabs > li > a{
 
 .module.module-narrow.resources>ul{
   flex-direction: column;
+}
+
+
+.footer__legal a:hover{
+  color:white;
 }
