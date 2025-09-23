@@ -73,15 +73,51 @@ def get_featured_datasets():
     Returns a list of all featured datasets.
     """
     try:
+        # First try the search index
         result = toolkit.get_action('package_search')(
             {'ignore_auth': True},
             {
-                'fq': 'is_featured:true',
-                'rows': 1000
+                'fq': 'is_featured:true AND type:data',
+                'rows': 1000,
+                'sort': 'metadata_created desc'
             }
-        )  # Bypass auth
-        return result['results']
-    except toolkit.ObjectNotFound:
+        )
+        
+        # If search returns results, use them
+        if result['results']:
+            return result['results']
+        
+        # Fallback: Query database directly for packages with is_featured extra
+        import ckan.model as model
+        featured_packages = []
+        
+        # Get all packages with is_featured extra set to True
+        extras_query = model.Session.query(model.PackageExtra).filter(
+            model.PackageExtra.key == 'is_featured',
+            model.PackageExtra.value == 'True'
+        ).all()
+        
+        for extra in extras_query:
+            try:
+                # Get the full package data
+                package_dict = toolkit.get_action('package_show')(
+                    {'ignore_auth': True},
+                    {'id': extra.package_id}
+                )
+                # Only include if it's a data type package
+                if package_dict.get('type') == 'data':
+                    featured_packages.append(package_dict)
+            except Exception:
+                # Skip packages that can't be shown
+                continue
+        
+        return featured_packages
+        
+    except Exception as e:
+        # Log the error for debugging
+        import logging
+        log = logging.getLogger(__name__)
+        log.error(f"Error getting featured datasets: {e}")
         return []
 
 
