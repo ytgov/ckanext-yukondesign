@@ -105,7 +105,7 @@
               <div class="col-lg-5 d-flex flex-column gap-2">
                 <div>
                   {{ _("You can also see") }} 
-                  <a href="{{ lang_prefix }}{{url_for('pia-summaries.search')}}" target="_blank">{{ _("privacy impact assessment summaries") }}</a>, 
+                  <a href="{{ lang_prefix }}{{url_for('pia-summaries.search')}}">{{ _("privacy impact assessment summaries") }}</a>, 
                   {% if lang_prefix != '/fr' %}
                     <a target="_blank" href="https://yukon.ca/en/your-government/open-government/access-information">{{ _("visit the Access to Information Registry") }}</a>
                   {% else %}
