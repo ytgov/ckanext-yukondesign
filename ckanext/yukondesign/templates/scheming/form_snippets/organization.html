@@ -10,7 +10,7 @@
   {% endblock %}
 {% endmacro %}
 
-  <div data-module="dataset-visibility">
+  <div>
   {% snippet "scheming/form_snippets/_organization_select.html",
     field=field,
     data=data,
@@ -26,7 +26,7 @@
       <div class="controls">
         <select id="field-private" name="private" class="form-control form-select">
           {% for option in [('False', _('Public')), ('True', _('Private'))] %}
-          <option value="{{ option[1] }}" {% if option[0] == data.private|trim %}selected="selected"{% endif %}>{{ option[1] }}</option>
+          <option value="{{ option[0] }}" {% if option[0] == data.private|trim %}selected="selected"{% endif %}>{{ option[1] }}</option>
           {% endfor %}
         </select>
       </div>
