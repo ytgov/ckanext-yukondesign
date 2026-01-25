@@ -165,7 +165,7 @@ msgstr ""
 
 #: ckanext/yukondesign/templates/home/index.html:63
 msgid "Enter open information search terms"
-msgstr "Entrer les termes de recherche pour les informations ouvertes"
+msgstr "Entrer les termes de recherche"
 
 #: ckanext/yukondesign/templates/home/index.html:65
 msgid "Recently updated:"
@@ -190,7 +190,7 @@ msgstr ""
 
 #: ckanext/yukondesign/templates/home/index.html:78
 msgid "Enter open data search terms"
-msgstr "Entrer les termes d’interrogation pour les données ouvertes"
+msgstr "Entrer les termes de recherche"
 
 #: ckanext/yukondesign/templates/home/index.html:80
 msgid "Featured datasets:"
