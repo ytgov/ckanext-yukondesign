@@ -121,7 +121,7 @@
       <div class="modal-content">
         <div class="modal-header align-items-start gap-4">
           <div>
-            <h5 class="modal-title" id="api-access-modalLabel">Access via API</h5>
+            <h2 class="modal-title h5" id="api-access-modalLabel">Access via API</h2>
             <p class="m-0" style="font-size:14px">{{ _("Access package data via a web API with powerful query support. Further information in the main CKAN <a target='_blank' href='https://docs.ckan.org/en/latest/api/'>API guide</a>") | safe }}.</p>
           </div>
           <button type="button" class="close-modal btn btn-xs py-0 px-0 " data-dismiss="modal" aria-label="Close" sty>
@@ -129,7 +129,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <h6 class="">{{_("Package show")}}</h6>
+          <h3 class="h6">{{_("Package show")}}</h3>
           <p class="m-0">
             <a href="{{g.site_url}}/api/3/action/package_show?id={{pkg.name}}" target="_blank">
               {{ _('Detailed metadata about a specific dataset') }}
@@ -142,7 +142,7 @@
             <button class="copy-btn btn btn-link btn-sm px-0 d-block ms-auto">Copy</button>
           </div>
           {% if pkg.resources %}
-            <h6 class="mt-4">{{_("Resource(s) download")}}</h6>
+            <h3 class="mt-4 h6">{{_("Resource(s) download")}}</h3>
               {% for resource in pkg.resources %}
               {% set url_action = pkg.type ~ ('_resource.edit' if url_is_edit and can_edit else '_resource.read') %}
               {% set url = url or h.url_for(url_action, id=pkg.name, resource_id=resource.id) %}
