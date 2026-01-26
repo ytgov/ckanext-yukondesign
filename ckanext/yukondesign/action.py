@@ -43,17 +43,37 @@ def _set_groups_list(context, data_dict):
     """
     Set the groupsfield in the data_dict from the groups_list
     """
-    groups_list = data_dict.get("groups_list", False)
-    if groups_list:
-        groups = []
-        if not isinstance(groups_list, list):
-            groups_list = [groups_list]
+    # If the form omitted the field entirely, leave existing groups unchanged.
+    # If the field is present but empty, treat that as an invalid submission
+    # and raise a ValidationError so the UI shows a required-field message.
+    if "groups_list" not in data_dict:
+        return
 
-        for group_id in groups_list:
-            groups.append({"id": group_id})
+    gl = data_dict.get("groups_list")
+    empty = False
+    if isinstance(gl, str) and not gl.strip():
+        empty = True
+    elif isinstance(gl, (list, tuple)) and not any(bool(x) for x in gl):
+        empty = True
+    if empty:
+        raise toolkit.ValidationError({"groups_list": ["Missing value"]})
 
-        data_dict.pop("groups_list")
-        data_dict["groups"] = groups
+    groups_list = gl
+    if isinstance(groups_list, str):
+        groups_list = [groups_list]
+
+    # Build groups list, filtering out any empty values
+    groups = []
+    for group_id in [g for g in groups_list if g]:
+        try:
+            group = get_action("group_show")(context, {"id": group_id})
+        except Exception:
+            # Ignore invalid group ids rather than crashing the update
+            continue
+        groups.append({key: group.get(key) for key in ("id", "name", "title")})
+
+    data_dict.pop("groups_list", None)
+    data_dict["groups"] = groups
 
 
 @toolkit.side_effect_free

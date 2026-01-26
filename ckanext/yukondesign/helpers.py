@@ -7,12 +7,128 @@ def get_all_groups():
     """
     Returns a list of all groups in CKAN.
     """
+    import logging
+    log = logging.getLogger(__name__)
     try:
-        groups = toolkit.get_action('group_list')(
-            {'ignore_auth': True}, {'all_fields': True}
-        )  # Bypass auth
-        return groups
-    except toolkit.ObjectNotFound:
+        # Log the raw template/request context for debugging
+        c_userobj = getattr(toolkit.c, 'userobj', None)
+        c_user = getattr(toolkit.c, 'user', None)
+        log.debug("get_all_groups called: c.userobj=%r c.user=%r", c_userobj, c_user)
+
+        # Return only groups that the current user is a member of.
+        user = c_user or None
+        if not c_userobj and not user:
+            log.debug("No user in context; returning empty group list")
+            return []
+
+        import ckan.model as model
+
+        # Determine the current user object. Templates often set `c.userobj`,
+        # otherwise `c.user` may be a username.
+        user_obj = c_userobj
+        if not user_obj:
+            user_identifier = c_user
+            try:
+                user_obj = model.User.get(user_identifier)
+            except Exception:
+                user_obj = None
+            if not user_obj:
+                log.debug("Could not resolve user object for identifier=%r", user_identifier)
+                return []
+
+        # Get all groups and check which ones the user is a member of
+        try:
+            all_groups = toolkit.get_action('group_list')(
+                {'ignore_auth': True},
+                {'all_fields': True, 'sort': 'name'}
+            )
+            log.debug('Found %d total groups', len(all_groups))
+            
+            user_groups = []
+            for group in all_groups:
+                try:
+                    # Check if user is a member of this group
+                    members = toolkit.get_action('member_list')(
+                        {'ignore_auth': True},
+                        {'id': group['id'], 'object_type': 'user'}
+                    )
+                    # Check if our user is in the members list
+                    for member in members:
+                        member_id = member[0] if isinstance(member, (list, tuple)) else member.get('id')
+                        if str(member_id) == str(user_obj.id) or str(member_id) == str(user_obj.name):
+                            user_groups.append(group)
+                            log.debug('User %s is member of group %s', user_obj.name, group['name'])
+                            break
+                except Exception:
+                    log.exception('Failed to check membership for group %s', group.get('id'))
+                    continue
+            
+            if user_groups:
+                log.debug('Returning %d groups for user %s', len(user_groups), user_obj.name)
+                return user_groups
+            log.debug('No groups found for user %s via action API', user_obj.name)
+        except Exception:
+            log.exception('Action API approach failed; falling back to DB scan')
+
+        # Fallback: query Member rows and match in Python to support older/newer CKAN
+        try:
+            members = model.Session.query(model.Member).filter(
+                model.Member.table_name == 'group'
+            ).all()
+
+            log.debug("Found %d group membership rows total", len(members))
+
+            group_ids = []
+            for m in members:
+                match = False
+                candidates = [
+                    getattr(m, 'user_id', None),
+                    getattr(m, 'entity_id', None),
+                    getattr(m, 'ref', None),
+                    getattr(m, 'entity', None),
+                    getattr(m, 'user', None),
+                ]
+                for cand in candidates:
+                    if cand is None:
+                        continue
+                    try:
+                        if hasattr(cand, 'id'):
+                            cand_val = getattr(cand, 'id')
+                        elif hasattr(cand, 'name'):
+                            cand_val = getattr(cand, 'name')
+                        else:
+                            cand_val = cand
+                    except Exception:
+                        cand_val = cand
+
+                    try:
+                        if str(cand_val) == str(user_obj.id) or str(cand_val) == str(user_obj.name):
+                            match = True
+                            break
+                    except Exception:
+                        continue
+                if match:
+                    gid = getattr(m, 'table_id', None)
+                    if gid:
+                        group_ids.append(gid)
+
+            groups = []
+            for gid in group_ids:
+                try:
+                    group = toolkit.get_action('group_show')({'ignore_auth': True}, {'id': gid})
+                except Exception:
+                    continue
+                groups.append(group)
+
+            log.debug('Returning %d groups from DB scan for user id=%s', len(groups), user_obj.id)
+            return groups
+        except Exception as e:
+            log.exception('Fallback DB scan failed: %r', e)
+            return []
+    except Exception as e:
+        log.exception("Unexpected error in get_all_groups: %r", e)
+        return []
+    except Exception:
         return []
 
 
