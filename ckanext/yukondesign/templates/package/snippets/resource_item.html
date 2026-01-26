@@ -24,43 +24,52 @@
       <span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
     </a>
     {% endblock %}
+
     <div class="d-flex items-center gap-1 my-2">
-      <div class="heading">
-        {{_("Date updated:")}}
-      </div>
+      <div class="heading">{{ _("Date updated:") }}</div>
       <div class="description">
         {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=res.metadata_modified %}
       </div>
     </div>
+
     {% block resource_item_description %}
-        {% if res.description %}
+      {% if res.description %}
         <p class="description">
           {{ h.markdown_extract(h.get_translated(res, 'description'), extract_length=250) }}
         </p>
-        {% endif %}
+      {% endif %}
     {% endblock %}
   </div>
-  {% block resource_item_explore %}<div class="ms-auto d-flex flex-column flex-md-row align-items-center gap-3">
-    {% if res.url and h.is_url(res.url) %}
-        
-        {% if h.check_access('package_update', {'id':pkg.id }) %}
-          <a class="btn btn-link" href="{{url}}/edit">{{_("Edit")}}</a>
-        {% endif %}
 
-        <a class="btn btn-primary d-flex" href="{{ res.url }}" target="_blank" rel="noreferrer">
-            {% if res.has_views or res.url_type == 'upload' %}
-              <i class="fa fa-arrow-circle-down" title="{{ _('Download') }}"></i>
-              <span class="d-none d-md-block" >
-                {{ _('Download') }}
-              </span>
-            {% else %}
-              <i class="fa fa-external-link" title="{{ _('Go to resource') }}"></i>
-              <span class="d-none d-md-block" >
-                {{ _('Go to resource') }}
-              </span>
-            {% endif %}
-        </a>
-      
+  {% block resource_item_explore %}
+  <div class="ms-auto d-flex flex-column flex-md-row align-items-center gap-2">
+    {# copy to anchor(logged-in users only) #}
+    {% if c.userobj %}
+      <a
+        class="btn btn-link"
+        href="#resource-{{ res.id }}"
+        title="{{ _('Link to this resource') }}"
+        aria-label="{{ _('Link to this resource') }}"
+      >
+        <i class="fa fa-paperclip" aria-hidden="true"></i>
+        <span class="visually-hidden">{{ _('Link to this resource') }}</span>
+      </a>
+    {% endif %}
+
+    {% if res.url and h.is_url(res.url) %}
+      {% if h.check_access('package_update', {'id': pkg.id}) %}
+        <a class="btn btn-link" href="{{ url }}/edit">{{ _("Edit") }}</a>
+      {% endif %}
+
+      <a class="btn btn-primary d-flex" href="{{ res.url }}" target="_blank" rel="noreferrer">
+        {% if res.has_views or res.url_type == 'upload' %}
+          <i class="fa fa-arrow-circle-down" title="{{ _('Download') }}"></i>
+          <span class="d-none d-md-block">{{ _('Download') }}</span>
+        {% else %}
+          <i class="fa fa-external-link" title="{{ _('Go to resource') }}"></i>
+          <span class="d-none d-md-block">{{ _('Go to resource') }}</span>
+        {% endif %}
+      </a>
     {% endif %}
   </div>
   {% endblock %}
