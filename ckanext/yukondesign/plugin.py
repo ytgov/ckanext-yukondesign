@@ -12,6 +12,8 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.IAuthFunctions)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IFacets)
+    plugins.implements(plugins.IPackageController, inherit=True)
 
     def i18n_domain(self):
         return "ckanext-yukondesign"
@@ -58,5 +60,30 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'get_current_year': helpers.get_current_year,
             'dataset_type_title': helpers.dataset_type_title,
             'dataset_type_menu_title': helpers.dataset_type_menu_title,
-            'matomo_siteid': helpers.add_matomo_siteid_to_context
+            'matomo_siteid': helpers.add_matomo_siteid_to_context,
+            'get_year_facet_items': helpers.get_year_facet_items
         }
+
+    # IFacets
+    def dataset_facets(self, facets_dict, package_type):
+        """Add year_published to the dataset facets."""
+        facets_dict['year_published'] = toolkit._('Year published')
+        return facets_dict
+
+    def organization_facets(self, facets_dict, organization_type, package_type):
+        """Add year_published to the organization facets."""
+        facets_dict['year_published'] = toolkit._('Year published')
+        return facets_dict
+
+    # IPackageController
+    def before_dataset_index(self, pkg_dict):
+        """Add year_published field to the search index."""
+        if pkg_dict.get('metadata_created'):
+            try:
+                # Extract year from metadata_created timestamp
+                # Format is typically: 2024-01-26T12:34:56.789012
+                year = pkg_dict['metadata_created'][:4]
+                pkg_dict['year_published'] = year
+            except (KeyError, IndexError, ValueError):
+                pass
+        return pkg_dict
