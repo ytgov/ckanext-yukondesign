@@ -303,3 +303,27 @@ def add_matomo_siteid_to_context():
     matomo_siteid = toolkit.config.get('ckan.matomo_siteid', '1')
     # Return the Matomo site ID for direct use in templates
     return matomo_siteid
+
+
+def get_year_facet_items(facet_name, search_facets):
+    """
+    Get facet items for the year_published facet, sorted chronologically (newest first).
+    
+    This overrides the default facet sorting which is by count, and instead sorts
+    by year in descending order (most recent years first).
+    
+    :param facet_name: The name of the facet field (should be 'year_published')
+    :param search_facets: Dictionary containing all search facets
+    :return: List of facet items sorted by year (newest first)
+    """
+    if not search_facets or facet_name not in search_facets:
+        return []
+    
+    facet_data = search_facets.get(facet_name, {})
+    items = facet_data.get('items', [])
+    
+    # Sort items by year in descending order (newest first)
+    # Each item has 'name' (the year) and 'count' (number of datasets)
+    sorted_items = sorted(items, key=lambda x: x.get('name', ''), reverse=True)
+    
+    return sorted_items

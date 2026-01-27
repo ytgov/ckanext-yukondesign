@@ -403,6 +403,9 @@ msgstr "Accès via l'API"
 msgid "Keywords"
 msgstr "Étiquettes"
 
+msgid "Year published"
+msgstr "Année de publication"
+
 msgid "Organisations"
 msgstr "Organisations"
 
