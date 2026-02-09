@@ -12,7 +12,7 @@ Example:
 
 #}
 {% set title = package.title or package.name %}
-{% set notes = h.markdown_extract(package.notes, extract_length=180) %}
+{% set notes = h.render_markdown(package.notes) | striptags | truncate(180) %}
 
 {% block package_item %}
   <li class="{{ item_class or 'dataset-item' }} py-4 my-0">
@@ -45,7 +45,7 @@ Example:
         <div class="mb-3">
             {% block notes %}
             {% if notes %}
-                <div>{{ notes|urlize }}</div>
+                <div>{{ notes | urlize }}</div>
             {% else %}
                 <p class="empty">{{ h.humanize_entity_type('package', package.type, 'no description') or _("There is no description for this dataset") }}</p>
             {% endif %}
