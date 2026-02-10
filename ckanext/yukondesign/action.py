@@ -209,7 +209,7 @@ def package_set_featured(context, data_dict):
         # Fetch all current featured datasets
         current_featured = toolkit.get_action('package_search')(
             {'ignore_auth': True},
-            {'fq': 'is_featured:true', 'rows': 1000}
+            {'fq': 'is_featured:True', 'rows': 1000}
         )['results']
         
         log.info(f"Found {len(current_featured)} currently featured datasets")
@@ -247,45 +247,39 @@ def package_set_featured(context, data_dict):
         # Commit the changes
         model.repo.commit()
         
-        # Verify the changes were applied
-        log.info("Verifying changes were applied...")
-        for dataset_id in dataset_ids:
-            try:
-                package_dict = toolkit.get_action('package_show')(
-                    {'ignore_auth': True}, {'id': dataset_id}
-                )
-                is_featured_value = package_dict.get('is_featured', 'NOT_SET')
-                log.info(f"Package {dataset_id} featured={is_featured_value}")
-            except Exception as e:
-                log.error(f"Failed to verify package {dataset_id}: {e}")
-        
         # Manually update search index for affected packages
         # This ensures search queries work without updating metadata_modified
-        try:
-            from ckan.lib.search import rebuild
-            package_ids_to_reindex = (
-                list(previous_featured_ids) + list(dataset_ids)
-            )
-            for pkg_id in package_ids_to_reindex:
-                try:
-                    # Use rebuild function to force reindex
-                    rebuild(package_id=pkg_id, only_missing=False, force=True)
-                except Exception:
-                    # Try alternative method if rebuild fails
-                    try:
-                        import ckan.lib.search as search
-                        package_dict = toolkit.get_action('package_show')(
-                            {'ignore_auth': True}, {'id': pkg_id}
-                        )
-                        search_backend = search.get_backend()
-                        search_backend.update_dict(package_dict)
-                    except Exception:
-                        pass  # Skip this package if both methods fail
-        except Exception as index_error:
-            # Log the error but don't fail the operation
-            import logging
-            log = logging.getLogger(__name__)
-            log.warning(f"Failed to update search index: {index_error}")
+        # We need to do this AFTER commit so package_show returns updated extras
+        import ckan.lib.search as search
+        package_ids_to_reindex = set(previous_featured_ids) | set([package_objects[did].id for did in dataset_ids])
+        
+        log.info(f"Reindexing {len(package_ids_to_reindex)} packages in search index")
+        
+        # Get the search index backend
+        search_backend = search.index_for('package')
+        
+        for pkg_id in package_ids_to_reindex:
+            try:
+                # Fetch the updated package data after commit
+                package_dict = toolkit.get_action('package_show')(
+                    {'ignore_auth': True}, {'id': pkg_id}
+                )
+                is_featured_value = package_dict.get('is_featured', 'NOT_SET')
+                log.info(f"Reindexing package {pkg_id}, is_featured={is_featured_value}")
+                
+                # Update the search index with the current package data
+                search_backend.index_package(package_dict, defer_commit=False)
+                log.info(f"Successfully reindexed package {pkg_id}")
+            except Exception as e:
+                log.error(f"Failed to reindex package {pkg_id}: {e}")
+                import traceback
+                log.error(traceback.format_exc())
+                # Continue with other packages even if one fails
+                continue
+        
+        # Commit all changes to Solr
+        search_backend.commit()
+        log.info("Search index committed")
 
         return {
             "success": True,
@@ -314,14 +308,6 @@ def _update_package_extra(package_obj, key, value):
     
     log.info(f"Updating package {package_obj.id} extra {key} to {value}")
     
-    # First, let's see what extras already exist
-    existing_extras = model.Session.query(model.PackageExtra).filter_by(
-        package_id=package_obj.id
-    ).all()
-    log.info(f"Package {package_obj.id} has {len(existing_extras)} extras")
-    for extra in existing_extras:
-        log.info(f"  - {extra.key} = {extra.value}")
-    
     # Try to find the specific extra we want to update
     existing_extra = model.Session.query(model.PackageExtra).filter_by(
         package_id=package_obj.id,
@@ -330,27 +316,21 @@ def _update_package_extra(package_obj, key, value):
     
     if existing_extra:
         log.info(f"Found existing extra {key} = {existing_extra.value}")
-        if value in ['False', 'false', '']:
-            # Remove the extra if setting to false
-            log.info(f"Deleting extra {key}")
-            model.Session.delete(existing_extra)
-        else:
-            # Update existing extra
-            old_value = existing_extra.value
-            existing_extra.value = value
-            log.info(f"Updated extra {key} from {old_value} to {value}")
+        # Always update the value, even if it's 'False'
+        # This ensures the search index can properly filter on the field
+        old_value = existing_extra.value
+        existing_extra.value = value
+        log.info(f"Updated extra {key} from {old_value} to {value}")
     else:
-        log.info(f"No existing extra {key} found")
-        if value not in ['False', 'false', '']:
-            # Create new extra only if value is truthy
-            log.info(f"Creating new extra {key} with value {value}")
-            new_extra = model.PackageExtra(
-                package_id=package_obj.id,
-                key=key,
-                value=value
-            )
-            model.Session.add(new_extra)
-            log.info(f"Added new extra: {new_extra.key} = {new_extra.value}")
+        log.info(f"No existing extra {key} found, creating new one")
+        # Always create the extra, even if value is 'False'
+        new_extra = model.PackageExtra(
+            package_id=package_obj.id,
+            key=key,
+            value=value
+        )
+        model.Session.add(new_extra)
+        log.info(f"Added new extra: {key} = {value}")
     
     # Flush to ensure the change is in the session
     model.Session.flush()
