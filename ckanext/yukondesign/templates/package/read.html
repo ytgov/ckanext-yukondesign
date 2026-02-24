@@ -88,6 +88,18 @@
               {% endif %}
               <a href="{{h.url_for('activity.package_activity', id=pkg.name)}}" class="btn btn-outline-primary">{{_("View changes")}}</a>
               <button class="btn btn-outline-primary btn-api-access"  data-toggle="modal" data-target="#api-access-modal">{{_("Access via API")}}</button>
+              {% set zip_res = h.downloadall__pop_zip_resource(pkg) %}
+              {% if pkg.resources and pkg.resources|length > 1 %}
+                {% if zip_res %}
+                  <a class="btn btn-outline-primary resource-url-analytics resource-type-{{ zip_res.resource_type }}" href="{{ zip_res.url }}">
+                    <i class="fa fa-arrow-circle-o-down"></i> {{ _('Download all') }}
+                  </a>
+                {% else %}
+                  <button class="btn btn-outline-primary" disabled="disabled" title="{{ _('This download is not currently available') }}">
+                    <i class="fa fa-arrow-circle-o-down"></i> {{ _('Download all') }}
+                  </button>
+                {% endif %}
+              {% endif %}
             </div>
 
             {% if pkg.methodology %}
