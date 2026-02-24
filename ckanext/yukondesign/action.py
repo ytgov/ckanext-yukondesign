@@ -66,7 +66,7 @@ def _set_groups_list(context, data_dict):
     groups = []
     for group_id in [g for g in groups_list if g]:
         try:
-            group = get_action("group_show")(context, {"id": group_id})
+            group = toolkit.get_action("group_show")(context, {"id": group_id})
         except Exception:
             # Ignore invalid group ids rather than crashing the update
             continue

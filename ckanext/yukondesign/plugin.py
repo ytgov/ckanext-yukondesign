@@ -75,6 +75,10 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
         facets_dict['year_published'] = toolkit._('Year published')
         return facets_dict
 
+    def group_facets(self, facets_dict, group_type, package_type):
+        """Return facets for groups."""
+        return facets_dict
+
     # IPackageController
     def before_dataset_index(self, pkg_dict):
         """Add year_published field to the search index."""
