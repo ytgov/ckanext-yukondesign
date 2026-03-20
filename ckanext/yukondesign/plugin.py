@@ -2,7 +2,11 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckanext.yukondesign.action as action
 import ckanext.yukondesign.helpers as helpers
-from ckanext.yukondesign.auth import package_delete_sysadmin_only
+from ckanext.yukondesign.cli import get_commands
+from ckanext.yukondesign.auth import (
+    package_delete_sysadmin_only,
+    yukon_matomo_sync_usage_data_sysadmin_only,
+)
 import os
 
 
@@ -14,6 +18,7 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IFacets)
     plugins.implements(plugins.IPackageController, inherit=True)
+    plugins.implements(plugins.IClick)
 
     def i18n_domain(self):
         return "ckanext-yukondesign"
@@ -39,11 +44,15 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'package_create': action.package_create,
             'package_update': action.package_update,
             'package_set_featured': action.package_set_featured,
+            'yukon_matomo_sync_usage_data': action.yukon_matomo_sync_usage_data,
         }
 
     def get_auth_functions(self):
         return {
-            'package_delete': package_delete_sysadmin_only
+            'package_delete': package_delete_sysadmin_only,
+            'yukon_matomo_sync_usage_data': (
+                yukon_matomo_sync_usage_data_sysadmin_only
+            ),
         }
 
     def get_helpers(self):
@@ -61,8 +70,12 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'dataset_type_title': helpers.dataset_type_title,
             'dataset_type_menu_title': helpers.dataset_type_menu_title,
             'matomo_siteid': helpers.add_matomo_siteid_to_context,
-            'get_year_facet_items': helpers.get_year_facet_items
+            'get_year_facet_items': helpers.get_year_facet_items,
         }
+
+    # IClick
+    def get_commands(self):
+        return get_commands()
 
     # IFacets
     def dataset_facets(self, facets_dict, package_type):

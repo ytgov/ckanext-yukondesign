@@ -1,4 +1,5 @@
 .ropeproject
+*.code-workspace
 node_modules
 bower_components
 

@@ -81,6 +81,12 @@ def _set_groups_list(context, data_dict):
 def package_show(up_func, context, data_dict):
     user = context.get("user")
     result = up_func(context, data_dict)
+    package = model.Package.get(result["id"])
+    if package:
+        for key in ["visits", "downloads", "visit_90_days", "download_90_days"]:
+            value = package.extras.get(key)
+            if value is not None:
+                result[key] = value
     org_id = result['organization']['id']
     if not can_view_internal_data(user, org_id):
         result.pop('internal_contact_name', None)
@@ -136,6 +142,66 @@ def package_update(up_func, context, data_dict):
     _set_groups_list(context, data_dict)
 
     return up_func(context, data_dict)
+
+
+def yukon_matomo_sync_usage_data(context, data_dict):
+    """
+    Sync usage counters from Matomo into package extras.
+
+    This action is intended for scheduled/API-triggered syncs and defaults to
+    a conservative batch size to avoid overloading Matomo.
+    """
+    from . import matomo_sync
+
+    toolkit.check_access("yukon_matomo_sync_usage_data", context, data_dict)
+
+    dry_run = bool(data_dict.get("dry_run", False))
+    dataset_refs = data_dict.get("dataset_refs") or []
+    limit = data_dict.get("limit")
+    offset = data_dict.get("offset")
+
+    if limit is not None:
+        try:
+            limit = int(limit)
+        except (TypeError, ValueError):
+            raise toolkit.ValidationError({"limit": ["Must be an integer"]})
+
+    if offset is not None:
+        try:
+            offset = int(offset)
+        except (TypeError, ValueError):
+            raise toolkit.ValidationError({"offset": ["Must be an integer"]})
+
+    if isinstance(dataset_refs, str):
+        dataset_refs = [dataset_refs]
+    elif not isinstance(dataset_refs, (list, tuple)):
+        raise toolkit.ValidationError(
+            {"dataset_refs": ["Must be a string or a list of strings"]}
+        )
+
+    # Keep API-triggered runs conservative unless the caller scopes them.
+    if not dataset_refs and limit is None:
+        limit = 25
+
+    if limit is not None and limit > 100:
+        raise toolkit.ValidationError(
+            {"limit": ["Must be less than or equal to 100"]}
+        )
+    if offset is not None and offset < 0:
+        raise toolkit.ValidationError(
+            {"offset": ["Must be greater than or equal to 0"]}
+        )
+
+    summary = matomo_sync.sync_usage_data(
+        dry_run=dry_run,
+        limit=limit,
+        offset=offset,
+        dataset_refs=list(dataset_refs) if dataset_refs else None,
+    )
+    summary["limit"] = limit
+    summary["offset"] = offset or 0
+    summary["dataset_refs"] = list(dataset_refs)
+    return summary
 
 
 def package_set_featured(context, data_dict):
