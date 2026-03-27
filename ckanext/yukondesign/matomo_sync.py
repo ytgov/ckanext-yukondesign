@@ -354,13 +354,15 @@ def _sum_metric_for_urls(records, candidate_urls, metric_keys):
 
 def _dataset_url(package):
     site_url = toolkit.config.get("ckan.site_url", "").rstrip("/")
+    dataset_type = (getattr(package, "type", "") or "dataset").strip("/")
     if site_url:
-        return "{}/dataset/{}".format(site_url, package.name)
-    return "/dataset/{}".format(package.name)
+        return "{}/{}/{}".format(site_url, dataset_type, package.name)
+    return "/{}/{}".format(dataset_type, package.name)
 
 
 def _dataset_download_urls(package):
     site_url = toolkit.config.get("ckan.site_url", "").rstrip("/")
+    dataset_type = (getattr(package, "type", "") or "dataset").strip("/")
     urls = []
     for resource in package.resources:
         if resource.state != "active":
@@ -376,8 +378,9 @@ def _dataset_download_urls(package):
 
         if getattr(resource, "url_type", "") == "upload" and site_url:
             urls.append(
-                "{}/data/{}/resource/{}/download/{}".format(
+                "{}/{}/{}/resource/{}/download/{}".format(
                     site_url,
+                    dataset_type,
                     package.id,
                     resource.id,
                     resource_url.lstrip("/"),
