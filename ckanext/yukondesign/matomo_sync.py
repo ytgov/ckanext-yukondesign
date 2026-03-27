@@ -18,6 +18,7 @@ log = logging.getLogger(__name__)
 
 SUPPORTED_TYPES = ["data", "information", "access-requests", "pia-summaries"]
 USAGE_EXTRA_KEYS = ["visits", "downloads", "visit_90_days", "download_90_days"]
+MATOMO_USER_AGENT = "ckan-yukon-matomo-sync/1.0"
 
 
 class MatomoClient(object):
@@ -69,7 +70,14 @@ class MatomoClient(object):
         body = urlencode({"token_auth": self.token_auth}).encode("utf-8")
         query = urlencode(params, doseq=True)
         url = "{}/index.php?{}".format(self.base_url, query)
-        request = Request(url, data=body)
+        request = Request(
+            url,
+            data=body,
+            headers={
+                "User-Agent": MATOMO_USER_AGENT,
+                "Accept": "application/json",
+            },
+        )
 
         with urlopen(request, timeout=self.timeout) as response:
             raw = response.read().decode("utf-8")
@@ -92,7 +100,14 @@ class MatomoClient(object):
             body["urls[{}]".format(idx)] = "?{}".format(query)
 
         url = "{}/index.php?{}".format(self.base_url, urlencode(params))
-        request = Request(url, data=urlencode(body, doseq=True).encode("utf-8"))
+        request = Request(
+            url,
+            data=urlencode(body, doseq=True).encode("utf-8"),
+            headers={
+                "User-Agent": MATOMO_USER_AGENT,
+                "Accept": "application/json",
+            },
+        )
 
         with urlopen(request, timeout=self.timeout) as response:
             raw = response.read().decode("utf-8")
