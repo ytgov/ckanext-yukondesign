@@ -299,8 +299,13 @@ def add_matomo_siteid_to_context():
     Adds the Matomo site ID to the template context.
     This is used for tracking purposes.
     """
-    # Get the Matomo site ID from the CKAN configuration
-    matomo_siteid = toolkit.config.get('ckan.matomo_siteid', '1')
+    # Get the Matomo site ID from the CKAN configuration.
+    # Falls back to ckanext.yukondesign.matomo.site_id so a single env var
+    # (CKANEXT__YUKONDESIGN__MATOMO__SITE_ID) is sufficient.
+    matomo_siteid = toolkit.config.get(
+        'ckan.matomo_siteid',
+        toolkit.config.get('ckanext.yukondesign.matomo.site_id', '1')
+    )
     # Return the Matomo site ID for direct use in templates
     return matomo_siteid
 

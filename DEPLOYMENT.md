@@ -40,7 +40,6 @@ ckan.auth.allow_admin_collaborators = true
 ckan.licenses_group_url = file:///srv/app/src/ckanext-yukondesign/licenses-yukon.json
 ckan.dataset.create_on_ui_requires_resources = false
 # Put Matomo siteid here (4 is used for the Datopian test environment)
-ckan.matomo_siteid = 4
 ckan.locale_default = en
 ckan.locales_offered = en fr
 ckan.scheming.dataset_schemas = ckanext.yukondesign:data_schema.yaml ckanext.yukondesign:information_schema.yaml ckanext.yukondesign:access-requests_schema.yaml ckanext.yukondesign:pia-summaries_schema.yaml
