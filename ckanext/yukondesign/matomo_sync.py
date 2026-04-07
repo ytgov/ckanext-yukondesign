@@ -1,14 +1,12 @@
 # encoding: utf-8
 
+import calendar
 import datetime
 import json
 import logging
-import random
-import time
-import calendar
 from sqlalchemy import or_
+import http.client
 from urllib.parse import urlencode, urlparse
-from urllib.request import Request, urlopen
 
 import ckan.model as model
 import ckan.plugins.toolkit as toolkit
@@ -18,7 +16,6 @@ log = logging.getLogger(__name__)
 
 SUPPORTED_TYPES = ["data", "information", "access-requests", "pia-summaries"]
 USAGE_EXTRA_KEYS = ["visits", "downloads", "visit_90_days", "download_90_days"]
-MATOMO_USER_AGENT = "ckan-yukon-matomo-sync/1.0"
 
 
 class MatomoClient(object):
@@ -37,9 +34,6 @@ class MatomoClient(object):
                 "ckanext.yukondesign.matomo.timeout_seconds", 20
             )
         )
-        self.start_date = toolkit.config.get(
-            "ckanext.yukondesign.matomo.start_date", "2000-01-01"
-        )
 
         if not self.base_url:
             raise toolkit.ValidationError(
@@ -55,7 +49,14 @@ class MatomoClient(object):
             )
 
         self.base_url = self.base_url.rstrip("/")
-        self.tracking_url = "{}/matomo.php".format(self.base_url)
+
+    def _http_conn(self):
+        parsed = urlparse(self.base_url)
+        host = parsed.hostname
+        port = parsed.port or (443 if parsed.scheme == "https" else 80)
+        if parsed.scheme == "https":
+            return http.client.HTTPSConnection(host, port, timeout=self.timeout)
+        return http.client.HTTPConnection(host, port, timeout=self.timeout)
 
     def _call(self, method, extra_params):
         params = {
@@ -67,20 +68,20 @@ class MatomoClient(object):
             "flat": 1,
         }
         params.update(extra_params)
-        body = urlencode({"token_auth": self.token_auth}).encode("utf-8")
         query = urlencode(params, doseq=True)
-        url = "{}/index.php?{}".format(self.base_url, query)
-        request = Request(
-            url,
-            data=body,
-            headers={
-                "User-Agent": MATOMO_USER_AGENT,
-                "Accept": "application/json",
-            },
-        )
-
-        with urlopen(request, timeout=self.timeout) as response:
-            raw = response.read().decode("utf-8")
+        body = urlencode({"token_auth": self.token_auth}).encode("utf-8")
+        parsed = urlparse(self.base_url)
+        path = parsed.path.rstrip("/") + "/index.php?" + query
+        conn = self._http_conn()
+        try:
+            conn.request(
+                "POST", path, body=body,
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+            resp = conn.getresponse()
+            raw = resp.read().decode("utf-8")
+        finally:
+            conn.close()
         data = json.loads(raw)
         if isinstance(data, dict) and data.get("result") == "error":
             raise toolkit.ValidationError(
@@ -98,19 +99,20 @@ class MatomoClient(object):
         for idx, request_payload in enumerate(requests_payload):
             query = urlencode(request_payload, doseq=True)
             body["urls[{}]".format(idx)] = "?{}".format(query)
-
-        url = "{}/index.php?{}".format(self.base_url, urlencode(params))
-        request = Request(
-            url,
-            data=urlencode(body, doseq=True).encode("utf-8"),
-            headers={
-                "User-Agent": MATOMO_USER_AGENT,
-                "Accept": "application/json",
-            },
-        )
-
-        with urlopen(request, timeout=self.timeout) as response:
-            raw = response.read().decode("utf-8")
+        parsed = urlparse(self.base_url)
+        path = parsed.path.rstrip("/") + "/index.php?" + urlencode(params)
+        encoded_body = urlencode(body, doseq=True).encode("utf-8")
+        log.debug("Matomo _bulk_call path=%s body_len=%s num_urls=%s", path, len(encoded_body), len(requests_payload))
+        conn = self._http_conn()
+        try:
+            conn.request(
+                "POST", path, body=encoded_body,
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+            resp = conn.getresponse()
+            raw = resp.read().decode("utf-8")
+        finally:
+            conn.close()
         data = json.loads(raw)
         if isinstance(data, dict) and data.get("result") == "error":
             raise toolkit.ValidationError(
@@ -118,60 +120,39 @@ class MatomoClient(object):
             )
         return data
 
-
-class MatomoTrackingClient(MatomoClient):
-    def _track(self, payload):
-        params = {
-            "idsite": self.site_id,
-            "rec": 1,
-            "apiv": 1,
-            "rand": random.randint(1, 10**9),
-            "token_auth": self.token_auth,
-        }
-        params.update(payload)
-        query = urlencode(params, doseq=True)
-        url = "{}?{}".format(self.tracking_url, query)
-        req = Request(
-            url,
-            headers={"User-Agent": "ckan-yukon-test-traffic/1.0"},
-        )
-
-        with urlopen(req, timeout=self.timeout) as response:
-            response.read()
-
-    def track_pageview(self, page_url, visitor_id):
-        self._track(
+    def _visits_payload(self, page_url, periods):
+        """Build sub-request entries for page visit counts (per dataset URL)."""
+        return [
             {
-                "url": page_url,
-                "action_name": "Dataset Page View",
-                "_id": visitor_id,
+                "module": "API",
+                "method": "Actions.getPageUrl",
+                "idSite": self.site_id,
+                "period": period,
+                "date": date_value,
+                "pageUrl": page_url,
+                "format": "JSON",
             }
-        )
+            for period, date_value in periods
+        ]
 
-    def track_download(self, page_url, download_url, visitor_id):
-        self._track(
+    def _downloads_site_payload(self, periods):
+        """Build sub-request entries for site-wide download counts (archive-backed)."""
+        return [
             {
-                "download": download_url,
-                "_id": visitor_id,
+                "module": "API",
+                "method": "Actions.getDownloads",
+                "idSite": self.site_id,
+                "period": period,
+                "date": date_value,
+                "format": "JSON",
+                "filter_limit": "-1",
+                "flat": "1",
             }
-        )
+            for period, date_value in periods
+        ]
 
-    def page_visits_for_periods(self, page_url, periods):
-        requests_payload = []
-        for period, date_value in periods:
-            requests_payload.append(
-                {
-                    "module": "API",
-                    "method": "Actions.getPageUrl",
-                    "idSite": self.site_id,
-                    "period": period,
-                    "date": date_value,
-                    "pageUrl": page_url,
-                    "format": "JSON",
-                }
-            )
-
-        responses = self._bulk_call(requests_payload)
+    @staticmethod
+    def _sum_visits(responses):
         total = 0
         for response in responses:
             if isinstance(response, list) and response:
@@ -182,65 +163,48 @@ class MatomoTrackingClient(MatomoClient):
                 continue
         return total
 
-    def downloads_for_periods(self, package, candidate_urls, periods):
-        package_prefix = "/data/{}/resource/".format(package.id)
-        uploaded_urls = []
-        external_urls = []
-
-        for candidate_url in candidate_urls:
-            if not candidate_url:
-                continue
-            if package_prefix in candidate_url:
-                uploaded_urls.append(candidate_url)
-            else:
-                external_urls.append(candidate_url)
-
-        requests_payload = []
-        if uploaded_urls:
-            for period, date_value in periods:
-                requests_payload.append(
-                    {
-                        "module": "API",
-                        "method": "API.get",
-                        "idSite": self.site_id,
-                        "period": period,
-                        "date": date_value,
-                        "segment": "actionType==downloads;actionUrl=@{}".format(
-                            package_prefix
-                        ),
-                        "format": "JSON",
-                    }
-                )
-
-        for candidate_url in external_urls:
-            for period, date_value in periods:
-                requests_payload.append(
-                    {
-                        "module": "API",
-                        "method": "API.get",
-                        "idSite": self.site_id,
-                        "period": period,
-                        "date": date_value,
-                        "segment": "actionType==downloads;actionUrl=={}".format(
-                            candidate_url
-                        ),
-                        "format": "JSON",
-                    }
-                )
-
-        if not requests_payload:
-            return 0
-
-        responses = self._bulk_call(requests_payload)
-        total = 0
+    @staticmethod
+    def _build_download_map(responses):
+        """Aggregate nb_hits by normalised download URL across all period responses."""
+        url_hits = {}
         for response in responses:
-            if isinstance(response, list) and response:
-                response = response[0]
-            try:
-                total += int(float(response.get("nb_downloads", 0)))
-            except (AttributeError, TypeError, ValueError):
-                continue
-        return total
+            rows = response if isinstance(response, list) else []
+            for row in rows:
+                if not isinstance(row, dict):
+                    continue
+                raw_url = row.get("Actions_DownloadUrl") or row.get("label") or ""
+                if not raw_url or row.get("is_summary"):
+                    continue
+                # Normalise: strip scheme, lowercase, no trailing slash
+                parsed = urlparse(raw_url if "://" in raw_url else "http://" + raw_url)
+                key = (parsed.netloc.lower() + parsed.path).rstrip("/")
+                hits = 0
+                try:
+                    hits = int(float(row.get("nb_hits", 0)))
+                except (TypeError, ValueError):
+                    pass
+                url_hits[key] = url_hits.get(key, 0) + hits
+        return url_hits
+
+    def prefetch_downloads(self, periods):
+        """Fetch site-wide download counts for all periods in one bulk request.
+        Returns a dict mapping normalised URL path to total hit count."""
+        payload = self._downloads_site_payload(periods)
+        if not payload:
+            return {}
+        responses = self._bulk_call(payload)
+        return self._build_download_map(responses)
+
+    def fetch_page_visits(self, page_url, periods_3y, periods_90d):
+        """Fetch page visit counts for both time windows in a single bulk request."""
+        v3y = self._visits_payload(page_url, periods_3y)
+        v90 = self._visits_payload(page_url, periods_90d)
+        split = len(v3y)
+        combined = v3y + v90
+        if not combined:
+            return 0, 0
+        responses = self._bulk_call(combined)
+        return self._sum_visits(responses[:split]), self._sum_visits(responses[split:])
 
 
 def _iter_records(payload):
@@ -254,6 +218,31 @@ def _iter_records(payload):
                 for row in value:
                     if isinstance(row, dict):
                         yield row
+
+
+def _sum_downloads_from_map(download_map, candidate_urls, package_id):
+    """Sum download hits for a dataset's resource URLs from a pre-fetched site-wide map.
+
+    Uploaded files: match any map key that contains the package resource path prefix.
+    External URLs: match by normalised URL.
+    """
+    package_prefix = "/data/{}/resource/".format(package_id)
+    total = 0
+    for url in candidate_urls:
+        if not url:
+            continue
+        if package_prefix in url:
+            # Uploaded file — sum all download URLs that belong to this package
+            for key, hits in download_map.items():
+                if package_prefix in key:
+                    total += hits
+            # Only count prefix once even if multiple resources share the package path
+            break
+        else:
+            parsed = urlparse(url if "://" in url else "http://" + url)
+            key = (parsed.netloc.lower() + parsed.path).rstrip("/")
+            total += download_map.get(key, 0)
+    return total
 
 
 def _normalize_url(value):
@@ -354,20 +343,21 @@ def _sum_metric_for_urls(records, candidate_urls, metric_keys):
 
 def _dataset_url(package):
     site_url = toolkit.config.get("ckan.site_url", "").rstrip("/")
-    dataset_type = (getattr(package, "type", "") or "dataset").strip("/")
     if site_url:
-        return "{}/{}/{}".format(site_url, dataset_type, package.name)
-    return "/{}/{}".format(dataset_type, package.name)
+        return "{}/dataset/{}".format(site_url, package.name)
+    return "/dataset/{}".format(package.name)
 
 
 def _dataset_download_urls(package):
     site_url = toolkit.config.get("ckan.site_url", "").rstrip("/")
-    dataset_type = (getattr(package, "type", "") or "dataset").strip("/")
     urls = []
     for resource in package.resources:
         if resource.state != "active":
             continue
         if not resource.url:
+            continue
+        extras = getattr(resource, "extras", None) or {}
+        if isinstance(extras, dict) and "downloadall_datapackage_hash" in extras:
             continue
 
         resource_url = resource.url
@@ -378,9 +368,8 @@ def _dataset_download_urls(package):
 
         if getattr(resource, "url_type", "") == "upload" and site_url:
             urls.append(
-                "{}/{}/{}/resource/{}/download/{}".format(
+                "{}/data/{}/resource/{}/download/{}".format(
                     site_url,
-                    dataset_type,
                     package.id,
                     resource.id,
                     resource_url.lstrip("/"),
@@ -406,77 +395,6 @@ def _get_package_by_ref(dataset_ref):
         return package
 
     raise toolkit.ObjectNotFound("Dataset not found: {}".format(dataset_ref))
-
-
-def _random_visitor_id():
-    alphabet = "0123456789abcdef"
-    return "".join(random.choice(alphabet) for _ in range(16))
-
-
-def generate_test_traffic(
-    dataset_ref,
-    visits=25,
-    downloads=10,
-    sleep_ms=0,
-    visitor_id=None,
-    dry_run=False,
-):
-    if visits < 0 or downloads < 0:
-        raise toolkit.ValidationError("visits/downloads must be >= 0")
-    if sleep_ms < 0:
-        raise toolkit.ValidationError("sleep_ms must be >= 0")
-
-    package = _get_package_by_ref(dataset_ref)
-    page_url = _dataset_url(package)
-    download_urls = _dataset_download_urls(package)
-
-    if downloads > 0 and not download_urls:
-        raise toolkit.ValidationError(
-            "Dataset has no active resource URLs to count as downloads"
-        )
-
-    visitor_id = visitor_id or _random_visitor_id()
-
-    if dry_run:
-        return {
-            "dataset": package.name,
-            "visitor_id": visitor_id,
-            "page_url": page_url,
-            "downloads_targeted": downloads,
-            "visits_targeted": visits,
-            "downloads_sent": 0,
-            "visits_sent": 0,
-            "dry_run": True,
-        }
-
-    client = MatomoTrackingClient()
-
-    visits_sent = 0
-    downloads_sent = 0
-
-    for _ in range(visits):
-        client.track_pageview(page_url, visitor_id)
-        visits_sent += 1
-        if sleep_ms:
-            time.sleep(float(sleep_ms) / 1000.0)
-
-    for idx in range(downloads):
-        download_url = download_urls[idx % len(download_urls)]
-        client.track_download(page_url, download_url, visitor_id)
-        downloads_sent += 1
-        if sleep_ms:
-            time.sleep(float(sleep_ms) / 1000.0)
-
-    return {
-        "dataset": package.name,
-        "visitor_id": visitor_id,
-        "page_url": page_url,
-        "downloads_targeted": downloads,
-        "visits_targeted": visits,
-        "downloads_sent": downloads_sent,
-        "visits_sent": visits_sent,
-        "dry_run": False,
-    }
 
 
 def _upsert_extra(package_id, key, value):
@@ -529,7 +447,7 @@ def sync_usage_data(dry_run=False, limit=None, offset=None, dataset_refs=None):
     if offset is not None and offset < 0:
         raise toolkit.ValidationError("--offset must be greater than or equal to 0")
 
-    client = MatomoTrackingClient()
+    client = MatomoClient()
 
     today = datetime.date.today()
     end_date = today - datetime.timedelta(days=1)
@@ -550,6 +468,18 @@ def sync_usage_data(dry_run=False, limit=None, offset=None, dataset_refs=None):
     )
     log.info("Matomo sync starting for %s package(s)", len(packages))
 
+    # Pre-fetch site-wide download counts once for each time window.
+    # Actions.getDownloads reads from Matomo archives (fast) instead of
+    # scanning raw logs per dataset (slow segment queries).
+    periods_3y = _period_chunks(three_year_start, end_date)
+    periods_90d = _period_chunks(last_90_start, end_date)
+    log.info("Matomo sync prefetching downloads: 3y=%s periods, 90d=%s periods",
+             len(periods_3y), len(periods_90d))
+    download_map_3y = client.prefetch_downloads(periods_3y)
+    download_map_90d = client.prefetch_downloads(periods_90d)
+    log.info("Matomo sync download maps: 3y=%s urls, 90d=%s urls",
+             len(download_map_3y), len(download_map_90d))
+
     for package in packages:
         processed += 1
         try:
@@ -557,21 +487,14 @@ def sync_usage_data(dry_run=False, limit=None, offset=None, dataset_refs=None):
                 page_url = _dataset_url(package)
                 download_urls = _dataset_download_urls(package)
 
-                visits = client.page_visits_for_periods(
-                    page_url, _period_chunks(three_year_start, end_date)
+                visits, visit_90_days = client.fetch_page_visits(
+                    page_url, periods_3y, periods_90d
                 )
-                downloads = client.downloads_for_periods(
-                    package,
-                    download_urls,
-                    _period_chunks(three_year_start, end_date),
+                downloads = _sum_downloads_from_map(
+                    download_map_3y, download_urls, package.id
                 )
-                visit_90_days = client.page_visits_for_periods(
-                    page_url, _period_chunks(last_90_start, end_date)
-                )
-                download_90_days = client.downloads_for_periods(
-                    package,
-                    download_urls,
-                    _period_chunks(last_90_start, end_date),
+                download_90_days = _sum_downloads_from_map(
+                    download_map_90d, download_urls, package.id
                 )
 
                 payload = {

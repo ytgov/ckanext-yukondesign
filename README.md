@@ -11,6 +11,8 @@ This extension is a CKAN extension that provides a new design for the Yukon 2025
 | --------------- | ------------- |
 | 2.11.0 | yes    |
 
+> **Note:** This extension requires `ckanext-downloadall` from the `yukon-2.11.0` branch. See [DEPLOYMENT.md](DEPLOYMENT.md) for details.
+
 ## Deployment
 
 To deploy this extension, you need to have a CKAN instance running. You can follow the [official documentation](https://docs.ckan.org/en/latest/maintaining/installing/index.html) to install CKAN.

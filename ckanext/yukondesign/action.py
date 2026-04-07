@@ -183,9 +183,18 @@ def yukon_matomo_sync_usage_data(context, data_dict):
     if not dataset_refs and limit is None:
         limit = 25
 
-    if limit is not None and limit > 100:
+    # Optional hard ceiling from config. 0 or unset means unlimited.
+    max_limit = toolkit.config.get(
+        "ckanext.yukondesign.matomo.api_sync_max_limit", 0
+    )
+    try:
+        max_limit = int(max_limit)
+    except (TypeError, ValueError):
+        max_limit = 0
+
+    if max_limit > 0 and limit is not None and limit > max_limit:
         raise toolkit.ValidationError(
-            {"limit": ["Must be less than or equal to 100"]}
+            {"limit": ["Must be less than or equal to {}".format(max_limit)]}
         )
     if offset is not None and offset < 0:
         raise toolkit.ValidationError(

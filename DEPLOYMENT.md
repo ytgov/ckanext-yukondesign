@@ -8,18 +8,22 @@ Deployment documentation
 
 ## Install `ckanext-downloadall`
 
-Activate the CKAN virtual environment and install the extension:
+> **Important:** Deploy `ckanext-downloadall` from the `yukon-2.11.0` branch, not from PyPI. The Yukon-specific branch contains fixes and customisations required by this extension.
+
+Activate the CKAN virtual environment and install the extension from the correct branch:
 
 ```bash
 . /usr/lib/ckan/default/bin/activate
-pip install ckanext-downloadall
+pip install git+https://github.com/datopian/ckanext-downloadall.git@yukon-2.11.0
 ```
 
-If you are deploying from a checked-out source tree instead of PyPI, install it in development mode:
+If you are deploying from a checked-out source tree, check out the correct branch and install in development mode:
 
 ```bash
-cd /path/to/ckanext-downloadall
-python setup.py develop
+git clone https://github.com/datopian/ckanext-downloadall.git
+cd ckanext-downloadall
+git checkout yukon-2.11.0
+pip install -e .
 ```
 
 ## Configuration settings
@@ -46,7 +50,8 @@ ckanext.yukondesign.matomo.api_url = http://matomo:80
 ckanext.yukondesign.matomo.site_id = 1
 ckanext.yukondesign.matomo.token_auth = <matomo-api-token>
 ckanext.yukondesign.matomo.timeout_seconds = 20
-ckanext.yukondesign.matomo.start_date = 2000-01-01
+# Maximum `limit` allowed via the API action. Set to 0 (or omit) for no limit.
+ckanext.yukondesign.matomo.api_sync_max_limit = 0
 
 # Download-all settings
 ckanext.downloadall.max_resource_size = 104857600
@@ -194,6 +199,70 @@ Options for `generate-test-traffic`:
 - `--sleep-ms`: small delay between events (useful for low-resource Matomo)
 - `--visitor-id`: provide a stable visitor id across runs
 - `--dry-run`: preview without sending events
+
+## Generate random synthetic traffic across many datasets
+
+For broader testing, you can run the helper script below to randomly select
+multiple active datasets and emit synthetic visits/downloads for each.
+
+```bash
+python /srv/app/src/ckanext-yukondesign/scripts/generate_random_matomo_traffic.py \
+  -c /etc/ckan/default/ckan.ini \
+  --dataset-count 22 \
+  --min-visits 3 \
+  --max-visits 12 \
+  --min-downloads 1 \
+  --max-downloads 4
+```
+
+Useful flags:
+
+- `--dataset-ref <name-or-id>`: restrict selection to a subset (repeatable)
+- `--allow-no-resources`: include datasets without downloadable resources
+- `--sleep-ms`: add delay between emitted events
+- `--seed`: make a random run reproducible
+- `--dry-run`: preview selected datasets without sending events
+
+The same script can also run from a local machine without CKAN internals by
+using Playwright to open CKAN pages in a real browser session:
+
+```bash
+python src/ckanext-yukondesign/scripts/generate_random_matomo_traffic.py \
+  --ckan-url https://ckan.yukon.dev.datopian.com \
+  --dataset-count 22 \
+  --min-visits 3 \
+  --max-visits 12 \
+  --min-downloads 1 \
+  --max-downloads 4
+```
+
+Prerequisites for standalone mode:
+
+```bash
+pip install playwright
+playwright install chromium
+```
+
+## Import Yukon datasets into a local instance
+
+To seed a local CKAN with Yukon datasets copied from `open.yukon.ca`, including
+downloading uploaded resources from the source instance and re-uploading them
+to your local instance, use:
+
+```bash
+python src/ckanext-yukondesign/scripts/import_open_yukon_datasets.py \
+  --target-url http://localhost:5000 \
+  --target-api-token <local-sysadmin-token> \
+  --per-type 50
+```
+
+Notes:
+
+- Only resources with `url_type=upload` are imported.
+- Linked/external resources are skipped.
+- Missing organizations are created automatically on the target instance.
+- Use `--dataset-type data --dataset-type information` etc. to limit the types.
+- Use `--dry-run` to preview what would be imported.
 
 ## One-shot local smoke test
 

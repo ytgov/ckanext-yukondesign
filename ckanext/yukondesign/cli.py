@@ -6,6 +6,7 @@ from ckan.cli import load_config
 from ckan.config.middleware import make_app
 
 from . import matomo_sync
+from . import matomo_traffic
 
 
 def get_commands():
@@ -78,30 +79,42 @@ def sync_usage_data(ctx, dry_run, limit, offset, dataset_refs):
     help="Dataset name or id to target.",
 )
 @click.option(
-    "--visits",
+    "--visits-3y",
+    "visits_3y",
     type=int,
     default=25,
     show_default=True,
-    help="Number of synthetic pageviews to emit.",
+    help=(
+        "Pageviews with random timestamps in the 3-year window "
+        "(older than 90 days)."
+    ),
 )
 @click.option(
-    "--downloads",
+    "--visits-90d",
+    "visits_90d",
     type=int,
     default=10,
     show_default=True,
-    help="Number of synthetic download events to emit.",
+    help="Pageviews with random timestamps in the last 90 days.",
 )
 @click.option(
-    "--sleep-ms",
+    "--downloads-3y",
+    "downloads_3y",
     type=int,
-    default=0,
+    default=10,
     show_default=True,
-    help="Delay between events in milliseconds.",
+    help=(
+        "Download events with random timestamps in the 3-year window "
+        "(older than 90 days)."
+    ),
 )
 @click.option(
-    "--visitor-id",
-    default=None,
-    help="Optional 16-char visitor id; random if omitted.",
+    "--downloads-90d",
+    "downloads_90d",
+    type=int,
+    default=5,
+    show_default=True,
+    help="Download events with random timestamps in the last 90 days.",
 )
 @click.option(
     "--dry-run",
@@ -113,26 +126,146 @@ def sync_usage_data(ctx, dry_run, limit, offset, dataset_refs):
 def generate_test_traffic(
     ctx,
     dataset_ref,
-    visits,
-    downloads,
-    sleep_ms,
-    visitor_id,
+    visits_3y,
+    visits_90d,
+    downloads_3y,
+    downloads_90d,
     dry_run,
 ):
-    """Emit synthetic Matomo traffic for local validation."""
+    """Emit synthetic Matomo traffic spread across 3-year and 90-day windows.
+
+    Each pageview is sent with a unique visitor ID so Matomo counts it
+    as a distinct visit.  The cdt (custom datetime) parameter backdates
+    events so the 3-year and 90-day sync totals will diff correctly.
+    """
     flask_app = ctx.obj["flask_app"]
     with flask_app.app_context():
-        summary = matomo_sync.generate_test_traffic(
+        summary = matomo_traffic.generate_test_traffic(
             dataset_ref=dataset_ref,
-            visits=visits,
-            downloads=downloads,
-            sleep_ms=sleep_ms,
-            visitor_id=visitor_id,
+            visits_3y=visits_3y,
+            visits_90d=visits_90d,
+            downloads_3y=downloads_3y,
+            downloads_90d=downloads_90d,
             dry_run=dry_run,
         )
 
     click.echo(
-        "generate-test-traffic: dataset={dataset} visits_sent={visits_sent} "
-        "downloads_sent={downloads_sent} visitor_id={visitor_id} "
-        "dry_run={dry_run}".format(**summary)
+        "generate-test-traffic: dataset={dataset}\n"
+        "  visits    3y={visits_3y_sent}/{visits_3y_targeted}"
+        "  90d={visits_90d_sent}/{visits_90d_targeted}\n"
+        "  downloads 3y={downloads_3y_sent}/{downloads_3y_targeted}"
+        "  90d={downloads_90d_sent}/{downloads_90d_targeted}\n"
+        "  dry_run={dry_run}".format(**summary)
+    )
+
+
+@yukon_matomo.command(
+    "generate-bulk-traffic",
+    short_help="Generate fake Matomo traffic for all datasets of all types",
+)
+@click.option(
+    "--visits-3y",
+    "visits_3y",
+    type=int,
+    default=25,
+    show_default=True,
+    help="Pageviews per dataset backdated to the 3-year window (older than 90 days).",
+)
+@click.option(
+    "--visits-90d",
+    "visits_90d",
+    type=int,
+    default=10,
+    show_default=True,
+    help="Pageviews per dataset backdated to the last 90 days.",
+)
+@click.option(
+    "--downloads-3y",
+    "downloads_3y",
+    type=int,
+    default=10,
+    show_default=True,
+    help="Download events per dataset backdated to the 3-year window.",
+)
+@click.option(
+    "--downloads-90d",
+    "downloads_90d",
+    type=int,
+    default=5,
+    show_default=True,
+    help="Download events per dataset backdated to the last 90 days.",
+)
+@click.option(
+    "--dataset-ref",
+    "dataset_refs",
+    multiple=True,
+    help=(
+        "Restrict to specific dataset name/id. "
+        "Can be repeated. Omit to target all supported datasets."
+    ),
+)
+@click.option(
+    "--limit",
+    type=int,
+    default=None,
+    help="Process at most this many datasets.",
+)
+@click.option(
+    "--offset",
+    type=int,
+    default=None,
+    help="Skip this many datasets before starting.",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    default=False,
+    help="Show what would be sent without emitting any events.",
+)
+@click.pass_context
+def generate_bulk_traffic(
+    ctx,
+    visits_3y,
+    visits_90d,
+    downloads_3y,
+    downloads_90d,
+    dataset_refs,
+    limit,
+    offset,
+    dry_run,
+):
+    """Generate fake Matomo traffic for every active dataset of every type.
+
+    Iterates all datasets of types: data, information, access-requests,
+    pia-summaries.  Events are spread across two windows:
+
+    \b
+      3-year window  — random timestamps older than 90 days
+      90-day window  — random timestamps within the last 90 days
+
+    Each pageview uses a unique visitor ID so Matomo counts it as a
+    distinct visit.  Datasets without resources get their download counts
+    set to 0 automatically.
+    """
+    flask_app = ctx.obj["flask_app"]
+    with flask_app.app_context():
+        summary = matomo_traffic.generate_bulk_traffic(
+            visits_3y=visits_3y,
+            visits_90d=visits_90d,
+            downloads_3y=downloads_3y,
+            downloads_90d=downloads_90d,
+            dataset_refs=list(dataset_refs) if dataset_refs else None,
+            limit=limit,
+            offset=offset,
+            dry_run=dry_run,
+        )
+
+    click.echo(
+        "generate-bulk-traffic: total={total_packages} "
+        "succeeded={succeeded} failed={failed} skipped={skipped} "
+        "dry_run={dry_run}\n"
+        "  visits    3y={visits_3y_sent}  90d={visits_90d_sent}\n"
+        "  downloads 3y={downloads_3y_sent}  90d={downloads_90d_sent}".format(
+            **summary
+        )
     )
