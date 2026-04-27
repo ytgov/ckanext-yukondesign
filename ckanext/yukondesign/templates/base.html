@@ -4,15 +4,85 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/yukon.css" />
     <script>
+        // Initialize tracking queue
         var _paq = window._paq = window._paq || [];
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
+        
+        // Custom Matomo tracking without matomo.js (bypasses Cloudflare blocking)
         (function() {
-          var u="{{ h.matomo_url() }}";
-          _paq.push(['setTrackerUrl', u+'matomo.php']);
-          _paq.push(['setSiteId', "{{ h.matomo_siteid() }}"]);
-          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-          g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            var trackerUrl = "{{ h.matomo_url() }}matomo.php";
+            var siteId = "{{ h.matomo_siteid() }}";
+            var visitorId = localStorage.getItem('_pk_id') || Math.random().toString(16).substring(2, 18);
+            localStorage.setItem('_pk_id', visitorId);
+            
+            function sendTrackingRequest(params) {
+                var defaultParams = {
+                    idsite: siteId,
+                    rec: 1,
+                    _id: visitorId,
+                    rand: Math.random().toString(36).substring(7),
+                    url: window.location.href,
+                    urlref: document.referrer || '',
+                    res: screen.width + 'x' + screen.height,
+                    cookie: 1
+                };
+                var allParams = Object.assign({}, defaultParams, params);
+                var queryString = Object.keys(allParams)
+                    .map(function(key) { return encodeURIComponent(key) + '=' + encodeURIComponent(allParams[key]); })
+                    .join('&');
+                var img = new Image(1, 1);
+                img.src = trackerUrl + '?' + queryString;
+            }
+            
+            // Process _paq queue
+            var queue = window._paq.slice();
+            
+            // Process existing queue
+            queue.forEach(function(cmd) {
+                if (cmd[0] === 'trackPageView') {
+                    sendTrackingRequest({
+                        action_name: cmd[1] || document.title
+                    });
+                } else if (cmd[0] === 'trackLink') {
+                    sendTrackingRequest({
+                        link: cmd[1],
+                        download: cmd[1]
+                    });
+                }
+            });
+            
+            // Override push to handle new tracking calls
+            window._paq.push = function(cmd) {
+                Array.prototype.push.call(this, cmd);
+                if (cmd[0] === 'trackPageView') {
+                    sendTrackingRequest({
+                        action_name: cmd[1] || document.title
+                    });
+                } else if (cmd[0] === 'trackLink') {
+                    sendTrackingRequest({
+                        link: cmd[1],
+                        download: cmd[1]
+                    });
+                }
+            };
+            
+            // Auto-track downloads based on CKAN URL pattern
+            if (queue.some(function(cmd) { return cmd[0] === 'enableLinkTracking'; })) {
+                document.addEventListener('click', function(e) {
+                    var link = e.target.closest('a');
+                    if (link && link.href) {
+                        // Match CKAN download pattern: /<dataset_type>/<dataset_id>/resource/<resource_id>/download/<file_name>
+                        var isDownload = /\/resource\/[^\/]+\/download\//i.test(link.href);
+                        if (isDownload) {
+                            sendTrackingRequest({
+                                link: link.href,
+                                download: link.href
+                            });
+                        }
+                    }
+                }, true);
+            }
         })();
     </script>
 {% endblock %}
