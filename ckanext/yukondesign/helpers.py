@@ -309,16 +309,18 @@ def add_matomo_siteid_to_context():
 def matomo_url():
     """
     Returns the Matomo tracking URL from the configuration.
-    This ensures the tracking code uses the same Matomo instance as the API sync.
+    Uses CKANEXT__YUKONDESIGN__MATOMO__TRACKER_URL for browser tracking,
+    separate from the API_URL which is used for stats queries.
     """
-    # Get the Matomo API URL from configuration (CKANEXT__YUKONDESIGN__MATOMO__API_URL)
-    api_url = toolkit.config.get('ckanext.yukondesign.matomo.api_url', 'https://analytics.gov.yk.ca/')
+    # Get the Matomo tracker URL from configuration (CKANEXT__YUKONDESIGN__MATOMO__TRACKER_URL)
+    # Falls back to analytics.gov.yk.ca if not set
+    tracker_url = toolkit.config.get('ckanext.yukondesign.matomo.tracker_url', 'https://analytics.gov.yk.ca/')
     
     # Ensure the URL ends with a trailing slash for the tracking code
-    if not api_url.endswith('/'):
-        api_url += '/'
+    if not tracker_url.endswith('/'):
+        tracker_url += '/'
     
-    return api_url
+    return tracker_url
 
 
 def get_year_facet_items(facet_name, search_facets):
