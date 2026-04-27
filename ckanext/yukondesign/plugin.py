@@ -70,6 +70,7 @@ class Yukon2025DesignPlugin(plugins.SingletonPlugin):
             'dataset_type_title': helpers.dataset_type_title,
             'dataset_type_menu_title': helpers.dataset_type_menu_title,
             'matomo_siteid': helpers.add_matomo_siteid_to_context,
+            'matomo_url': helpers.matomo_url,
             'get_year_facet_items': helpers.get_year_facet_items,
         }
 

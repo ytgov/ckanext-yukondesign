@@ -300,14 +300,25 @@ def add_matomo_siteid_to_context():
     This is used for tracking purposes.
     """
     # Get the Matomo site ID from the CKAN configuration.
-    # Falls back to ckanext.yukondesign.matomo.site_id so a single env var
-    # (CKANEXT__YUKONDESIGN__MATOMO__SITE_ID) is sufficient.
-    matomo_siteid = toolkit.config.get(
-        'ckan.matomo_siteid',
-        toolkit.config.get('ckanext.yukondesign.matomo.site_id', '1')
-    )
+    # Uses CKANEXT__YUKONDESIGN__MATOMO__SITE_ID env var.
+    matomo_siteid = toolkit.config.get('ckanext.yukondesign.matomo.site_id', '1')
     # Return the Matomo site ID for direct use in templates
     return matomo_siteid
+
+
+def matomo_url():
+    """
+    Returns the Matomo tracking URL from the configuration.
+    This ensures the tracking code uses the same Matomo instance as the API sync.
+    """
+    # Get the Matomo API URL from configuration (CKANEXT__YUKONDESIGN__MATOMO__API_URL)
+    api_url = toolkit.config.get('ckanext.yukondesign.matomo.api_url', 'https://analytics.gov.yk.ca/')
+    
+    # Ensure the URL ends with a trailing slash for the tracking code
+    if not api_url.endswith('/'):
+        api_url += '/'
+    
+    return api_url
 
 
 def get_year_facet_items(facet_name, search_facets):
