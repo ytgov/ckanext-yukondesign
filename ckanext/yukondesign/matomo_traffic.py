@@ -21,7 +21,7 @@ from .matomo_sync import (
     MatomoClient,
     _active_packages,
     _dataset_download_urls,
-    _dataset_url,
+    _dataset_urls_multilang,
     _get_package_by_ref,
     _shift_years,
 )
@@ -127,16 +127,22 @@ def generate_test_traffic(
 
     All events for a dataset are sent in a single bulk POST so the number
     of HTTP round-trips equals the number of datasets, not the number of
-    individual events.  Events are backdated with Matomo's ``cdt`` parameter
-    so the 3-year and 90-day windows are populated independently.  Every
-    pageview uses a unique visitor ID so Matomo counts each as a distinct visit.
+    individual events.  Events are backdated with Matomo's ``cdt``
+    parameter so the 3-year and 90-day windows are populated
+    independently.  Every pageview uses a unique visitor ID so Matomo
+    counts each as a distinct visit.
+
+    Pageviews are split between English and French URLs to simulate
+    real-world multilingual traffic. Downloads use the same URLs
+    regardless of language.
     """
     if visits_3y < 0 or visits_90d < 0 or downloads_3y < 0 or downloads_90d < 0:
         raise toolkit.ValidationError("All visit/download counts must be >= 0")
 
     total_downloads = downloads_3y + downloads_90d
     package = _get_package_by_ref(dataset_ref)
-    page_url = _dataset_url(package)
+    # Get both English and French URLs
+    page_urls = _dataset_urls_multilang(package)
     download_urls = _dataset_download_urls(package)
 
     if total_downloads > 0 and not download_urls:
@@ -153,7 +159,7 @@ def generate_test_traffic(
     if dry_run:
         return {
             "dataset": package.name,
-            "page_url": page_url,
+            "page_urls": page_urls,
             "visits_3y_targeted": visits_3y,
             "visits_90d_targeted": visits_90d,
             "downloads_3y_targeted": downloads_3y,
@@ -168,12 +174,15 @@ def generate_test_traffic(
     client = MatomoTrackingClient()
     requests = []
 
-    for _ in range(visits_3y):
+    # Generate pageviews, alternating between English and French URLs
+    for idx in range(visits_3y):
         at = _random_datetime_in_range(three_year_start, pre_90_end)
+        page_url = page_urls[idx % len(page_urls)]
         requests.append(client._build_pageview(page_url, _random_visitor_id(), at=at))
 
-    for _ in range(visits_90d):
+    for idx in range(visits_90d):
         at = _random_datetime_in_range(last_90_start, end_date)
+        page_url = page_urls[idx % len(page_urls)]
         requests.append(client._build_pageview(page_url, _random_visitor_id(), at=at))
 
     for idx in range(downloads_3y):
@@ -191,7 +200,7 @@ def generate_test_traffic(
 
     return {
         "dataset": package.name,
-        "page_url": page_url,
+        "page_urls": page_urls,
         "visits_3y_targeted": visits_3y,
         "visits_90d_targeted": visits_90d,
         "downloads_3y_targeted": downloads_3y,

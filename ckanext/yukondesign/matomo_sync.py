@@ -196,7 +196,7 @@ class MatomoClient(object):
         return self._build_download_map(responses)
 
     def fetch_page_visits(self, page_url, periods_3y, periods_90d):
-        """Fetch page visit counts for both time windows in a single bulk request."""
+        """Fetch page visit counts for both time windows in one request."""
         v3y = self._visits_payload(page_url, periods_3y)
         v90 = self._visits_payload(page_url, periods_90d)
         split = len(v3y)
@@ -204,7 +204,41 @@ class MatomoClient(object):
         if not combined:
             return 0, 0
         responses = self._bulk_call(combined)
-        return self._sum_visits(responses[:split]), self._sum_visits(responses[split:])
+        visits_3y = self._sum_visits(responses[:split])
+        visits_90d = self._sum_visits(responses[split:])
+        return visits_3y, visits_90d
+
+    def fetch_page_visits_multilang(self, page_urls, periods_3y, periods_90d):
+        """Fetch page visit counts for multiple language URLs combined.
+
+        Args:
+            page_urls: List of URLs (e.g., English and French versions)
+            periods_3y: Period chunks for 3-year window
+            periods_90d: Period chunks for 90-day window
+
+        Returns:
+            Tuple of (visits_3y, visits_90d) summed across all URLs
+        """
+        if not page_urls:
+            return 0, 0
+
+        all_payloads_3y = []
+        all_payloads_90d = []
+
+        for url in page_urls:
+            all_payloads_3y.extend(self._visits_payload(url, periods_3y))
+            all_payloads_90d.extend(self._visits_payload(url, periods_90d))
+
+        split = len(all_payloads_3y)
+        combined = all_payloads_3y + all_payloads_90d
+
+        if not combined:
+            return 0, 0
+
+        responses = self._bulk_call(combined)
+        visits_3y = self._sum_visits(responses[:split])
+        visits_90d = self._sum_visits(responses[split:])
+        return visits_3y, visits_90d
 
 
 def _iter_records(payload):
@@ -342,10 +376,40 @@ def _sum_metric_for_urls(records, candidate_urls, metric_keys):
 
 
 def _dataset_url(package):
+    """Get the primary (English) dataset URL using the correct package type."""
     site_url = toolkit.config.get("ckan.site_url", "").rstrip("/")
+    dataset_type = (package.type or "dataset").strip("/")
     if site_url:
-        return "{}/dataset/{}".format(site_url, package.name)
-    return "/dataset/{}".format(package.name)
+        return "{}/{}/{}".format(site_url, dataset_type, package.name)
+    return "/{}/{}".format(dataset_type, package.name)
+
+
+def _dataset_urls_multilang(package):
+    """Get all language-variant URLs for a dataset (English + French).
+
+    Returns a list of URLs to query for visit statistics, combining:
+    - English URL: /{type}/{name}
+    - French URL: /fr/{type}/{name}
+    """
+    site_url = toolkit.config.get("ckan.site_url", "").rstrip("/")
+    dataset_type = (package.type or "dataset").strip("/")
+
+    urls = []
+
+    # English URL
+    if site_url:
+        urls.append("{}/{}/{}".format(site_url, dataset_type, package.name))
+    else:
+        urls.append("/{}/{}".format(dataset_type, package.name))
+
+    # French URL
+    if site_url:
+        url_fr = "{}/fr/{}/{}".format(site_url, dataset_type, package.name)
+        urls.append(url_fr)
+    else:
+        urls.append("/fr/{}/{}".format(dataset_type, package.name))
+
+    return urls
 
 
 def _dataset_download_urls(package):
@@ -484,11 +548,11 @@ def sync_usage_data(dry_run=False, limit=None, offset=None, dataset_refs=None):
         processed += 1
         try:
             with model.Session.begin_nested():
-                page_url = _dataset_url(package)
+                page_urls = _dataset_urls_multilang(package)
                 download_urls = _dataset_download_urls(package)
 
-                visits, visit_90_days = client.fetch_page_visits(
-                    page_url, periods_3y, periods_90d
+                visits, visit_90_days = client.fetch_page_visits_multilang(
+                    page_urls, periods_3y, periods_90d
                 )
                 downloads = _sum_downloads_from_map(
                     download_map_3y, download_urls, package.id
