@@ -102,7 +102,6 @@ class MatomoClient(object):
         parsed = urlparse(self.base_url)
         path = parsed.path.rstrip("/") + "/index.php?" + urlencode(params)
         encoded_body = urlencode(body, doseq=True).encode("utf-8")
-        log.debug("Matomo _bulk_call path=%s body_len=%s num_urls=%s", path, len(encoded_body), len(requests_payload))
         conn = self._http_conn()
         try:
             conn.request(
@@ -238,6 +237,7 @@ class MatomoClient(object):
         responses = self._bulk_call(combined)
         visits_3y = self._sum_visits(responses[:split])
         visits_90d = self._sum_visits(responses[split:])
+        
         return visits_3y, visits_90d
 
 
@@ -304,29 +304,23 @@ def _shift_years(value, years):
 
 
 def _period_chunks(start_date, end_date):
+    """Break a date range into chunks for Matomo API queries.
+    
+    IMPORTANT: Only use period=range to avoid data duplication.
+    Matomo's period=year and period=month return cumulative/repeated data
+    rather than period-specific data, causing visits to be counted multiple times.
+    
+    We chunk by month to optimize API calls while using range for accuracy.
+    """
     chunks = []
     current = start_date
 
     while current <= end_date:
-        if (
-            current.day == 1
-            and current.month == 1
-            and datetime.date(current.year, 12, 31) <= end_date
-        ):
-            chunks.append(("year", str(current.year)))
-            current = datetime.date(current.year + 1, 1, 1)
-            continue
-
+        # Calculate the end of the current month
         last_day_of_month = calendar.monthrange(current.year, current.month)[1]
         month_end = datetime.date(current.year, current.month, last_day_of_month)
-        if current.day == 1 and month_end <= end_date:
-            chunks.append(("month", "{:04d}-{:02d}".format(current.year, current.month)))
-            if current.month == 12:
-                current = datetime.date(current.year + 1, 1, 1)
-            else:
-                current = datetime.date(current.year, current.month + 1, 1)
-            continue
-
+        
+        # Use range for this month (or remaining days if we hit end_date)
         range_end = min(month_end, end_date)
         chunks.append(
             (
@@ -334,7 +328,10 @@ def _period_chunks(start_date, end_date):
                 "{},{}".format(current.isoformat(), range_end.isoformat()),
             )
         )
+        
+        # Move to the first day of the next month
         current = range_end + datetime.timedelta(days=1)
+    
     return chunks
 
 
