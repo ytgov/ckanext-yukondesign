@@ -254,13 +254,13 @@ def _iter_records(payload):
                         yield row
 
 
-def _sum_downloads_from_map(download_map, candidate_urls, package_id):
+def _sum_downloads_from_map(download_map, candidate_urls, package_id, package_type):
     """Sum download hits for a dataset's resource URLs from a pre-fetched site-wide map.
 
     Uploaded files: match any map key that contains the package resource path prefix.
     External URLs: match by normalised URL.
     """
-    package_prefix = "/data/{}/resource/".format(package_id)
+    package_prefix = "/{}/{}/resource/".format(package_type, package_id)
     total = 0
     for url in candidate_urls:
         if not url:
@@ -429,8 +429,9 @@ def _dataset_download_urls(package):
 
         if getattr(resource, "url_type", "") == "upload" and site_url:
             urls.append(
-                "{}/data/{}/resource/{}/download/{}".format(
+                "{}/{}/{}/resource/{}/download/{}".format(
                     site_url,
+                    package.type,
                     package.id,
                     resource.id,
                     resource_url.lstrip("/"),
@@ -552,10 +553,10 @@ def sync_usage_data(dry_run=False, limit=None, offset=None, dataset_refs=None):
                     page_urls, periods_3y, periods_90d
                 )
                 downloads = _sum_downloads_from_map(
-                    download_map_3y, download_urls, package.id
+                    download_map_3y, download_urls, package.id, package.type
                 )
                 download_90_days = _sum_downloads_from_map(
-                    download_map_90d, download_urls, package.id
+                    download_map_90d, download_urls, package.id, package.type
                 )
 
                 payload = {
