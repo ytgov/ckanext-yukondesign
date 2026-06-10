@@ -234,10 +234,14 @@ class MatomoClient(object):
         if not combined:
             return 0, 0
 
-        responses = self._bulk_call(combined)
+        # Group the API bulk request calls into 24-chunk batches.
+        responses = []
+
+        for i in range(0, len(combined), 24):
+            responses.extend(self._bulk_call(combined[i:i + 24]))
+
         visits_3y = self._sum_visits(responses[:split])
         visits_90d = self._sum_visits(responses[split:])
-        
         return visits_3y, visits_90d
 
 
@@ -303,35 +307,49 @@ def _shift_years(value, years):
     return datetime.date(year, value.month, day)
 
 
-def _period_chunks(start_date, end_date):
-    """Break a date range into chunks for Matomo API queries.
-    
-    IMPORTANT: Only use period=range to avoid data duplication.
-    Matomo's period=year and period=month return cumulative/repeated data
-    rather than period-specific data, causing visits to be counted multiple times.
-    
-    We chunk by month to optimize API calls while using range for accuracy.
+def _download_period_chunks(start_date, end_date):
+    """Break a date range into yearly batches for download prefetch queries.
+
+    Yearly batches avoid the silent per-sub-request filter_limit cap that occurs with 3
+    years' worth of monthly chunks, while staying small enough to avoid server OOM that
+    happens with a single 3-year range.
     """
     chunks = []
     current = start_date
 
     while current <= end_date:
-        # Calculate the end of the current month
-        last_day_of_month = calendar.monthrange(current.year, current.month)[1]
-        month_end = datetime.date(current.year, current.month, last_day_of_month)
-        
-        # Use range for this month (or remaining days if we hit end_date)
-        range_end = min(month_end, end_date)
+        year_end = datetime.date(current.year, 12, 31)
+        range_end = min(year_end, end_date)
         chunks.append(
-            (
-                "range",
-                "{},{}".format(current.isoformat(), range_end.isoformat()),
-            )
+            ("range", "{},{}".format(current.isoformat(), range_end.isoformat()))
         )
-        
-        # Move to the first day of the next month
+        current = datetime.date(current.year + 1, 1, 1)
+
+    return chunks
+
+
+def _month_chunks(start_date, end_date):
+    """Break a date range using period=month for full months, period=range for partial
+    edges."""
+    chunks = []
+    current = start_date
+
+    while current <= end_date:
+        if current.day == 1:
+            last_day = calendar.monthrange(current.year, current.month)[1]
+            month_end = datetime.date(current.year, current.month, last_day)
+
+            if month_end <= end_date:
+                chunks.append(("month", "{}-{:02d}".format(current.year, current.month)))
+                current = month_end + datetime.timedelta(days=1)
+                continue
+
+        last_day = calendar.monthrange(current.year, current.month)[1]
+        month_end = datetime.date(current.year, current.month, last_day)
+        range_end = min(month_end, end_date)
+        chunks.append(("range", "{},{}".format(current.isoformat(), range_end.isoformat())))
         current = range_end + datetime.timedelta(days=1)
-    
+
     return chunks
 
 
@@ -530,15 +548,14 @@ def sync_usage_data(dry_run=False, limit=None, offset=None, dataset_refs=None):
     )
     log.info("Matomo sync starting for %s package(s)", len(packages))
 
-    # Pre-fetch site-wide download counts once for each time window.
-    # Actions.getDownloads reads from Matomo archives (fast) instead of
-    # scanning raw logs per dataset (slow segment queries).
-    periods_3y = _period_chunks(three_year_start, end_date)
-    periods_90d = _period_chunks(last_90_start, end_date)
+    download_periods_3y = _download_period_chunks(three_year_start, end_date)
+    download_periods_90d = _download_period_chunks(last_90_start, end_date)
+    visit_periods_3y = _month_chunks(three_year_start, end_date)
+    visit_periods_90d = _month_chunks(last_90_start, end_date)
     log.info("Matomo sync prefetching downloads: 3y=%s periods, 90d=%s periods",
-             len(periods_3y), len(periods_90d))
-    download_map_3y = client.prefetch_downloads(periods_3y)
-    download_map_90d = client.prefetch_downloads(periods_90d)
+             len(download_periods_3y), len(download_periods_90d))
+    download_map_3y = client.prefetch_downloads(download_periods_3y)
+    download_map_90d = client.prefetch_downloads(download_periods_90d)
     log.info("Matomo sync download maps: 3y=%s urls, 90d=%s urls",
              len(download_map_3y), len(download_map_90d))
 
@@ -550,7 +567,7 @@ def sync_usage_data(dry_run=False, limit=None, offset=None, dataset_refs=None):
                 download_urls = _dataset_download_urls(package)
 
                 visits, visit_90_days = client.fetch_page_visits_multilang(
-                    page_urls, periods_3y, periods_90d
+                    page_urls, visit_periods_3y, visit_periods_90d
                 )
                 downloads = _sum_downloads_from_map(
                     download_map_3y, download_urls, package.id, package.type
