@@ -284,7 +284,7 @@ def package_set_featured(context, data_dict):
         # Fetch all current featured datasets
         current_featured = toolkit.get_action('package_search')(
             {'ignore_auth': True},
-            {'fq': 'is_featured:True', 'rows': 1000}
+            {'fq': 'is_featured:true', 'rows': 1000}
         )['results']
         
         log.info(f"Found {len(current_featured)} currently featured datasets")
@@ -305,7 +305,7 @@ def package_set_featured(context, data_dict):
             if package_obj:
                 log.info(f"Removing featured flag from package {pkg_id}")
                 # Update the extras directly without changing metadata_modified
-                _update_package_extra(package_obj, 'is_featured', 'False')
+                _update_package_extra(package_obj, 'is_featured', 'false')
 
         # Set the "is_featured" flag for the new datasets
         for dataset_id in dataset_ids:
@@ -314,7 +314,7 @@ def package_set_featured(context, data_dict):
                 log.info(f"Setting featured flag for package {dataset_id}")
                 log.info(f"Pkg ID: {package_obj.id}, Name: {package_obj.name}")
                 # Update the extras directly without changing metadata_modified
-                _update_package_extra(package_obj, 'is_featured', 'True')
+                _update_package_extra(package_obj, 'is_featured', 'true')
             else:
                 log.error(f"No package object found for {dataset_id}")
 
