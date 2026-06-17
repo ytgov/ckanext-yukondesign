@@ -210,7 +210,7 @@ def get_featured_datasets():
         # Get all packages with is_featured extra set to True
         extras_query = model.Session.query(model.PackageExtra).filter(
             model.PackageExtra.key == 'is_featured',
-            model.PackageExtra.value == 'True'
+            model.PackageExtra.value == 'true'
         ).all()
         
         for extra in extras_query:
